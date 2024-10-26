@@ -1,20 +1,44 @@
-/* Estilo para pantallas grandes */
+:root {
+    --naranja: #FFA500; /* Ajusta este código si tienes un valor específico */
+    --verde-azulado: #008080; /* Ajusta este código si tienes un valor específico */
+    --azul-gris: #6C7A89; /* Ajusta este código si tienes un valor específico */
+    --negro-cairo: #000000; /* Negro con la tipografía Cairo */
+}
+
 body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
+    font-family: 'Cairo', sans-serif;
+    background-color: var(--azul-gris);
+    color: var(--negro-cairo);
 }
 
 header {
-    background: #f4f4f4;
-    padding: 1em 0;
+    background-color: var(--naranja);
+    color: var(--negro-cairo);
+    padding: 20px;
     text-align: center;
 }
 
+h1, h2 {
+    color: var(--naranja);
+}
+
+a {
+    color: var(--verde-azulado);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--naranja);
+    text-decoration: underline;
+}
+
 section {
-    padding: 2em;
-    border-bottom: 1px solid #ccc;
+    padding: 20px;
+    border-bottom: 1px solid var(--azul-gris);
+}
+
+.logo {
+    max-width: 150px;
 }
 
 /* Estilo para dispositivos móviles */
@@ -22,7 +46,7 @@ section {
     section {
         padding: 1em;
     }
-
+    
     ul {
         padding: 0;
     }
