@@ -51,6 +51,7 @@ nav ul li a {
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 2em;
+  color: #FFA500; /* Naranja */
 }
 
 .contenido {
@@ -60,16 +61,42 @@ nav ul li a {
 }
 
 footer {
-  background-color: #f1f1f1;
+  background-color: #DCDCDC; /* Azul gris */
   padding: 20px;
   text-align: center;
+  color: #000; /* Negro */
 }
 
 footer .ubicacion {
   margin-top: 20px;
-  color: #000;
 }
 
 footer .horarios, footer .contacto, footer .redes, footer .derechos, footer .ubicacion {
   margin-bottom: 10px;
+}
+
+h2 {
+  color: #008080; /* Verde azulado */
+}
+
+a {
+  color: #000; /* Negro */
+  text-decoration: none;
+}
+
+a:hover {
+  color: #FFA500; /* Naranja */
+}
+
+button {
+  background-color: #FFA500; /* Naranja */
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-family: 'Cairo', sans-serif;
+}
+
+button:hover {
+  background-color: #FF8C00; /* Naranja más oscuro */
 }
