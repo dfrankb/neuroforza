@@ -67,8 +67,8 @@ footer {
   color: #000; /* Negro */
 }
 
-footer .ubicacion {
-  margin-top: 20px;
+footer .ubicacion p {
+  margin: 5px 0;
 }
 
 footer .horarios, footer .contacto, footer .redes, footer .derechos, footer .ubicacion {
