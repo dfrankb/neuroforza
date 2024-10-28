@@ -114,16 +114,16 @@ img {
 
 /* Clases específicas para tamaños personalizados */
 .img-pequena {
-  width: 150px;
+  width: 100px;
   height: auto;
 }
 
 .img-mediana {
-  width: 300px;
+  width: 200px;
   height: auto;
 }
 
 .img-grande {
-  width: 500px;
+  width: 300px;
   height: auto;
 }
