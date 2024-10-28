@@ -16,7 +16,7 @@ header {
 }
 
 .logo img {
-  width: 200px; /* Ajusta el ancho del logo según tus necesidades */
+  width: 800px; /* Ajusta el ancho del logo según tus necesidades */
   height: auto;
 }
 
@@ -108,7 +108,7 @@ button:hover {
 
 /* Control del tamaño de las imágenes */
 img {
-  max-width: 100%;
+  max-width: 10%
   height: auto;
 }
 
