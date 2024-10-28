@@ -14,7 +14,10 @@ header {
 }
 
 .logo img {
-  max-height: 50px;
+  width: 150px; /* Ajusta el ancho según tus necesidades */
+  height: auto; /* Mantiene la proporción de la imagen */
+}
+
 }
 
 nav ul {
