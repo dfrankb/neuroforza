@@ -3,6 +3,8 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  background-color: #000; /* Fondo negro */
+  color: #fff; /* Letra blanca */
 }
 
 header {
@@ -37,7 +39,8 @@ nav ul li a {
 .bienvenida {
   position: relative;
   text-align: center;
-  color: white;
+  background-color: #008080; /* Azul gris */
+  color: #FFA500; /* Naranja */
 }
 
 .imagen-bienvenida img {
@@ -57,7 +60,8 @@ nav ul li a {
 
 .contenido {
   padding: 20px;
-  background-color: #f9f9f9;
+  background-color: #000; /* Fondo negro */
+  color: #fff; /* Letra blanca */
   margin: 20px 0;
 }
 
@@ -81,7 +85,7 @@ h2 {
 }
 
 a {
-  color: #000; /* Negro */
+  color: #FFA500; /* Naranja */
   text-decoration: none;
 }
 
@@ -104,7 +108,7 @@ button:hover {
 
 /* Control del tamaño de las imágenes */
 img {
-  max-width: 10%;
+  max-width: 100%;
   height: auto;
 }
 
