@@ -6,6 +6,7 @@
   <title>NeuroForza</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap">
+  <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
 </head>
 <body>
   <header>
@@ -53,6 +54,9 @@
     <div class="contenido">
       <h2>Reservar Cita</h2>
       <p>Reserva tu cita fácilmente a través de nuestra página web o llámanos. Estamos aquí para ayudarte a encontrar la mejor atención médica.</p>
+      <!-- Calendly inline widget begin -->
+      <div class="calendly-inline-widget" data-url="https://calendly.com/danfrank-neuroforza/60" style="min-width:320px;height:700px;"></div>
+      <!-- Calendly inline widget end -->
     </div>
   </section>
   <section id="multimedia">
@@ -64,7 +68,7 @@
   <footer>
     <div class="contacto">
       <div class="horarios">Horarios de atención</div>
-      <button>Pide tu cita</button>
+      <button onclick="Calendly.initPopupWidget({url: 'https://calendly.com/danfrank-neuroforza/60'});return false;">Pide tu cita</button>
     </div>
     <div class="redes">
       <a href="https://www.facebook.com/NeuroForza" target="_blank">Facebook</a>
@@ -77,8 +81,4 @@
       <p>Dirección: Anillo Perif. 2165-Consultorio 905, Los Alpes, Álvaro Obregón, 01010 CDMX.</p>
       <p>Teléfono: (55) 1234-5678</p>
       <p>Email: <a href="mailto:danfrank@neuroforza.com">danfrank@neuroforza.com</a></p>
-      <p>WhatsApp: <a href="https://wa.me/5215541410026" target="_blank">+52 1 5541410026</a></p>
-    </div>
-  </footer>
-</body>
-</html>
+      <p>WhatsApp: <a href="https://wa.me/5215541410026" target="_blank">+52 1 5541410026</a></
