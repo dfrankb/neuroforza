@@ -14,10 +14,8 @@ header {
 }
 
 .logo img {
-  width: 200px; /* Ajusta el ancho según tus necesidades */
-  height: auto; /* Mantiene la proporción de la imagen */
-}
-
+  width: 200px; /* Ajusta el ancho del logo según tus necesidades */
+  height: auto;
 }
 
 nav ul {
@@ -102,4 +100,26 @@ button {
 
 button:hover {
   background-color: #FF8C00; /* Naranja más oscuro */
+}
+
+/* Control del tamaño de las imágenes */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Clases específicas para tamaños personalizados */
+.img-pequena {
+  width: 150px;
+  height: auto;
+}
+
+.img-mediana {
+  width: 300px;
+  height: auto;
+}
+
+.img-grande {
+  width: 500px;
+  height: auto;
 }
