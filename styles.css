@@ -104,7 +104,7 @@ button:hover {
 
 /* Control del tamaño de las imágenes */
 img {
-  max-width: 100%;
+  max-width: 10%;
   height: auto;
 }
 
