@@ -26,17 +26,15 @@
     /* Estilos para la ventana emergente */
     .popup {
       position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 90%;
-      max-width: 400px;
-      background: white;
+      top: 20%;
+      right: -400px; /* Fuera de la pantalla inicialmente */
+      width: 300px;
+      background: rgba(255, 255, 255, 0.9); /* Fondo traslúcido */
       box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
       border-radius: 8px;
       padding: 20px;
-      display: none;
       z-index: 1000;
+      transition: right 0.5s ease; /* Animación de deslizamiento */
     }
     .popup h3 {
       margin-top: 0;
@@ -64,11 +62,14 @@
       display: none;
       z-index: 999;
     }
+    .popup.show {
+      right: 20px; /* Muestra la ventana emergente */
+    }
   </style>
 </head>
 <body>
   <!-- Ventana emergente -->
-  <div class="popup-overlay" id="popup-overlay"></div>
+  <div class="popup-overlay" id="popup-overlay" onclick="cerrarPopup()"></div>
   <div class="popup" id="popup">
     <h3>¿En qué podemos ayudarte?</h3>
     <p>Haz tus preguntas o agenda una cita con nosotros fácilmente.</p>
@@ -184,13 +185,13 @@
     // Mostrar la ventana emergente automáticamente
     window.onload = function() {
       document.getElementById('popup-overlay').style.display = 'block';
-      document.getElementById('popup').style.display = 'block';
+      document.getElementById('popup').classList.add('show');
     };
 
     // Función para cerrar la ventana emergente
     function cerrarPopup() {
       document.getElementById('popup-overlay').style.display = 'none';
-      document.getElementById('popup').style.display = 'none';
+      document.getElementById('popup').classList.remove('show');
     }
   </script>
 
