@@ -50,18 +50,29 @@
 
     /* Estilos para Multimedia */
     .multimedia-grid {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
       gap: 20px;
+      align-items: start;
       margin-top: 20px;
     }
     .multimedia-grid iframe {
-      flex: 1;
-      min-width: 300px;
-      max-width: 450px;
-      height: 300px;
+      width: 100%;
       border: none;
+    }
+    .spotify-section {
+      margin-top: 40px;
+      text-align: center;
+    }
+    .gallery {
+      display: flex;
+      gap: 10px;
+      overflow-x: scroll;
+      padding: 10px;
+    }
+    .gallery img {
+      height: 150px;
+      border-radius: 10px;
     }
   </style>
 </head>
@@ -74,7 +85,7 @@
     </div>
     <nav>
       <ul>
-        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="index.html#inicio">Inicio</a></li>
         <li><a href="servicios.html">Servicios</a></li>
         <li><a href="testimonios.html">Testimonios</a></li>
         <li><a href="sobre-nosotros.html">Sobre Nosotros</a></li>
@@ -83,89 +94,31 @@
     </nav>
   </header>
 
-  <!-- Hero Section -->
-  <section id="inicio" class="hero">
-    <div class="hero-texto">
-      <h1>Bienvenidos a NeuroForza</h1>
-      <p>Comprometidos con tu bienestar y tu salud.</p>
-      <a href="#contacto" class="boton-reservar">Reservar Cita</a>
-    </div>
-  </section>
-
-  <!-- Servicios -->
-  <section id="servicios">
-    <h2>Nuestros Servicios</h2>
-    <div class="servicios-grid">
-      <div class="servicio">
-        <img src="servicio1.jpg" alt="Terapia Física">
-        <h3>Terapia Física</h3>
-        <p>Recupera tu movilidad con tratamientos especializados.</p>
-      </div>
-      <div class="servicio">
-        <img src="NeuroForza_Blanco.png" alt="Pilates Rehabilitativo">
-        <h3>Pilates Rehabilitativo</h3>
-        <p>Fortalece tu cuerpo y mejora tu postura.</p>
-      </div>
-      <div class="servicio">
-        <img src="servicio3.jpg" alt="Consulta Especializada">
-        <h3>Consulta Especializada</h3>
-        <p>Atención personalizada para todas tus necesidades.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Testimonios -->
-  <section id="testimonios">
-    <h2>Lo que dicen nuestros pacientes</h2>
-    <div class="testimonios">
-      <blockquote>
-        <p>"Gracias a NeuroForza recuperé mi calidad de vida. El equipo es increíble."</p>
-        <cite>- Ana López</cite>
-      </blockquote>
-      <blockquote>
-        <p>"Excelente atención, tratamientos efectivos y un ambiente muy acogedor."</p>
-        <cite>- Carlos Pérez</cite>
-      </blockquote>
-      <blockquote>
-        <p>"El servicio y la tecnología son de primer nivel. Totalmente recomendado."</p>
-        <cite>- Sofía Ramírez</cite>
-      </blockquote>
-    </div>
-  </section>
-
-  <!-- Sobre Nosotros -->
-  <section id="sobre-nosotros">
-    <h2>Sobre Nosotros</h2>
-    <div class="contenido">
-      <p>En NeuroForza, nuestra misión es mejorar la calidad de vida de nuestros pacientes a través de tratamientos integrales, personalizados y basados en la evidencia. Contamos con un equipo multidisciplinario altamente capacitado, dedicado a brindar el mejor servicio en un entorno cálido y profesional.</p>
-      <img src="NeuroForza_NF-blanco.png" alt="Monograma NF Blanco">
-    </div>
-  </section>
-
   <!-- Multimedia -->
   <section id="multimedia">
     <h2>Multimedia</h2>
     <div class="multimedia-grid">
-      <iframe src="https://www.youtube.com/embed/pRNdVwBn-Ow" title="Podcast de NeuroForza"></iframe>
-      <iframe src="https://via.placeholder.com/450x300" title="Galería de Imágenes"></iframe>
-      <iframe src="https://open.spotify.com/embed/episode/4wJY99oBIT2Hw34GatdnbO" title="Podcast en Spotify"></iframe>
+      <!-- YouTube Video -->
+      <div>
+        <iframe src="https://www.youtube.com/embed/pRNdVwBn-Ow" title="Podcast de NeuroForza"></iframe>
+      </div>
+      <div>
+        <p><strong>Sinopsis:</strong> En este episodio del podcast de NeuroForza, exploramos los beneficios de la fisioterapia y los tratamientos integrales que ofrecemos en nuestra clínica. Escucha cómo transformamos vidas a través de nuestro enfoque multidisciplinario.</p>
+      </div>
     </div>
-  </section>
 
-  <!-- Contacto -->
-  <section id="contacto">
-    <h2>Contáctanos</h2>
-    <p>Estamos aquí para ayudarte. Reserva tu cita o escríbenos.</p>
-    <form action="#" method="post">
-      <input type="text" name="nombre" placeholder="Tu nombre" required>
-      <input type="email" name="email" placeholder="Tu correo electrónico" required>
-      <textarea name="mensaje" placeholder="Tu mensaje" required></textarea>
-      <button type="submit" class="boton-reservar">Enviar</button>
-    </form>
+    <!-- Galería de imágenes -->
+    <div class="gallery">
+      <img src="foto1.jpg" alt="Imagen 1">
+      <img src="foto2.jpg" alt="Imagen 2">
+      <img src="foto3.jpg" alt="Imagen 3">
+    </div>
 
-    <!-- Botón de Calendly -->
-    <button class="calendly-button" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/danfrank-neuroforza/60'}); return false;">Agendar Cita</button>
-    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+    <!-- Spotify Podcast -->
+    <div class="spotify-section">
+      <iframe src="https://open.spotify.com/embed/episode/4wJY99oBIT2Hw34GatdnbO" title="Podcast en Spotify"></iframe>
+      <p><strong>Sinopsis:</strong> Escucha nuestro podcast en Spotify donde abordamos temas clave sobre salud, rehabilitación y bienestar físico.</p>
+    </div>
   </section>
 
   <!-- Footer -->
