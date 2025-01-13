@@ -47,6 +47,18 @@
     .calendly-button:hover {
       background-color: #00796b;
     }
+
+    /* Estilos para el mapa */
+    .google-maps {
+      margin-top: 20px;
+      text-align: center;
+    }
+    .google-maps iframe {
+      width: 100%;
+      max-width: 600px;
+      height: 450px;
+      border: none;
+    }
   </style>
 </head>
 <body>
@@ -135,6 +147,16 @@
     <!-- Botón de Calendly -->
     <button class="calendly-button" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/danfrank-neuroforza/60'}); return false;">Agendar Cita</button>
     <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+
+    <!-- Google Maps -->
+    <div class="google-maps">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3762.799302518367!2d-99.20409052494084!3d19.358142086939534!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1ff4771234567%3A0xabcdef1234567890!2sAnillo%20Perif.%202165%2C%20Los%20Alpes%2C%20%C3%81lvaro%20Obreg%C3%B3n%2C%20CDMX!5e0!3m2!1ses-419!2smx!4v1700000000000!5m2!1ses-419!2smx"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
   </section>
 
   <!-- Footer -->
