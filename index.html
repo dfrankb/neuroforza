@@ -22,9 +22,60 @@
       margin: 0 auto;
       display: block;
     }
+
+    /* Estilos para la ventana emergente */
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90%;
+      max-width: 400px;
+      background: white;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+      padding: 20px;
+      display: none;
+      z-index: 1000;
+    }
+    .popup h3 {
+      margin-top: 0;
+      font-size: 1.5em;
+    }
+    .popup button {
+      background-color: #009688;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .popup button:hover {
+      background-color: #00796b;
+    }
+    .popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      z-index: 999;
+    }
   </style>
 </head>
 <body>
+  <!-- Ventana emergente -->
+  <div class="popup-overlay" id="popup-overlay"></div>
+  <div class="popup" id="popup">
+    <h3>¿En qué podemos ayudarte?</h3>
+    <p>Haz tus preguntas o agenda una cita con nosotros fácilmente.</p>
+    <button onclick="window.location.href='https://calendly.com/danfrank-neuroforza/60'">Agendar Cita</button>
+    <button onclick="cerrarPopup()">Cerrar</button>
+  </div>
+
   <!-- Header -->
   <header>
     <div class="logo">
@@ -128,6 +179,20 @@
       &copy; 2017 - 2023 NeuroForza, SAPI de CV. <a href="#">Consulta aquí nuestro aviso de privacidad</a>
     </div>
   </footer>
+
+  <script>
+    // Mostrar la ventana emergente automáticamente
+    window.onload = function() {
+      document.getElementById('popup-overlay').style.display = 'block';
+      document.getElementById('popup').style.display = 'block';
+    };
+
+    // Función para cerrar la ventana emergente
+    function cerrarPopup() {
+      document.getElementById('popup-overlay').style.display = 'none';
+      document.getElementById('popup').style.display = 'none';
+    }
+  </script>
 
 </body>
 </html>
