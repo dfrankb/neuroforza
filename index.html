@@ -29,6 +29,18 @@
       height: auto;
     }
 
+    .logo img.light {
+      display: none;
+    }
+
+    header.light .logo img.dark {
+      display: none;
+    }
+
+    header.light .logo img.light {
+      display: block;
+    }
+
     nav ul {
       list-style: none;
       display: flex;
@@ -48,8 +60,8 @@
     }
 
     .hero {
-      background-color: #e0f2f1; /* Verde muy claro de la paleta */
-      color: #004d40; /* Verde profundo para contraste */
+      background-color: #004d40; /* Verde profundo para mejor contraste */
+      color: white; /* Texto blanco para contraste */
       text-align: center;
       padding: 100px 20px;
     }
@@ -57,13 +69,13 @@
     .hero h1 {
       margin: 0;
       font-size: 3.5rem; /* Incremento en tamaño de encabezado */
-      color: white; /* Contraste */
+      color: white; /* Contraste asegurado */
     }
 
     .hero p {
       font-size: 1.2rem;
       margin: 10px 0 20px;
-      color: white; /* Contraste */
+      color: white; /* Contraste asegurado */
     }
 
     .boton-reservar {
@@ -92,7 +104,7 @@
 
     .servicio {
       text-align: center;
-      background: #004d40; /* Verde profundo para contraste */
+      background: #00796b; /* Verde oscuro para contraste */
       padding: 20px;
       border-radius: 10px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -142,6 +154,10 @@
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 
+    .formulario h3 {
+      color: #333333; /* Título oscuro para contraste */
+    }
+
     .formulario input, .formulario textarea {
       width: 100%;
       padding: 10px;
@@ -185,7 +201,7 @@
 
   <header>
     <div class="logo">
-      <a href="index.html"><img src="NeuroForza_Negro.png" alt="Logo NeuroForza"></a>
+      <a href="index.html"><img src="NeuroForza_Branco.png" alt="Logo NeuroForza" class="light"><img src="NeuroForza_Negro.png" alt="Logo NeuroForza" class="dark"></a>
     </div>
     <nav>
       <ul>
