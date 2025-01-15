@@ -21,24 +21,15 @@
       justify-content: space-between;
       align-items: center;
       padding: 10px 20px;
-      background: #004d40; /* Verde profundo */
+      background: rgba(0, 77, 64, 0.8); /* Fondo oscuro semi-transparente */
+      position: fixed; /* Para mantenerlo visible al hacer scroll */
+      width: 100%;
+      z-index: 1000;
     }
 
     .logo img {
       max-width: 150px;
       height: auto;
-    }
-
-    .logo img.light {
-      display: none;
-    }
-
-    header.light .logo img.dark {
-      display: none;
-    }
-
-    header.light .logo img.light {
-      display: block;
     }
 
     nav ul {
@@ -214,7 +205,7 @@
 
   <header>
     <div class="logo">
-      <a href="index.html"><img src="NeuroForza_Branco.png" alt="Logo NeuroForza" class="light"><img src="NeuroForza_Negro.png" alt="Logo NeuroForza" class="dark"></a>
+      <a href="index.html"><img src="NeuroForza_Blanco.png" alt="Logo NeuroForza"></a>
     </div>
     <nav>
       <ul>
