@@ -20,22 +20,22 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px 20px;
-      background: rgba(0, 77, 64, 0.8); /* Fondo oscuro semi-transparente */
+      padding: 5px 10px; /* Reducir espacio para ocupar menos pantalla */
+      background: rgba(0, 77, 64, 0.9); /* Fondo oscuro semi-transparente */
       position: fixed; /* Para mantenerlo visible al hacer scroll */
       width: 100%;
       z-index: 1000;
     }
 
     .logo img {
-      max-width: 150px;
+      max-width: 120px; /* Tamaño reducido para encajar mejor */
       height: auto;
     }
 
     nav ul {
       list-style: none;
       display: flex;
-      gap: 15px;
+      gap: 10px; /* Menor espacio entre enlaces */
       margin: 0;
       padding: 0;
     }
@@ -50,22 +50,58 @@
       text-decoration: underline;
     }
 
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+    }
+
+    .menu-toggle div {
+      width: 25px;
+      height: 3px;
+      background: #ffa726;
+    }
+
+    .menu-mobile {
+      display: none;
+      flex-direction: column;
+      background: rgba(0, 77, 64, 0.95);
+      position: absolute;
+      top: 50px;
+      right: 10px;
+      padding: 10px;
+      border-radius: 5px;
+      z-index: 1001;
+    }
+
+    .menu-mobile a {
+      color: #ffffff;
+      padding: 10px 0;
+      border-bottom: 1px solid #ffa726;
+      text-align: center;
+    }
+
+    .menu-mobile a:last-child {
+      border-bottom: none;
+    }
+
     .hero {
       background-color: #ffffff; /* Fondo blanco */
       color: #333333; /* Texto oscuro para contraste */
       text-align: center;
-      padding: 100px 20px;
+      padding: 80px 20px; /* Reducir altura */
       border-bottom: 5px solid #ffa726; /* Línea naranja */
     }
 
     .hero h1 {
       margin: 0;
-      font-size: 3.5rem;
+      font-size: 3rem; /* Ajuste del tamaño */
       color: #333333; /* Texto oscuro */
     }
 
     .hero p {
-      font-size: 1.2rem;
+      font-size: 1rem;
       margin: 10px 0 20px;
       color: #333333; /* Texto oscuro */
     }
@@ -94,6 +130,13 @@
       padding: 0 20px;
     }
 
+    .servicio {
+      text-align: center;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
     .servicio:nth-child(1) {
       background: #00796b; /* Verde */
     }
@@ -106,26 +149,10 @@
       background: #0288d1; /* Azul */
     }
 
-    .servicio {
-      text-align: center;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
     .servicio h3 {
       margin: 10px 0;
       color: white; /* Texto blanco para contraste */
-      font-size: 2rem; /* Incremento en tamaño de encabezado */
-    }
-
-    .servicio p {
-      color: white; /* Texto blanco */
-    }
-
-    .servicio a {
-      color: #e0f2f1; /* Verde claro */
-      text-decoration: underline;
+      font-size: 1.8rem;
     }
 
     .contact-section {
@@ -160,55 +187,29 @@
     }
 
     .formulario h3 {
-      color: white; /* Texto blanco */
-      font-size: 1.8rem; /* Incremento en tamaño */
-    }
-
-    .formulario input, .formulario textarea {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-
-    .formulario button {
-      background-color: #ffa726; /* Naranja */
       color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .formulario button:hover {
-      background-color: #f57c00;
-    }
-
-    footer {
-      background: #004d40; /* Verde profundo */
-      color: white;
-      text-align: center;
-      padding: 10px;
-      margin-top: 20px;
-    }
-
-    footer p {
-      margin: 5px 0;
-    }
-
-    footer a {
-      color: #ffffff;
-      text-decoration: underline;
+      font-size: 1.5rem;
     }
 
     @media (max-width: 768px) {
+      .menu-toggle {
+        display: flex;
+      }
+
+      nav ul {
+        display: none;
+      }
+
+      .menu-mobile {
+        display: flex;
+      }
+
       .hero h1 {
-        font-size: 2.5rem;
+        font-size: 2rem;
       }
 
       .hero p {
-        font-size: 1rem;
+        font-size: 0.9rem;
       }
 
       .servicios {
@@ -223,19 +224,6 @@
         margin-right: 0;
         margin-bottom: 20px;
       }
-
-      .formulario {
-        margin-top: 0;
-      }
-
-      nav ul {
-        flex-direction: column;
-        gap: 10px;
-      }
-
-      nav a {
-        font-size: 0.9rem;
-      }
     }
   </style>
 </head>
@@ -244,6 +232,11 @@
   <header>
     <div class="logo">
       <a href="index.html"><img src="NeuroForza_Blanco.png" alt="Logo NeuroForza"></a>
+    </div>
+    <div class="menu-toggle" onclick="toggleMenu()">
+      <div></div>
+      <div></div>
+      <div></div>
     </div>
     <nav>
       <ul>
@@ -254,12 +247,20 @@
         <li><a href="multimedia.html">Multimedia</a></li>
       </ul>
     </nav>
+    <div class="menu-mobile" id="menuMobile">
+      <a href="index.html">Inicio</a>
+      <a href="servicios.html">Servicios</a>
+      <a href="testimonios.html">Testimonios</a>
+      <a href="sobre-nosotros.html">Sobre Nosotros</a>
+      <a href="multimedia.html">Multimedia</a>
+    </div>
   </header>
 
   <section class="hero">
     <h1>Bienvenidos a NeuroForza</h1>
     <p>Tu bienestar es nuestra prioridad. En NeuroForza nos especializamos en fisioterapia avanzada y tratamientos personalizados para mejorar tu calidad de vida.</p>
-    <a class="boton-reservar" href="#" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/danfrank-neuroforza/60'}); return false;">Reservar tu cita ahora</a>
+    <button class="boton-reservar" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/neuroforza'}); return false;">Reservar tu cita ahora</button>
+    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
   </section>
 
   <section class="servicios">
@@ -273,35 +274,4 @@
       <p>Descripción breve del servicio 2.</p>
       <a href="servicio2.html">Saber más</a>
     </div>
-    <div class="servicio">
-      <h3>Servicio 3</h3>
-      <p>Descripción breve del servicio 3.</p>
-      <a href="servicio3.html">Saber más</a>
-    </div>
-  </section>
-
-  <section class="contact-section">
-    <div class="google-maps">
-      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3762.799302518367!2d-99.20409052494084!3d19.358142086939534!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1ff4771234567%3A0xabcdef1234567890!2sAnillo%20Perif.%202165%2C%20Los%20Alpes%2C%20%C3%81lvaro%20Obreg%C3%B3n%2C%20CDMX!5e0!3m2!1ses-419!2smx!4v1700000000000!5m2!1ses-419!2smx"></iframe>
-    </div>
-    <div class="formulario">
-      <h3>Contáctanos</h3>
-      <form action="mailto:danfrank@neuroforza.com" method="post" enctype="text/plain">
-        <input type="text" name="nombre" placeholder="Tu nombre" required>
-        <input type="email" name="email" placeholder="Tu correo electrónico" required>
-        <input type="text" name="asunto" placeholder="Asunto" required>
-        <textarea name="mensaje" placeholder="Escribe tu mensaje aquí" rows="5" required></textarea>
-        <button type="submit">Enviar</button>
-      </form>
-    </div>
-  </section>
-
-  <footer>
-    <p>Dirección: Anillo Perif. 2165-Consultorio 905, Los Alpes, Álvaro Obregón, 01010 CDMX.</p>
-    <p>Teléfono: 5541410026 | Email: <a href="mailto:danfrank@neuroforza.com">danfrank@neuroforza.com</a></p>
-    <p>WhatsApp: <a href="https://wa.me/5215541410026" target="_blank">Contáctanos por WhatsApp</a></p>
-    <p>&copy; 2023 NeuroForza. Todos los derechos reservados.</p>
-  </footer>
-
-</body>
-</html>
+    <div class="serv
