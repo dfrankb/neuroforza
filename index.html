@@ -274,4 +274,42 @@
       <p>Descripción breve del servicio 2.</p>
       <a href="servicio2.html">Saber más</a>
     </div>
-    <div class="serv
+    <div class="servicio">
+      <h3>Servicio 3</h3>
+      <p>Descripción breve del servicio 3.</p>
+      <a href="servicio3.html">Saber más</a>
+    </div>
+  </section>
+
+  <section class="contact-section">
+    <div class="google-maps">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3762.799302518367!2d-99.20409052494084!3d19.358142086939534!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1ff4771234567%3A0xabcdef1234567890!2sAnillo%20Perif.%202165%2C%20Los%20Alpes%2C%20%C3%81lvaro%20Obreg%C3%B3n%2C%20CDMX!5e0!3m2!1ses-419!2smx!4v1700000000000!5m2!1ses-419!2smx"></iframe>
+    </div>
+    <div class="formulario">
+      <h3>Contáctanos</h3>
+      <form action="mailto:danfrank@neuroforza.com" method="post" enctype="text/plain">
+        <input type="text" name="nombre" placeholder="Tu nombre" required>
+        <input type="email" name="email" placeholder="Tu correo electrónico" required>
+        <input type="text" name="asunto" placeholder="Asunto" required>
+        <textarea name="mensaje" placeholder="Escribe tu mensaje aquí" rows="5" required></textarea>
+        <button type="submit">Enviar</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <p>Dirección: Anillo Perif. 2165-Consultorio 905, Los Alpes, Álvaro Obregón, 01010 CDMX.</p>
+    <p>Teléfono: 5541410026 | Email: <a href="mailto:danfrank@neuroforza.com">danfrank@neuroforza.com</a></p>
+    <p>WhatsApp: <a href="https://wa.me/5215541410026" target="_blank">Contáctanos por WhatsApp</a></p>
+    <p>&copy; 2023 NeuroForza. Todos los derechos reservados.</p>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('menuMobile');
+      menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+    }
+  </script>
+
+</body>
+</html>
