@@ -27,23 +27,44 @@
       justify-content: center;
       align-items: center;
       z-index: 2000;
-      transition: opacity 1s ease, visibility 1s ease;
+      overflow: hidden;
     }
 
-    #intro-animation img {
-      max-width: 50%;
-      height: auto;
-      animation: openBrain 2s ease forwards;
+    #brain-left, #brain-right {
+      position: absolute;
+      width: 50%;
+      height: 100%;
+      background: url('NeuroForza_cerebro.png') no-repeat center center;
+      background-size: contain;
+      animation: splitBrain 2s ease forwards;
     }
 
-    @keyframes openBrain {
+    #brain-left {
+      left: 0;
+      background-position: right center;
+    }
+
+    #brain-right {
+      right: 0;
+      background-position: left center;
+    }
+
+    @keyframes splitBrain {
       0% {
-        transform: scale(1);
+        transform: translateX(0);
+      }
+      50% {
+        transform: translateX(-20%);
       }
       100% {
-        transform: scale(1.2) translateY(-50vh);
-        opacity: 0;
+        transform: translateX(-100%);
       }
+    }
+
+    #intro-animation.hidden {
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 1s ease, visibility 1s ease;
     }
 
     header {
@@ -283,7 +304,8 @@
 <body>
 
   <div id="intro-animation">
-    <img src="NeuroForza_cerebro.png" alt="Gráfico de cerebro NeuroForza">
+    <div id="brain-left"></div>
+    <div id="brain-right"></div>
   </div>
 
   <header>
@@ -370,9 +392,8 @@
     window.addEventListener('load', () => {
       const intro = document.getElementById('intro-animation');
       setTimeout(() => {
-        intro.style.opacity = '0';
-        intro.style.visibility = 'hidden';
-      }, 3000); // Oculta el gráfico después de 3 segundos
+        intro.classList.add('hidden');
+      }, 2000); // Oculta la animación después de 2 segundos
     });
   </script>
 
