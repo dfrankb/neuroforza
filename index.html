@@ -16,6 +16,36 @@
       color: #333333;
     }
 
+    #intro-animation {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      transition: opacity 1s ease, visibility 1s ease;
+    }
+
+    #intro-animation img {
+      max-width: 50%;
+      height: auto;
+      animation: openBrain 2s ease forwards;
+    }
+
+    @keyframes openBrain {
+      0% {
+        transform: scale(1);
+      }
+      100% {
+        transform: scale(1.2) translateY(-50vh);
+        opacity: 0;
+      }
+    }
+
     header {
       display: flex;
       justify-content: space-between;
@@ -252,6 +282,10 @@
 </head>
 <body>
 
+  <div id="intro-animation">
+    <img src="NeuroForza_cerebro.png" alt="Gráfico de cerebro NeuroForza">
+  </div>
+
   <header>
     <div class="logo">
       <a href="index.html"><img src="NeuroForza_Blanco.png" alt="Logo NeuroForza"></a>
@@ -332,6 +366,14 @@
       const menu = document.getElementById('menuMobile');
       menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
     }
+
+    window.addEventListener('load', () => {
+      const intro = document.getElementById('intro-animation');
+      setTimeout(() => {
+        intro.style.opacity = '0';
+        intro.style.visibility = 'hidden';
+      }, 3000); // Oculta el gráfico después de 3 segundos
+    });
   </script>
 
 </body>
