@@ -1,278 +1,223 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inicio - NeuroForza</title>
-  <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Cairo', sans-serif;
-      line-height: 1.6;
-      margin: 0;
-      padding: 0;
-      background-color: #ffffff;
-      color: #333333;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>NeuroForza - Fisioterapia y Rehabilitación</title>
+    <link rel="stylesheet" href="estilos.css">
+    <script src="script.js" defer></script>
+    <style>
+        /* Código CSS aquí */
 
-    #intro-animation {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: #ffffff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 2000;
-      overflow: hidden;
-    }
+        /* Animación de introducción - Apertura Cerebral */
+        #brain-left, #brain-right {
+          position: absolute;
+          width: 50%;
+          height: 100%;
+          background: url('NeuroForza_cerebro.png') no-repeat center center;
+          background-size: contain;
+          transform-origin: center;
+          animation: openBrain 2s ease forwards;
+        }
 
-    #brain {
-      position: relative;
-      width: 300px;
-      height: 300px;
-      background: url('NeuroForza_cerebro.png') no-repeat center center;
-      background-size: contain;
-    }
+        #brain-left {
+          left: 0;
+          background-position: right center;
+        }
 
-    #brain::before, #brain::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      width: 50%;
-      height: 100%;
-      background: url('NeuroForza_cerebro.png') no-repeat center center;
-      background-size: contain;
-      z-index: 2;
-    }
+        #brain-right {
+          right: 0;
+          background-position: left center;
+        }
 
-    #brain::before {
-      left: 0;
-      background-position: right center;
-      animation: openBrainLeft 2s ease forwards;
-    }
+        @keyframes openBrain {
+          0% {
+            transform: scaleX(1);
+          }
+          50% {
+            transform: scaleX(0);
+          }
+          100% {
+            transform: scaleX(1);
+            transform-origin: left;
+          }
+        }
 
-    #brain::after {
-      right: 0;
-      background-position: left center;
-      animation: openBrainRight 2s ease forwards;
-    }
+        /* Menú móvil con animación */
+        .menu-mobile {
+          display: none;
+          position: absolute;
+          top: 50px;
+          right: 10px;
+          background: rgba(0, 77, 64, 0.95);
+          padding: 10px;
+          border-radius: 5px;
+          z-index: 1001;
+          opacity: 0;
+          visibility: hidden;
+          transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
 
-    @keyframes openBrainLeft {
-      0% {
-        transform: translateX(0);
-      }
-      100% {
-        transform: translateX(-150%);
-      }
-    }
+        .menu-mobile.show {
+          display: flex;
+          opacity: 1;
+          visibility: visible;
+        }
 
-    @keyframes openBrainRight {
-      0% {
-        transform: translateX(0);
-      }
-      100% {
-        transform: translateX(150%);
-      }
-    }
+        .overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.5);
+          z-index: 1000;
+          display: none;
+        }
 
-    #intro-animation.hidden {
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 1s ease, visibility 1s ease;
-    }
+        .overlay.show {
+          display: block;
+        }
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      padding: 10px;
-      background: rgba(0, 77, 64, 0.9);
-      position: fixed;
-      width: 100%;
-      z-index: 1000;
-    }
+        /* Efecto hover en los servicios */
+        .servicio {
+          position: relative;
+          text-align: center;
+          padding: 20px;
+          border-radius: 10px;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          overflow: hidden;
+        }
 
-    .logo img {
-      max-width: 120px;
-      height: auto;
-    }
+        .servicio h3 {
+          margin: 10px 0;
+          color: white;
+          font-size: 1.8rem;
+        }
 
-    nav ul {
-      list-style: none;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin: 0;
-      padding: 0;
-    }
+        .servicio p {
+          color: white;
+          opacity: 0;
+          transition: opacity 0.3s ease;
+        }
 
-    nav a {
-      color: #ffa726;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 1rem;
-    }
+        .servicio:hover p {
+          opacity: 1;
+        }
 
-    nav a:hover {
-      text-decoration: underline;
-    }
+        .servicio:hover {
+          transform: scale(1.05);
+          box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+        }
 
-    .menu-toggle {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-    }
+        /* Estilo para Google Maps */
+        .google-maps iframe {
+          border: 0;
+          border-radius: 10px;
+        }
 
-    .menu-toggle div {
-      width: 25px;
-      height: 3px;
-      background: #ffa726;
-    }
+        /* Ajuste para el encabezado */
+        header nav a {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
 
-    .menu-mobile {
-      display: none;
-      flex-direction: column;
-      background: rgba(0, 77, 64, 0.95);
-      position: absolute;
-      top: 50px;
-      right: 10px;
-      padding: 10px;
-      border-radius: 5px;
-      z-index: 1001;
-    }
-
-    .menu-mobile a {
-      color: #ffffff;
-      padding: 10px 0;
-      border-bottom: 1px solid #ffa726;
-      text-align: center;
-    }
-
-    .menu-mobile a:last-child {
-      border-bottom: none;
-    }
-
-    .hero {
-      background-color: #ffffff;
-      color: #333333;
-      text-align: center;
-      padding: 80px 20px;
-      border-bottom: 5px solid #ffa726;
-    }
-
-    .hero h1 {
-      margin: 0;
-      font-size: 3rem;
-      color: #333333;
-    }
-
-    .hero p {
-      font-size: 1rem;
-      margin: 10px 0 20px;
-      color: #333333;
-    }
-
-    .boton-reservar {
-      background-color: #00796b;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      text-decoration: none;
-      font-size: 1rem;
-      cursor: pointer;
-    }
-
-    .boton-reservar:hover {
-      background-color: #004d40;
-    }
-
-    @media (max-width: 768px) {
-      .menu-toggle {
-        display: flex;
-      }
-
-      nav ul {
-        display: none;
-      }
-
-      .menu-mobile {
-        display: flex;
-      }
-
-      .hero h1 {
-        font-size: 2rem;
-      }
-
-      .hero p {
-        font-size: 0.9rem;
-      }
-
-      header {
-        padding: 5px;
-      }
-    }
-  </style>
+        @media (max-width: 1200px) {
+          header {
+            padding: 10px;
+          }
+        }
+    </style>
 </head>
 <body>
 
-  <div id="intro-animation">
-    <div id="brain"></div>
-  </div>
-
-  <header>
-    <div class="logo">
-      <a href="index.html"><img src="NeuroForza_Blanco.png" alt="Logo NeuroForza"></a>
-    </div>
-    <div class="menu-toggle" onclick="toggleMenu()">
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
-    <nav>
-      <ul>
-        <li><a href="index.html">Inicio</a></li>
-        <li><a href="servicios.html">Servicios</a></li>
-        <li><a href="testimonios.html">Testimonios</a></li>
-        <li><a href="sobre-nosotros.html">Sobre Nosotros</a></li>
-        <li><a href="multimedia.html">Multimedia</a></li>
-      </ul>
-    </nav>
+    <!-- Menú móvil -->
+    <div id="overlay"></div>
     <div class="menu-mobile" id="menuMobile">
-      <a href="index.html">Inicio</a>
-      <a href="servicios.html">Servicios</a>
-      <a href="testimonios.html">Testimonios</a>
-      <a href="sobre-nosotros.html">Sobre Nosotros</a>
-      <a href="multimedia.html">Multimedia</a>
+        <!-- Opciones del menú -->
+        <a href="#home">Inicio</a>
+        <a href="#services">Servicios</a>
+        <a href="#contact">Contacto</a>
     </div>
-  </header>
 
-  <section class="hero">
-    <h1>Bienvenidos a NeuroForza</h1>
-    <p>Tu bienestar es nuestra prioridad. En NeuroForza nos especializamos en fisioterapia avanzada y tratamientos personalizados para mejorar tu calidad de vida.</p>
-    <button class="boton-reservar" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/neuroforza'}); return false;">Reservar tu cita ahora</button>
+    <!-- Animación de Introducción -->
+    <div id="intro-animation">
+        <div id="brain-left"></div>
+        <div id="brain-right"></div>
+    </div>
+
+    <!-- Encabezado -->
+    <header>
+        <nav>
+            <a href="#home">Inicio</a>
+            <a href="#services">Servicios</a>
+            <a href="#contact">Contacto</a>
+            <a href="#multimedia">Multimedia</a>
+        </nav>
+    </header>
+
+    <!-- Contenido de la Página -->
+    <section id="home">
+        <h1>Bienvenido a NeuroForza</h1>
+        <p>Tu salud, nuestra prioridad.</p>
+    </section>
+
+    <section id="services">
+        <h2>Servicios</h2>
+        <div class="servicio">
+            <h3>Fisioterapia Manual</h3>
+            <p>Tratamientos personalizados.</p>
+        </div>
+        <div class="servicio">
+            <h3>Rehabilitación Neurológica</h3>
+            <p>Recupera tu movilidad.</p>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2>Contacto</h2>
+        <form action="contacto.php" method="POST">
+            <input type="text" name="nombre" placeholder="Tu Nombre" required>
+            <input type="email" name="email" placeholder="Tu Correo" required>
+            <textarea name="mensaje" placeholder="Tu Mensaje" required></textarea>
+            <button type="submit">Enviar</button>
+        </form>
+    </section>
+
+    <section id="multimedia">
+        <h2>Multimedia</h2>
+        <p>Explora nuestros contenidos multimedia.</p>
+    </section>
+
+    <section id="maps">
+        <h2>Ubicación</h2>
+        <div class="google-maps">
+            <iframe src="https://www.google.com/maps/embed?pb=..." loading="lazy"></iframe>
+        </div>
+    </section>
+
+    <!-- Botón de Reserva Calendly -->
+    <button class="boton-reservar" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/neuroforza/60'}); return false;">Reservar tu cita ahora</button>
     <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
-  </section>
 
-  <script>
-    function toggleMenu() {
-      const menu = document.getElementById('menuMobile');
-      menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
-    }
+    <script>
+        /* Código JavaScript para el menú móvil */
+        function toggleMenu() {
+          const menu = document.getElementById('menuMobile');
+          const overlay = document.getElementById('overlay');
+          menu.classList.toggle('show');
+          overlay.classList.toggle('show');
+        }
 
-    window.addEventListener('load', () => {
-      const intro = document.getElementById('intro-animation');
-      setTimeout(() => {
-        intro.classList.add('hidden');
-      }, 2000); // Oculta la animación después de 2 segundos
-    });
-  </script>
+        window.addEventListener('load', () => {
+          const intro = document.getElementById('intro-animation');
+          setTimeout(() => {
+            intro.classList.add('hidden');
+          }, 2000);
+        });
+    </script>
 
 </body>
 </html>
