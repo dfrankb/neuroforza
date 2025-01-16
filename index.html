@@ -20,7 +20,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 5px 10px;
+      flex-wrap: wrap;
+      padding: 10px;
       background: rgba(0, 77, 64, 0.9);
       position: fixed;
       width: 100%;
@@ -35,6 +36,7 @@
     nav ul {
       list-style: none;
       display: flex;
+      flex-wrap: wrap;
       gap: 10px;
       margin: 0;
       padding: 0;
@@ -44,6 +46,7 @@
       color: #ffa726;
       text-decoration: none;
       font-weight: bold;
+      font-size: 1rem;
     }
 
     nav a:hover {
@@ -158,13 +161,17 @@
     .servicio a {
       display: inline-block;
       margin-top: 10px;
-      color: #0288d1;
+      color: #ffa726;
       text-decoration: none;
       font-weight: bold;
     }
 
     .servicio:nth-child(2) a {
       color: #1e88e5;
+    }
+
+    .servicio:nth-child(3) a {
+      color: #ffa726;
     }
 
     .contact-section {
@@ -231,6 +238,14 @@
       .google-maps {
         margin-right: 0;
         margin-bottom: 20px;
+      }
+
+      nav a {
+        font-size: 0.9rem;
+      }
+
+      header {
+        padding: 5px;
       }
     }
   </style>
