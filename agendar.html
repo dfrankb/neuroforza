@@ -4,197 +4,80 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Agendar Cita — NeuroForza</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="NeuroForza_NF-blanco.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root{--bg:#0A0E1A;--bg-alt:#0D1117;--bg-deep:#050810;--text:#F8FAFC;--muted:rgba(255,255,255,.55);--cyan:#22D3EE;--cyan-dim:rgba(34,211,238,.15);--teal:#0891B2;--gold:#D4AF37;--gold-dim:rgba(212,175,55,.12);--border:rgba(255,255,255,.08)}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:'Jost',-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.7;-webkit-font-smoothing:antialiased}a{color:inherit;text-decoration:none}
 
-    body {
-      font-family: 'Cairo', sans-serif;
-      background: #f8f9fa;
-      color: #1a1a1a;
-      min-height: 100vh;
-    }
+    .header{position:fixed;top:0;width:100%;z-index:100;padding:16px 28px;background:rgba(10,14,26,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 1px 30px rgba(0,0,0,.3)}.header-inner{max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}.header img{height:40px;opacity:.9}.header-back{font-size:13px;font-weight:500;color:var(--muted);transition:color .3s;display:flex;align-items:center;gap:6px}.header-back:hover{color:var(--text)}
 
-    /* ── Header ── */
-    .header {
-      background: #004d40;
-      padding: 16px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .header img { height: 40px; }
-    .header a { color: #ffa726; text-decoration: none; font-weight: 600; font-size: 14px; }
+    .hero{text-align:center;padding:120px 24px 48px;background:var(--bg);position:relative;overflow:hidden}
+    .hero::before{content:'';position:absolute;top:-100px;left:50%;transform:translateX(-50%);width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(8,145,178,.08) 0%,transparent 70%)}
+    .hero h1{font-family:'Bodoni Moda',serif;font-size:clamp(2rem,5vw,3rem);font-weight:400;margin-bottom:12px;position:relative}.hero p{font-size:1.05rem;font-weight:300;color:var(--muted);max-width:480px;margin:0 auto;line-height:1.7;position:relative}
 
-    /* ── Hero ── */
-    .hero {
-      background: linear-gradient(165deg, #004d40 0%, #00796b 100%);
-      color: #fff;
-      text-align: center;
-      padding: 60px 24px 40px;
-    }
-    .hero h1 { font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
-    .hero p { font-size: 1.05rem; opacity: 0.9; max-width: 500px; margin: 0 auto; line-height: 1.5; }
+    .form-card{max-width:520px;margin:-10px auto 48px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:20px;padding:36px 32px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);position:relative}
 
-    /* ── Form Card ── */
-    .form-card {
-      max-width: 520px;
-      margin: -30px auto 40px;
-      background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-      padding: 32px 28px;
-      position: relative;
-    }
+    .form-group{margin-bottom:24px}
+    .form-group label{display:block;font-size:13px;font-weight:500;color:var(--muted);margin-bottom:8px;letter-spacing:.3px}
+    .form-group label .req{color:#EF4444}
 
-    .form-group { margin-bottom: 20px; }
-    .form-group label {
-      display: block;
-      font-size: 14px;
-      font-weight: 600;
-      color: #333;
-      margin-bottom: 6px;
-    }
-    .form-group label .req { color: #e53935; }
+    .form-group input,.form-group select,.form-group textarea{width:100%;padding:14px 16px;border:1.5px solid var(--border);border-radius:10px;font-size:16px;font-family:inherit;color:var(--text);background:rgba(255,255,255,.04);transition:border-color .3s,background .3s}
+    .form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--cyan);background:rgba(34,211,238,.04)}
+    .form-group input::placeholder,.form-group textarea::placeholder{color:rgba(255,255,255,.25)}
+    .form-group select{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2322D3EE' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center}
+    .form-group select option{background:var(--bg);color:var(--text)}
+    .form-group textarea{resize:vertical;min-height:80px}
+    .form-group .hint{font-size:12px;color:rgba(255,255,255,.3);margin-top:6px}
 
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width: 100%;
-      padding: 14px 16px;
-      border: 2px solid #e0e0e0;
-      border-radius: 10px;
-      font-size: 16px;
-      font-family: inherit;
-      transition: border-color 0.2s;
-      background: #fafafa;
-    }
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      outline: none;
-      border-color: #00796b;
-      background: #fff;
-    }
-    .form-group textarea { resize: vertical; min-height: 80px; }
-    .form-group .hint { font-size: 12px; color: #888; margin-top: 4px; }
+    .phone-wrap{display:flex;align-items:center;gap:0}
+    .phone-prefix{padding:14px 14px;background:rgba(255,255,255,.06);border:1.5px solid var(--border);border-right:none;border-radius:10px 0 0 10px;font-size:16px;color:var(--muted);font-weight:500}
+    .phone-wrap input{border-radius:0 10px 10px 0!important}
 
-    /* Time slot pills */
-    .slot-row {
-      display: flex;
-      gap: 10px;
-    }
-    .slot-pill {
-      flex: 1;
-      padding: 14px 8px;
-      border: 2px solid #e0e0e0;
-      border-radius: 10px;
-      background: #fafafa;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.2s;
-      font-size: 15px;
-      font-weight: 600;
-      color: #555;
-    }
-    .slot-pill:hover { border-color: #00796b; }
-    .slot-pill.active {
-      border-color: #00796b;
-      background: #e0f2f1;
-      color: #004d40;
-    }
-    .slot-pill .icon { font-size: 22px; display: block; margin-bottom: 4px; }
+    .slot-row{display:flex;gap:12px}
+    .slot-pill{flex:1;padding:16px 8px;border:1.5px solid var(--border);border-radius:12px;background:rgba(255,255,255,.03);text-align:center;cursor:pointer;transition:all .3s;font-size:14px;font-weight:500;color:var(--muted)}
+    .slot-pill:hover{border-color:var(--cyan);color:var(--text)}
+    .slot-pill.active{border-color:var(--cyan);background:rgba(34,211,238,.08);color:var(--cyan)}
+    .slot-pill .icon{font-size:24px;display:block;margin-bottom:6px}
+    .slot-pill small{font-weight:300;opacity:.7}
 
-    /* Submit */
-    .submit-btn {
-      width: 100%;
-      padding: 16px;
-      background: #00796b;
-      color: #fff;
-      border: none;
-      border-radius: 12px;
-      font-size: 17px;
-      font-weight: 700;
-      font-family: inherit;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.1s;
-      letter-spacing: 0.5px;
-    }
-    .submit-btn:hover { background: #004d40; }
-    .submit-btn:active { transform: scale(0.98); }
-    .submit-btn:disabled { background: #aaa; cursor: wait; }
+    .submit-btn{width:100%;padding:16px;background:var(--gold);color:var(--bg);border:none;border-radius:12px;font-size:16px;font-weight:600;font-family:inherit;cursor:pointer;transition:transform .2s,box-shadow .2s;letter-spacing:.4px}
+    .submit-btn:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(212,175,55,.35)}
+    .submit-btn:active{transform:scale(.98)}
+    .submit-btn:disabled{background:rgba(255,255,255,.15);color:var(--muted);cursor:wait;transform:none;box-shadow:none}
 
-    /* States */
-    .success-card {
-      text-align: center;
-      padding: 48px 28px;
-    }
-    .success-card .check { font-size: 64px; margin-bottom: 16px; }
-    .success-card h2 { font-size: 1.5rem; color: #004d40; margin-bottom: 12px; }
-    .success-card p { font-size: 1rem; color: #555; line-height: 1.6; max-width: 380px; margin: 0 auto; }
-    .success-card .wa-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 24px;
-      padding: 14px 28px;
-      background: #25D366;
-      color: #fff;
-      border-radius: 30px;
-      text-decoration: none;
-      font-size: 16px;
-      font-weight: 700;
-    }
+    .success-card{text-align:center;padding:56px 28px}
+    .success-card .check{font-size:64px;margin-bottom:20px;display:block}
+    .success-card h2{font-family:'Bodoni Moda',serif;font-size:1.6rem;font-weight:400;color:var(--text);margin-bottom:16px}
+    .success-card p{font-size:1rem;color:var(--muted);line-height:1.7;max-width:400px;margin:0 auto}
+    .success-card .wa-btn{display:inline-flex;align-items:center;gap:10px;margin-top:28px;padding:16px 32px;background:#25D366;color:#fff;border-radius:12px;text-decoration:none;font-size:15px;font-weight:600;transition:transform .2s,box-shadow .2s}
+    .success-card .wa-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(37,211,102,.3)}
 
-    .error-msg {
-      background: #ffebee;
-      color: #c62828;
-      padding: 12px 16px;
-      border-radius: 8px;
-      font-size: 14px;
-      margin-bottom: 16px;
-      display: none;
-    }
+    .error-msg{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:#EF4444;padding:12px 16px;border-radius:10px;font-size:14px;margin-bottom:20px;display:none}
 
-    /* Footer */
-    .footer {
-      text-align: center;
-      padding: 24px;
-      color: #999;
-      font-size: 13px;
-    }
-    .footer a { color: #00796b; text-decoration: none; }
+    .footer{text-align:center;padding:32px 24px;color:rgba(255,255,255,.2);font-size:13px}
+    .footer a{color:var(--cyan);font-weight:500}
 
-    /* Phone input prefix */
-    .phone-wrap {
-      display: flex;
-      align-items: center;
-      gap: 0;
-    }
-    .phone-prefix {
-      padding: 14px 12px;
-      background: #e8e8e8;
-      border: 2px solid #e0e0e0;
-      border-right: none;
-      border-radius: 10px 0 0 10px;
-      font-size: 16px;
-      color: #555;
-      font-weight: 600;
-    }
-    .phone-wrap input {
-      border-radius: 0 10px 10px 0 !important;
+    @media(max-width:600px){
+      .form-card{margin:0 16px 40px;padding:28px 20px}
+      .hero{padding:100px 20px 40px}
+      .hero h1{font-size:1.8rem}
+      .slot-row{flex-direction:column;gap:10px}
     }
   </style>
 </head>
 <body>
 
-  <div class="header">
-    <a href="index.html"><img src="NeuroForza_Blanco.png" alt="NeuroForza"></a>
-    <a href="index.html">← Inicio</a>
-  </div>
+  <header class="header">
+    <div class="header-inner">
+      <a href="index.html"><img src="NeuroForza_Blanco.png" alt="NeuroForza"></a>
+      <a href="index.html" class="header-back">&larr; Inicio</a>
+    </div>
+  </header>
 
   <div class="hero">
-    <h1>Agenda tu cita</h1>
+    <h1>Agenda tu evaluación</h1>
     <p>Completa el formulario y te confirmaremos por WhatsApp en menos de 2 horas.</p>
   </div>
 
@@ -226,11 +109,11 @@
         <label>Horario preferido <span class="req">*</span></label>
         <div class="slot-row">
           <div class="slot-pill active" onclick="selectSlot(this, 'morning')">
-            <span class="icon">🌅</span>
+            <span class="icon">&#9728;</span>
             Mañana<br><small>8:00–13:00</small>
           </div>
           <div class="slot-pill" onclick="selectSlot(this, 'afternoon')">
-            <span class="icon">🌇</span>
+            <span class="icon">&#9790;</span>
             Tarde<br><small>14:00–20:00</small>
           </div>
         </div>
@@ -242,123 +125,54 @@
         <textarea id="reason" placeholder="Describe brevemente tu situación (opcional)" maxlength="500"></textarea>
       </div>
 
-      <button type="submit" class="submit-btn" id="submitBtn">
-        Solicitar cita
-      </button>
+      <button type="submit" class="submit-btn" id="submitBtn">Solicitar cita →</button>
     </form>
   </div>
 
-  <!-- Success state -->
   <div class="form-card success-card" id="successCard" style="display:none">
-    <div class="check">✅</div>
+    <span class="check">&#10003;</span>
     <h2>¡Tu cita está apartada!</h2>
-    <p>Recibimos tu solicitud. Dan te confirmará el horario exacto por WhatsApp en las próximas horas. Si quieres agilizar, escríbele directo:</p>
+    <p>Recibimos tu solicitud. Dan te confirmará el horario exacto por WhatsApp en las próximas horas.</p>
     <a class="wa-btn" id="waDirectLink" href="#" target="_blank">
-      💬 Escríbenos por WhatsApp
+      &#128172; Escríbenos por WhatsApp
     </a>
   </div>
 
-  <div class="footer">
+  <footer class="footer">
     <p>NeuroForza — Fisioterapia y Rehabilitación</p>
     <p><a href="index.html">www.neuroforza.com</a></p>
-  </div>
+  </footer>
 
   <script>
-    // ── Config ─────────────────────────────────────────────
-    const WORKER_URL = "https://neuroforza-activation.danfrank.workers.dev"
-    const WA_NUMBER = "525541410026" // tu WhatsApp
+    const WORKER_URL="https://neuroforza-activation.danfrank.workers.dev";
+    const WA_NUMBER="525541410026";
+    const dateInput=document.getElementById("date");
+    dateInput.min=new Date().toISOString().slice(0,10);dateInput.value="";
 
-    // ── Set min date to today ──────────────────────────────
-    const dateInput = document.getElementById("date")
-    const today = new Date().toISOString().slice(0, 10)
-    dateInput.min = today
-    dateInput.value = ""
+    function selectSlot(el,value){document.querySelectorAll(".slot-pill").forEach(p=>p.classList.remove("active"));el.classList.add("active");document.getElementById("timeSlot").value=value}
 
-    // ── Slot selection ─────────────────────────────────────
-    function selectSlot(el, value) {
-      document.querySelectorAll(".slot-pill").forEach(p => p.classList.remove("active"))
-      el.classList.add("active")
-      document.getElementById("timeSlot").value = value
-    }
-
-    // ── Submit ─────────────────────────────────────────────
-    async function handleSubmit(e) {
-      e.preventDefault()
-
-      const btn = document.getElementById("submitBtn")
-      const errorEl = document.getElementById("errorMsg")
-      errorEl.style.display = "none"
-
-      const name = document.getElementById("name").value.trim()
-      const phone = document.getElementById("phone").value.replace(/\D/g, "")
-      const date = document.getElementById("date").value
-      const timeSlot = document.getElementById("timeSlot").value
-      const reason = document.getElementById("reason").value.trim()
-
-      // Validate
-      if (!name || !phone || !date || !timeSlot) {
-        showError("Por favor completa todos los campos obligatorios.")
-        return false
-      }
-      if (phone.length < 10) {
-        showError("El teléfono debe tener al menos 10 dígitos.")
-        return false
-      }
-
-      btn.disabled = true
-      btn.textContent = "Enviando..."
-
-      try {
-        const res = await fetch(WORKER_URL + "/book", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, phone, date, timeSlot, reason }),
-        })
-
-        const data = await res.json()
-
-        if (!data.ok) {
-          showError(data.error || "Error al enviar la solicitud.")
-          btn.disabled = false
-          btn.textContent = "Solicitar cita"
-          return false
-        }
-
-        // Success!
-        document.getElementById("formCard").style.display = "none"
-        document.getElementById("successCard").style.display = "block"
-
-        // Set direct WhatsApp link
-        const waText = `Hola, acabo de solicitar una cita por la web para el ${formatDate(date)}. Mi nombre es ${name}.`
-        document.getElementById("waDirectLink").href =
-          `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(waText)}`
-
-      } catch (err) {
-        showError("No se pudo conectar con el servidor. Intenta de nuevo.")
-        btn.disabled = false
-        btn.textContent = "Solicitar cita"
-      }
-
+    async function handleSubmit(e){
+      e.preventDefault();
+      const btn=document.getElementById("submitBtn"),errorEl=document.getElementById("errorMsg");
+      errorEl.style.display="none";
+      const name=document.getElementById("name").value.trim(),phone=document.getElementById("phone").value.replace(/\D/g,""),date=document.getElementById("date").value,timeSlot=document.getElementById("timeSlot").value,reason=document.getElementById("reason").value.trim();
+      if(!name||!phone||!date||!timeSlot){showError("Por favor completa todos los campos obligatorios.");return false}
+      if(phone.length<10){showError("El teléfono debe tener al menos 10 dígitos.");return false}
+      btn.disabled=true;btn.textContent="Enviando...";
+      try{
+        const res=await fetch(WORKER_URL+"/book",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name,phone,date,timeSlot,reason})});
+        const data=await res.json();
+        if(!data.ok){showError(data.error||"Error al enviar la solicitud.");btn.disabled=false;btn.textContent="Solicitar cita →";return false}
+        document.getElementById("formCard").style.display="none";
+        document.getElementById("successCard").style.display="block";
+        const waText=`Hola, acabo de solicitar una cita por la web para el ${formatDate(date)}. Mi nombre es ${name}.`;
+        document.getElementById("waDirectLink").href=`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(waText)}`;
+      }catch{showError("No se pudo conectar con el servidor. Intenta de nuevo.");btn.disabled=false;btn.textContent="Solicitar cita →"}
       return false
     }
 
-    function showError(msg) {
-      const el = document.getElementById("errorMsg")
-      el.textContent = msg
-      el.style.display = "block"
-    }
-
-    function formatDate(iso) {
-      if (!iso) return "una fecha próxima"
-      try {
-        const parts = iso.split("-")
-        if (parts.length === 3) return `${parts[2]}/${parts[1]}/${parts[0]}`
-        // Fallback: try Date parsing
-        const d = new Date(iso + "T12:00:00")
-        if (isNaN(d)) return iso
-        return `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`
-      } catch { return iso }
-    }
+    function showError(msg){const el=document.getElementById("errorMsg");el.textContent=msg;el.style.display="block"}
+    function formatDate(iso){if(!iso)return"una fecha próxima";try{const p=iso.split("-");if(p.length===3)return`${p[2]}/${p[1]}/${p[0]}`;return iso}catch{return iso}}
   </script>
 </body>
 </html>
