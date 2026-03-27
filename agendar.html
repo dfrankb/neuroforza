@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agendar Cita — NeuroForza</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: #f8f9fa;
+      color: #1a1a1a;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    .header {
+      background: #004d40;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .header img { height: 40px; }
+    .header a { color: #ffa726; text-decoration: none; font-weight: 600; font-size: 14px; }
+
+    /* ── Hero ── */
+    .hero {
+      background: linear-gradient(165deg, #004d40 0%, #00796b 100%);
+      color: #fff;
+      text-align: center;
+      padding: 60px 24px 40px;
+    }
+    .hero h1 { font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
+    .hero p { font-size: 1.05rem; opacity: 0.9; max-width: 500px; margin: 0 auto; line-height: 1.5; }
+
+    /* ── Form Card ── */
+    .form-card {
+      max-width: 520px;
+      margin: -30px auto 40px;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      padding: 32px 28px;
+      position: relative;
+    }
+
+    .form-group { margin-bottom: 20px; }
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 6px;
+    }
+    .form-group label .req { color: #e53935; }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      font-size: 16px;
+      font-family: inherit;
+      transition: border-color 0.2s;
+      background: #fafafa;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #00796b;
+      background: #fff;
+    }
+    .form-group textarea { resize: vertical; min-height: 80px; }
+    .form-group .hint { font-size: 12px; color: #888; margin-top: 4px; }
+
+    /* Time slot pills */
+    .slot-row {
+      display: flex;
+      gap: 10px;
+    }
+    .slot-pill {
+      flex: 1;
+      padding: 14px 8px;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      background: #fafafa;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 15px;
+      font-weight: 600;
+      color: #555;
+    }
+    .slot-pill:hover { border-color: #00796b; }
+    .slot-pill.active {
+      border-color: #00796b;
+      background: #e0f2f1;
+      color: #004d40;
+    }
+    .slot-pill .icon { font-size: 22px; display: block; margin-bottom: 4px; }
+
+    /* Submit */
+    .submit-btn {
+      width: 100%;
+      padding: 16px;
+      background: #00796b;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 17px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      letter-spacing: 0.5px;
+    }
+    .submit-btn:hover { background: #004d40; }
+    .submit-btn:active { transform: scale(0.98); }
+    .submit-btn:disabled { background: #aaa; cursor: wait; }
+
+    /* States */
+    .success-card {
+      text-align: center;
+      padding: 48px 28px;
+    }
+    .success-card .check { font-size: 64px; margin-bottom: 16px; }
+    .success-card h2 { font-size: 1.5rem; color: #004d40; margin-bottom: 12px; }
+    .success-card p { font-size: 1rem; color: #555; line-height: 1.6; max-width: 380px; margin: 0 auto; }
+    .success-card .wa-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 24px;
+      padding: 14px 28px;
+      background: #25D366;
+      color: #fff;
+      border-radius: 30px;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .error-msg {
+      background: #ffebee;
+      color: #c62828;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      margin-bottom: 16px;
+      display: none;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 24px;
+      color: #999;
+      font-size: 13px;
+    }
+    .footer a { color: #00796b; text-decoration: none; }
+
+    /* Phone input prefix */
+    .phone-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+    .phone-prefix {
+      padding: 14px 12px;
+      background: #e8e8e8;
+      border: 2px solid #e0e0e0;
+      border-right: none;
+      border-radius: 10px 0 0 10px;
+      font-size: 16px;
+      color: #555;
+      font-weight: 600;
+    }
+    .phone-wrap input {
+      border-radius: 0 10px 10px 0 !important;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <a href="index.html"><img src="NeuroForza_Blanco.png" alt="NeuroForza"></a>
+    <a href="index.html">← Inicio</a>
+  </div>
+
+  <div class="hero">
+    <h1>Agenda tu cita</h1>
+    <p>Completa el formulario y te confirmaremos por WhatsApp en menos de 2 horas.</p>
+  </div>
+
+  <div class="form-card" id="formCard">
+    <div class="error-msg" id="errorMsg"></div>
+
+    <form id="bookingForm" onsubmit="return handleSubmit(event)">
+      <div class="form-group">
+        <label>Nombre completo <span class="req">*</span></label>
+        <input type="text" id="name" placeholder="Tu nombre" required autocomplete="name">
+      </div>
+
+      <div class="form-group">
+        <label>Teléfono (WhatsApp) <span class="req">*</span></label>
+        <div class="phone-wrap">
+          <span class="phone-prefix">+52</span>
+          <input type="tel" id="phone" placeholder="55 1234 5678" required autocomplete="tel"
+                 pattern="[0-9\s]{10,15}" inputmode="numeric">
+        </div>
+        <div class="hint">Te contactaremos por WhatsApp para confirmar</div>
+      </div>
+
+      <div class="form-group">
+        <label>Fecha deseada <span class="req">*</span></label>
+        <input type="date" id="date" required>
+      </div>
+
+      <div class="form-group">
+        <label>Horario preferido <span class="req">*</span></label>
+        <div class="slot-row">
+          <div class="slot-pill active" onclick="selectSlot(this, 'morning')">
+            <span class="icon">🌅</span>
+            Mañana<br><small>8:00–13:00</small>
+          </div>
+          <div class="slot-pill" onclick="selectSlot(this, 'afternoon')">
+            <span class="icon">🌇</span>
+            Tarde<br><small>14:00–20:00</small>
+          </div>
+        </div>
+        <input type="hidden" id="timeSlot" value="morning">
+      </div>
+
+      <div class="form-group">
+        <label>¿Cuál es tu motivo de consulta?</label>
+        <textarea id="reason" placeholder="Describe brevemente tu situación (opcional)" maxlength="500"></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn" id="submitBtn">
+        Solicitar cita
+      </button>
+    </form>
+  </div>
+
+  <!-- Success state -->
+  <div class="form-card success-card" id="successCard" style="display:none">
+    <div class="check">✅</div>
+    <h2>¡Solicitud recibida!</h2>
+    <p>Te contactaremos por WhatsApp para confirmar tu cita. Si es urgente, también puedes escribirnos directamente:</p>
+    <a class="wa-btn" id="waDirectLink" href="#" target="_blank">
+      💬 Escríbenos por WhatsApp
+    </a>
+  </div>
+
+  <div class="footer">
+    <p>NeuroForza — Fisioterapia y Rehabilitación</p>
+    <p><a href="index.html">www.neuroforza.com</a></p>
+  </div>
+
+  <script>
+    // ── Config ─────────────────────────────────────────────
+    const WORKER_URL = "https://neuroforza-activation.danfrank.workers.dev"
+    const WA_NUMBER = "525541410026" // tu WhatsApp
+
+    // ── Set min date to today ──────────────────────────────
+    const dateInput = document.getElementById("date")
+    const today = new Date().toISOString().slice(0, 10)
+    dateInput.min = today
+    dateInput.value = ""
+
+    // ── Slot selection ─────────────────────────────────────
+    function selectSlot(el, value) {
+      document.querySelectorAll(".slot-pill").forEach(p => p.classList.remove("active"))
+      el.classList.add("active")
+      document.getElementById("timeSlot").value = value
+    }
+
+    // ── Submit ─────────────────────────────────────────────
+    async function handleSubmit(e) {
+      e.preventDefault()
+
+      const btn = document.getElementById("submitBtn")
+      const errorEl = document.getElementById("errorMsg")
+      errorEl.style.display = "none"
+
+      const name = document.getElementById("name").value.trim()
+      const phone = document.getElementById("phone").value.replace(/\D/g, "")
+      const date = document.getElementById("date").value
+      const timeSlot = document.getElementById("timeSlot").value
+      const reason = document.getElementById("reason").value.trim()
+
+      // Validate
+      if (!name || !phone || !date || !timeSlot) {
+        showError("Por favor completa todos los campos obligatorios.")
+        return false
+      }
+      if (phone.length < 10) {
+        showError("El teléfono debe tener al menos 10 dígitos.")
+        return false
+      }
+
+      btn.disabled = true
+      btn.textContent = "Enviando..."
+
+      try {
+        const res = await fetch(WORKER_URL + "/book", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, phone, date, timeSlot, reason }),
+        })
+
+        const data = await res.json()
+
+        if (!data.ok) {
+          showError(data.error || "Error al enviar la solicitud.")
+          btn.disabled = false
+          btn.textContent = "Solicitar cita"
+          return false
+        }
+
+        // Success!
+        document.getElementById("formCard").style.display = "none"
+        document.getElementById("successCard").style.display = "block"
+
+        // Set direct WhatsApp link
+        const waText = `Hola, acabo de solicitar una cita por la web para el ${formatDate(date)}. Mi nombre es ${name}.`
+        document.getElementById("waDirectLink").href =
+          `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(waText)}`
+
+      } catch (err) {
+        showError("No se pudo conectar con el servidor. Intenta de nuevo.")
+        btn.disabled = false
+        btn.textContent = "Solicitar cita"
+      }
+
+      return false
+    }
+
+    function showError(msg) {
+      const el = document.getElementById("errorMsg")
+      el.textContent = msg
+      el.style.display = "block"
+    }
+
+    function formatDate(iso) {
+      const [y, m, d] = iso.split("-")
+      return `${d}/${m}/${y}`
+    }
+  </script>
+</body>
+</html>
