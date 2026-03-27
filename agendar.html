@@ -349,8 +349,15 @@
     }
 
     function formatDate(iso) {
-      const [y, m, d] = iso.split("-")
-      return `${d}/${m}/${y}`
+      if (!iso) return "una fecha próxima"
+      try {
+        const parts = iso.split("-")
+        if (parts.length === 3) return `${parts[2]}/${parts[1]}/${parts[0]}`
+        // Fallback: try Date parsing
+        const d = new Date(iso + "T12:00:00")
+        if (isNaN(d)) return iso
+        return `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`
+      } catch { return iso }
     }
   </script>
 </body>
