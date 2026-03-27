@@ -954,8 +954,15 @@
     setTimeout(dismissIntro, 6000);
     introEl.addEventListener('click', dismissIntro);
 
-    // If video fails to load, dismiss immediately
-    introVideo.addEventListener('error', () => setTimeout(dismissIntro, 500));
+    // If video fails to load or can't autoplay (mobile), dismiss fast
+    introVideo.addEventListener('error', () => setTimeout(dismissIntro, 300));
+
+    // Mobile: if video hasn't started playing after 1s, skip intro
+    setTimeout(() => {
+      if (introVideo.paused || introVideo.readyState < 2) {
+        dismissIntro();
+      }
+    }, 1000);
 
     // ── Scroll header glass effect ──
     const header = document.getElementById('header');
