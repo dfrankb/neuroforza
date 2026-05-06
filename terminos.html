@@ -14,6 +14,7 @@
   h1{font-family:'Bodoni Moda',serif;font-size:2.2rem;font-weight:700;margin-bottom:8px}
   .subtitle{color:var(--muted);font-size:0.95rem;margin-bottom:40px}
   h2{font-size:0.8rem;font-weight:600;text-transform:uppercase;letter-spacing:2px;color:var(--cyan);margin-top:32px;margin-bottom:10px}
+  h3{font-size:1rem;font-weight:500;color:var(--text);margin-top:18px;margin-bottom:8px}
   p,li{color:rgba(255,255,255,.75);font-size:0.95rem;margin-bottom:12px}
   ul{padding-left:20px;margin-bottom:16px}
   li{margin-bottom:6px}
@@ -30,89 +31,162 @@
   <a href="/" class="back-link">← Volver a NeuroForza</a>
 
   <h1>Términos de Servicio</h1>
-  <p class="subtitle">Última actualización: 30 de marzo de 2026</p>
+  <p class="subtitle">Última actualización: 6 de mayo de 2026</p>
 
   <h2>1. Aceptación</h2>
   <p>
-    Al instalar, acceder o utilizar la aplicación NeuroForza ("la App"), usted acepta estos Términos de Servicio. Si no está de acuerdo, no utilice la App.
+    Al instalar, activar o utilizar la aplicación NeuroForza ("la App"), el usuario acepta estos Términos de Servicio. Si no está de acuerdo, no debe utilizar la App.
   </p>
 
-  <h2>2. Descripción del servicio</h2>
+  <h2>2. Naturaleza del servicio</h2>
   <p>
-    NeuroForza es una herramienta de gestión clínica diseñada para profesionales de fisioterapia y rehabilitación. Permite registrar expedientes clínicos, generar planes de tratamiento, aplicar escalas de evaluación, gestionar citas y generar documentos profesionales.
+    NeuroForza es una herramienta de apoyo clínico profesional (Clinical Decision Support Software · CDSS) diseñada exclusivamente para fisioterapeutas con cédula profesional vigente. Permite registrar expedientes clínicos, generar planes de tratamiento, aplicar escalas de evaluación, gestionar citas y emitir documentos profesionales.
   </p>
-
   <div class="highlight">
-    <p>NeuroForza NO es un dispositivo médico ni sustituye el juicio clínico del profesional. Las recomendaciones del motor clínico son sugerencias basadas en evidencia que el terapeuta debe validar según su criterio profesional.</p>
+    <p>NeuroForza no es un dispositivo médico ni sustituye el juicio clínico del profesional. Las recomendaciones del motor clínico son sugerencias basadas en evidencia que el terapeuta debe validar según su criterio profesional.</p>
   </div>
 
-  <h2>3. Planes y precios</h2>
+  <h2>3. Tiers y precios</h2>
   <ul>
-    <li><strong>Plan Gratuito:</strong> Hasta 3 pacientes activos, motor clínico, escalas de evaluación, 1 caso por paciente.</li>
-    <li><strong>Plan Pro ($499 MXN/mes):</strong> Pacientes ilimitados, editor de flyers, estadísticas, firma digital, sistema de booking, respaldo completo y todas las funcionalidades actuales y futuras.</li>
-    <li><strong>Early Adopter ($199 MXN/mes de por vida):</strong> Todas las funcionalidades Pro, disponible exclusivamente para los primeros 50 usuarios registrados.</li>
+    <li><strong>Aprendiz · GRATIS:</strong> motor clínico completo en modo demo, casos sintéticos, biblioteca académica, evidence tiers. No permite guardar pacientes reales ni generar PDFs oficiales.</li>
+    <li><strong>Profesional · $249 MXN/mes:</strong> todo lo del tier Aprendiz más pacientes reales, PDFs oficiales, agenda, evaluación estructurada, consentimiento informado. Requiere cédula profesional verificada.</li>
+    <li><strong>Clínica · $199 MXN/seat/mes:</strong> todo lo del tier Profesional más multi-terapeuta, multi-clínica con cobro consolidado mensual, dashboard de ingresos por terapeuta, gestión de equipo. Recomendado para equipos de 2 o más terapeutas.</li>
+    <li><strong>Especialista · +$149 MXN/paquete/mes:</strong> paquetes de profundidad clínica (Geriatría, Pélvico, Deportivo, Neuro, Pediátrico) sobre el tier Clínica.</li>
   </ul>
   <p>
-    Los precios pueden cambiar con previo aviso de 30 días. Los usuarios con plan Early Adopter conservan su precio de por vida mientras mantengan su suscripción activa.
+    Los precios pueden modificarse con notificación previa razonable. La verificación de cédula se realiza contra el registro oficial de la SEP. Sin cédula vigente verificada, los tiers Profesional, Clínica y Especialista no pueden activarse.
   </p>
 
-  <h2>4. Propiedad de los datos</h2>
+  <h2>4. Suscripción mensual recurrente</h2>
   <p>
-    Los datos clínicos registrados en la App son propiedad exclusiva del profesional de salud que los genera. NeuroForza no accede, analiza ni comercializa datos de pacientes. Los datos se almacenan de forma local en el dispositivo del profesional.
-  </p>
-  <p>
-    El sistema de citas en línea almacena datos de contacto de pacientes de forma temporal (máximo 30 días) en servidores seguros de Cloudflare, exclusivamente para coordinar la cita solicitada.
+    Los tiers Profesional, Clínica y Especialista operan como suscripción mensual recurrente procesada por Mercado Pago. Al activar la suscripción, el usuario autoriza a NeuroForza, a través de Mercado Pago, a cobrar mensualmente el monto autorizado en el medio de pago registrado.
   </p>
 
-  <h2>5. Responsabilidades del usuario</h2>
+  <h3>Ciclo de cobro</h3>
   <ul>
-    <li>Mantener la seguridad de su dispositivo y código PIN de acceso</li>
-    <li>Cumplir con la normativa aplicable en materia de protección de datos personales (LFPDPPP en México, o la legislación equivalente en su país)</li>
-    <li>Obtener el consentimiento informado de sus pacientes para el tratamiento de datos</li>
-    <li>Realizar respaldos periódicos de su información</li>
-    <li>Utilizar las recomendaciones del motor clínico bajo su criterio profesional</li>
+    <li>El cobro se ejecuta una vez al mes en la fecha aniversario de la activación.</li>
+    <li>En el tier Clínica, el monto se calcula multiplicando el precio por seat por la cantidad de dispositivos activos del grupo. Cuando cambia la cantidad de dispositivos activos, NeuroForza solicita a Mercado Pago la actualización del monto autorizado.</li>
+    <li>El medio de pago se ingresa directamente en el portal de Mercado Pago. NeuroForza nunca recibe los datos de tarjeta.</li>
   </ul>
 
-  <h2>6. Limitación de responsabilidad</h2>
+  <h3>Periodo de gracia y suspensión</h3>
+  <ul>
+    <li>Si un cobro mensual resulta rechazado, la suscripción entra en periodo de gracia de tres (3) días naturales durante los cuales la App sigue operativa y se reintenta el cobro.</li>
+    <li>Al término del periodo de gracia sin pago exitoso, la suscripción queda suspendida y los dispositivos pierden acceso a las funciones que requieren licencia activa, hasta que el titular regularice el pago.</li>
+    <li>Cuando Mercado Pago confirma un pago exitoso después de una suspensión, la suscripción se reactiva automáticamente.</li>
+    <li>Los datos clínicos almacenados localmente en cada dispositivo permanecen cifrados y accesibles al terapeuta aún durante una suspensión, aunque las funciones de generación de documentos oficiales y motor clínico pueden quedar restringidas.</li>
+  </ul>
+
+  <h3>Cancelación y reembolsos</h3>
+  <ul>
+    <li>El titular puede cancelar la suscripción en cualquier momento desde la pantalla "Mi clínica" de la App. La cancelación detiene los cobros futuros y la suscripción permanece activa hasta el final del periodo mensual ya pagado.</li>
+    <li>NeuroForza no aplica reembolsos automáticos sobre periodos ya cobrados. Las solicitudes de reembolso se evalúan caso por caso y, cuando proceden, se gestionan a través de Mercado Pago conforme a sus propias políticas y a la legislación aplicable.</li>
+  </ul>
+
+  <h3>Facturación</h3>
   <p>
-    NeuroForza se proporciona "tal cual" (as-is). No garantizamos que la App esté libre de errores ni que las recomendaciones clínicas sean apropiadas para cada caso particular. El profesional es el único responsable de las decisiones clínicas tomadas con base en la información de la App.
-  </p>
-  <p>
-    NeuroForza no será responsable por pérdida de datos derivada de daño al dispositivo, desinstalación de la App, o falla en la realización de respaldos por parte del usuario.
+    NeuroForza no emite por defecto comprobante fiscal digital (CFDI). Cuando el titular requiera factura, podrá solicitarla por escrito con los datos fiscales correspondientes y se emitirá conforme a la legislación fiscal mexicana aplicable.
   </p>
 
-  <h2>7. Sistema de citas</h2>
+  <h2>5. Multi-clínica · grupos de clínica</h2>
+
+  <h3>Responsabilidades del titular (owner)</h3>
+  <ul>
+    <li>Crear y administrar el grupo de clínica desde la App, incluyendo la generación y revocación de códigos de invitación.</li>
+    <li>Mantener vigente la suscripción mensual consolidada del grupo.</li>
+    <li>Asegurar que cada terapeuta miembro cuente con cédula profesional vigente y haya aceptado estos Términos y el Aviso de Privacidad.</li>
+    <li>Reconocer que la App no le otorga acceso al expediente clínico de los pacientes atendidos por los dispositivos miembros: el titular ve únicamente datos agregados de actividad operativa de su clínica.</li>
+  </ul>
+
+  <h3>Responsabilidades de los terapeutas miembros</h3>
+  <ul>
+    <li>Mantener vigente su propia cédula profesional y cumplir con la LFPDPPP en el tratamiento de los datos personales de sus pacientes.</li>
+    <li>Reconocer que el expediente clínico de sus pacientes permanece almacenado localmente en su dispositivo cifrado y bajo su exclusivo control profesional.</li>
+    <li>Reconocer que el titular del grupo asume el cobro consolidado de la suscripción, pero que la responsabilidad clínica directa frente al paciente recae sobre cada terapeuta miembro que lo atiende.</li>
+  </ul>
+
+  <h3>Privacidad estructural entre dispositivos del grupo</h3>
   <p>
-    Los profesionales con Plan Pro tienen acceso a una página de citas personalizada donde sus pacientes pueden solicitar citas. Este servicio se proporciona a través de la infraestructura de NeuroForza. El profesional es responsable de confirmar o rechazar las solicitudes y de la comunicación con sus pacientes.
+    La arquitectura técnica de la App impide que los datos clínicos de pacientes se compartan entre dispositivos del mismo grupo. Cada dispositivo mantiene su base de datos cifrada local. El titular ve únicamente agregados operativos. Esta separación es estructural y no depende de configuraciones del usuario.
   </p>
 
-  <h2>8. Portabilidad y cancelación</h2>
+  <h2>6. Propiedad de los datos clínicos</h2>
   <p>
-    El usuario puede exportar todos sus datos en cualquier momento mediante la función de respaldo en la App. Al cancelar su suscripción, conserva acceso a las funcionalidades del Plan Gratuito. Sus datos permanecen en su dispositivo.
+    Los datos clínicos registrados en la App son propiedad exclusiva del fisioterapeuta que los genera, conforme a la LFPDPPP. NeuroForza no accede, analiza ni comercializa el expediente clínico de ningún paciente. El expediente se almacena localmente cifrado en el dispositivo del fisioterapeuta y nunca se transmite a NeuroForza ni a ningún tercero.
+  </p>
+  <p>
+    El sistema de citas en línea almacena datos de contacto de pacientes prospectivos de forma temporal (máximo 30 días) en servidores de Cloudflare Workers, exclusivamente para coordinar la cita solicitada. Estos datos no forman parte del expediente clínico.
   </p>
 
-  <h2>9. Propiedad intelectual</h2>
+  <h2>7. Obligaciones del usuario</h2>
+  <ul>
+    <li>Contar con cédula profesional vigente para ejercer fisioterapia o área afín.</li>
+    <li>Usar la App únicamente en el ejercicio de su práctica profesional lícita.</li>
+    <li>Obtener el consentimiento informado de los pacientes para el tratamiento de sus datos.</li>
+    <li>No compartir códigos de activación con terceros.</li>
+    <li>No intentar eludir los controles de seguridad, licenciamiento o verificación de cédula.</li>
+    <li>Proteger sus credenciales de acceso (PIN, biometría, cuenta de Google si activa respaldo, medio de pago).</li>
+    <li>Cumplir con la LFPDPPP en el tratamiento de los datos personales de sus pacientes.</li>
+    <li>Realizar respaldos periódicos de su información cuando esto le competa.</li>
+  </ul>
+
+  <h2>8. Limitación de responsabilidad</h2>
   <p>
-    NeuroForza, su motor clínico, escalas de evaluación, algoritmos, diseño y marca son propiedad de sus creadores. El usuario tiene licencia de uso personal/profesional, no de redistribución.
+    La App se proporciona "tal cual" (as-is). NeuroForza no garantiza que la App esté libre de errores ni que las recomendaciones clínicas sean apropiadas para todo caso particular. El profesional es el único responsable de las decisiones clínicas tomadas en su práctica profesional.
+  </p>
+  <p>
+    NeuroForza no será responsable por pérdida de datos derivada de daño al dispositivo, desinstalación de la App, falla en la realización de respaldos por parte del usuario, ni por interrupciones en servicios de terceros (Cloudflare, Google, Apple, Mercado Pago) utilizados por la App.
   </p>
 
-  <h2>10. Modificaciones</h2>
+  <h2>9. Disponibilidad del servicio</h2>
   <p>
-    Nos reservamos el derecho de modificar estos términos. Los cambios se notificarán dentro de la App con al menos 15 días de anticipación. El uso continuado implica aceptación de los nuevos términos.
+    La App opera principalmente en modo local sobre el dispositivo del fisioterapeuta. Las funciones que requieren conectividad con el servidor de NeuroForza son: activación de licencia, verificación periódica, operación de la suscripción mensual, multi-clínica y eventos operativos. Cuando el servidor esté inaccesible, las funciones locales de la App siguen disponibles.
+  </p>
+  <p>
+    NeuroForza realiza esfuerzos razonables para mantener el servidor disponible 24/7, pero no garantiza disponibilidad ininterrumpida. Se contemplan ventanas de mantenimiento programado y eventuales interrupciones por causas técnicas o por proveedores de infraestructura.
   </p>
 
-  <h2>11. Legislación aplicable</h2>
+  <h2>10. Sistema de citas</h2>
   <p>
-    Estos términos se rigen por las leyes de los Estados Unidos Mexicanos. Cualquier controversia se someterá a los tribunales competentes de la Ciudad de México.
+    Los profesionales con suscripción activa tienen acceso a una página de citas personalizada donde sus pacientes pueden solicitar citas. Este servicio se proporciona a través de la infraestructura de NeuroForza. El profesional es responsable de confirmar o rechazar las solicitudes y de la comunicación con sus pacientes.
+  </p>
+
+  <h2>11. Portabilidad y terminación</h2>
+  <p>
+    El usuario puede exportar todos sus datos en cualquier momento mediante la función de respaldo en la App. Al cancelar su suscripción, los datos clínicos permanecen en su dispositivo bajo su control. NeuroForza puede suspender o terminar la licencia si el usuario incumple estos Términos, si la cédula declarada resulta no verificable o expirada, si la suscripción mensual queda impaga después del periodo de gracia, o por uso fraudulento del servicio.
+  </p>
+
+  <h2>12. Propiedad intelectual</h2>
+  <p>
+    NeuroForza, su motor clínico, catálogo de ejercicios, escalas de evaluación, algoritmos, diseño y marca son propiedad de sus creadores. El usuario tiene licencia de uso profesional, no de redistribución.
+  </p>
+
+  <h2>13. Modificaciones</h2>
+  <p>
+    NeuroForza se reserva el derecho de modificar estos Términos. Los cambios se notificarán dentro de la App con al menos 15 días naturales de anticipación. El uso continuado implica aceptación de los nuevos Términos.
+  </p>
+
+  <h2>14. Legislación aplicable</h2>
+  <p>
+    Estos Términos se rigen por las leyes de los Estados Unidos Mexicanos. Cualquier controversia se someterá a los tribunales competentes de la Ciudad de México.
+  </p>
+
+  <h2>15. Documento legal completo</h2>
+  <p>
+    Estos términos son un resumen claro y responsable. El documento legal completo, con detalle exhaustivo por sección y cumplimiento normativo formal, está publicado en:
+  </p>
+  <p>
+    <a href="https://neuroforza-activation.danfrank.workers.dev/terms">Términos de Uso completos</a>
   </p>
 
   <h2>Contacto</h2>
   <p>
-    Para cualquier consulta sobre estos términos, contacte a través de los canales disponibles en <a href="/">neuroforza.com</a>.
+    Para preguntas sobre estos Términos, escriba a <a href="mailto:danfrank@neuroforza.com">danfrank@neuroforza.com</a> o utilice los canales disponibles en <a href="/">neuroforza.com</a>.
   </p>
 
   <div class="footer">
     <p>NeuroForza — Fisioterapia y Rehabilitación</p>
+    <p><a href="/privacidad">Aviso de Privacidad</a></p>
   </div>
 </div>
 </body>

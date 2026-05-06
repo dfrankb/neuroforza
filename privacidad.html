@@ -14,7 +14,10 @@
   h1{font-family:'Bodoni Moda',serif;font-size:2.2rem;font-weight:700;margin-bottom:8px}
   .subtitle{color:var(--muted);font-size:0.95rem;margin-bottom:40px}
   h2{font-size:0.8rem;font-weight:600;text-transform:uppercase;letter-spacing:2px;color:var(--cyan);margin-top:32px;margin-bottom:10px}
-  p{color:rgba(255,255,255,.75);font-size:0.95rem;margin-bottom:16px}
+  h3{font-size:1rem;font-weight:500;color:var(--text);margin-top:18px;margin-bottom:8px}
+  p,li{color:rgba(255,255,255,.75);font-size:0.95rem;margin-bottom:14px}
+  ul{padding-left:20px;margin-bottom:16px}
+  li{margin-bottom:6px}
   .highlight{background:rgba(34,211,238,.08);border-left:3px solid var(--cyan);padding:14px 18px;border-radius:6px;margin:20px 0}
   .highlight p{margin:0;color:var(--text);font-weight:400}
   a{color:var(--cyan);text-decoration:none}
@@ -28,65 +31,109 @@
   <a href="/" class="back-link">← Volver a NeuroForza</a>
 
   <h1>Aviso de Privacidad</h1>
-  <p class="subtitle">Última actualización: 30 de marzo de 2026</p>
+  <p class="subtitle">Última actualización: 6 de mayo de 2026</p>
 
-  <h2>Responsable del tratamiento</h2>
   <p>
-    El profesional de la salud titular del dispositivo donde se instala NeuroForza es responsable del tratamiento de los datos personales registrados en la aplicación. Los datos se almacenan exclusivamente de forma local en el dispositivo del profesional y no se transmiten a servidores externos.
+    Este aviso explica con claridad cómo NeuroForza trata los datos personales. Distinguimos tres capas de información porque tienen un trato distinto: el expediente clínico del paciente, los datos operativos del fisioterapeuta y los datos comerciales de la suscripción. Cada capa se describe por separado para que el usuario sepa exactamente qué sale del dispositivo y qué no.
   </p>
 
-  <h2>Datos personales recabados</h2>
+  <h2>1. Responsable del tratamiento</h2>
   <p>
-    Nombre completo, fecha de nacimiento, fotografía, datos de contacto (teléfono, correo electrónico) y expediente clínico: diagnósticos, sesiones SOAPIE, escalas de evaluación, protocolos de tratamiento, planes terapéuticos y registros de pago. Se consideran datos sensibles aquellos relativos al estado de salud del paciente.
+    El profesional de la salud titular del dispositivo donde se instala NeuroForza es el responsable del tratamiento de los datos personales de sus pacientes, conforme al artículo 3 fracción XIV de la LFPDPPP. NeuroForza es el encargado técnico que provee la herramienta y las garantías de seguridad descritas en este aviso, sin acceso al expediente clínico de ningún paciente.
   </p>
 
-  <h2>Finalidad</h2>
+  <h2>2. Capa 1 · Expediente clínico del paciente</h2>
   <p>
-    Gestión del expediente clínico, registro de evolución del paciente, generación de documentos de atención y seguimiento terapéutico conforme a la NOM-004-SSA3-2012 (Expediente Clínico).
+    Esta capa contiene la información sensible del paciente: nombre, fecha de nacimiento, fotografía, datos de contacto, diagnósticos, sesiones SOAPIE, escalas de evaluación, planes terapéuticos, hallazgos de imagenología y documentos firmados.
   </p>
-
   <div class="highlight">
-    <p>Los datos personales se utilizan exclusivamente para la atención clínica del paciente. No se usan con fines comerciales, publicitarios ni de investigación sin consentimiento previo.</p>
+    <p>El expediente clínico del paciente nunca sale del dispositivo del fisioterapeuta. Se almacena localmente cifrado con SQLCipher (AES-256) y nunca se transmite a NeuroForza, a Mercado Pago, ni a ningún otro tercero.</p>
   </div>
+  <p>Medidas técnicas que protegen esta capa:</p>
+  <ul>
+    <li>Base de datos local cifrada con SQLCipher (AES-256).</li>
+    <li>Acceso protegido por PIN y autenticación biométrica.</li>
+    <li>En Android: bloqueo de capturas de pantalla (FLAG_SECURE) sobre las pantallas con datos clínicos.</li>
+    <li>Credenciales locales almacenadas en el Keychain (iOS) o Keystore (Android) del sistema operativo.</li>
+    <li>Respaldo opcional cifrado en el Google Drive personal del fisioterapeuta, activable solo si el fisioterapeuta lo elige expresamente. Si no se activa, ningún dato clínico sale del dispositivo por esta vía.</li>
+  </ul>
 
-  <h2>Derechos ARCO</h2>
+  <h2>3. Capa 2 · Datos operativos del fisioterapeuta</h2>
   <p>
-    El paciente tiene derecho a Acceder, Rectificar, Cancelar u Oponerse al tratamiento de sus datos personales conforme a la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP, DOF 05-07-2010) y su Reglamento. Para ejercer sus derechos, diríjase directamente al profesional de salud que lo atiende.
+    Para que la aplicación pueda licenciarse, mantenerse activa y enviar alertas de soporte técnico, NeuroForza opera un servidor en Cloudflare Workers que recibe únicamente:
   </p>
-
-  <h2>Medidas de seguridad</h2>
+  <ul>
+    <li>Identificador único del dispositivo donde está instalada la app.</li>
+    <li>Cédula profesional declarada por el fisioterapeuta, para verificación contra el registro de la SEP.</li>
+    <li>Eventos operativos predefinidos (código + timestamp), por ejemplo activación, verificación periódica de licencia o alertas técnicas.</li>
+    <li>Datos agregados sin contenido clínico cuando el fisioterapeuta forma parte de un grupo de clínica (ver capa 4).</li>
+  </ul>
   <p>
-    NeuroForza implementa las siguientes medidas de seguridad para proteger los datos personales:
-  </p>
-  <p>
-    • Base de datos cifrada con SQLCipher (AES-256)<br>
-    • Acceso a la aplicación protegido por PIN o autenticación biométrica<br>
-    • Bloqueo de capturas de pantalla para proteger la confidencialidad del expediente<br>
-    • Almacenamiento exclusivamente local — ningún dato se transmite a la nube<br>
-    • Copias de seguridad cifradas generadas por el profesional
-  </p>
-
-  <h2>Transferencias</h2>
-  <p>
-    Los datos personales NO se transfieren a terceros, salvo disposición legal expresa. No se comparten con redes sociales, servicios de publicidad ni plataformas de terceros.
-  </p>
-
-  <h2>Sistema de citas en línea</h2>
-  <p>
-    El formulario de citas en <a href="/agendar.html">neuroforza.com/agendar</a> recaba nombre, teléfono, fecha preferida y motivo de consulta. Estos datos se almacenan temporalmente (máximo 30 días) en un servidor seguro de Cloudflare Workers con el único fin de coordinar la cita. Una vez confirmada o rechazada, los datos de contacto se manejan exclusivamente por el profesional tratante.
+    Esta información sale del dispositivo y se almacena en Cloudflare Workers KV. Es información del fisioterapeuta como usuario profesional de la app, no del paciente. Cloudflare opera bajo su propia <a href="https://www.cloudflare.com/privacypolicy/">política de privacidad</a>.
   </p>
 
-  <h2>Profesionales que usan NeuroForza</h2>
+  <h2>4. Capa 3 · Datos comerciales de la suscripción mensual</h2>
   <p>
-    Cada profesional de salud que utiliza NeuroForza es responsable independiente del tratamiento de datos de sus pacientes. NeuroForza como plataforma facilita la herramienta tecnológica, pero no accede ni procesa los datos clínicos almacenados en los dispositivos de los profesionales.
+    Cuando el titular de una clínica activa la suscripción mensual recurrente, los datos del medio de pago (número de tarjeta, fecha de vencimiento, código de seguridad) se ingresan directamente en el portal de Mercado Pago. NeuroForza nunca recibe, transmite ni almacena esos datos. Mercado Pago es responsable del cumplimiento del estándar PCI-DSS sobre el medio de pago.
+  </p>
+  <p>NeuroForza recibe de Mercado Pago únicamente:</p>
+  <ul>
+    <li>Identificador del preapproval (suscripción autorizada).</li>
+    <li>Estado del pago (aprobado, rechazado, en proceso) y monto.</li>
+    <li>Notificaciones de cambios de estado (webhooks).</li>
+  </ul>
+  <p>
+    Mercado Pago opera bajo su propia <a href="https://www.mercadopago.com.mx/ayuda/politica-privacidad_299">política de privacidad</a> y bajo la regulación financiera mexicana aplicable.
+  </p>
+
+  <h2>5. Multi-clínica · grupos de clínica</h2>
+  <p>
+    Cuando un fisioterapeuta titular agrupa varios dispositivos bajo un mismo grupo de clínica para administrar el cobro consolidado:
+  </p>
+  <ul>
+    <li>El titular ve únicamente datos agregados de actividad de su clínica: cantidad de seats activos, monto total de la suscripción, totales monetarios cobrados o facturados por terapeuta del grupo.</li>
+    <li>El titular no tiene acceso al expediente clínico de los pacientes atendidos por los terapeutas miembros. Esa información permanece cifrada en cada dispositivo individual.</li>
+    <li>Cada terapeuta miembro mantiene su propio expediente bajo su exclusivo control profesional.</li>
+    <li>Cuando un dispositivo se desvincula del grupo, los datos clínicos permanecen en su dispositivo. El grupo no retiene datos clínicos de pacientes que no le pertenecen.</li>
+  </ul>
+
+  <h2>6. Sistema de citas en línea</h2>
+  <p>
+    El formulario de citas en <a href="/agendar.html">neuroforza.com/agendar</a> recaba nombre, teléfono, fecha preferida y motivo de consulta. Estos datos se almacenan temporalmente (máximo 30 días) en un servidor de Cloudflare Workers con el único fin de coordinar la cita. Una vez confirmada o rechazada, los datos de contacto se manejan exclusivamente por el profesional tratante.
+  </p>
+
+  <h2>7. Finalidad del tratamiento</h2>
+  <ul>
+    <li><strong>Datos del paciente</strong>: gestión del expediente clínico conforme a NOM-004-SSA3-2012, registro longitudinal de evolución, generación de documentos clínicos y apoyo a la planeación terapéutica.</li>
+    <li><strong>Datos del fisioterapeuta</strong>: verificación de cédula vigente, licenciamiento por dispositivo, generación de documentos firmados, respaldo opcional en su nube personal.</li>
+    <li><strong>Datos de la suscripción</strong>: operación del cobro mensual recurrente, gestión del modelo multi-clínica, soporte técnico.</li>
+  </ul>
+
+  <h2>8. Derechos ARCO del paciente</h2>
+  <p>
+    Conforme a la LFPDPPP (artículos 22-35), el paciente tiene derecho a Acceder, Rectificar, Cancelar u Oponerse al tratamiento de sus datos personales. Para ejercer estos derechos, el paciente debe dirigirse directamente al fisioterapeuta responsable que lo atiende, ya que es él quien tiene la custodia técnica del expediente.
+  </p>
+
+  <h2>9. Lo que NeuroForza no hace</h2>
+  <ul>
+    <li>No transmite ni transfiere datos clínicos de pacientes a ningún servidor de NeuroForza ni a ningún tercero.</li>
+    <li>No utiliza servicios de analítica de usuarios, publicidad ni seguimiento entre aplicaciones.</li>
+    <li>No vende datos a terceros.</li>
+    <li>No comparte información con redes sociales.</li>
+    <li>No tiene forma técnica de leer, descifrar ni acceder remotamente al contenido del expediente clínico almacenado en el dispositivo del fisioterapeuta.</li>
+  </ul>
+
+  <h2>10. Documento legal completo</h2>
+  <p>
+    Este aviso es un resumen claro y responsable. El documento legal completo, con detalle por sección, retención, transferencias internacionales, cumplimiento normativo (LFPDPPP, NOM-004-SSA3-2012, NOM-005-SSA3-2018, Apple, Google) y datos de contacto formal, está publicado en:
   </p>
   <p>
-    El sistema de citas personalizado (citas.neuroforza.com) permite a los pacientes solicitar citas con su profesional específico. Los datos de estas solicitudes se almacenan temporalmente y son accesibles únicamente por el profesional correspondiente.
+    <a href="https://neuroforza-activation.danfrank.workers.dev/privacy">Aviso de Privacidad completo</a>
   </p>
 
   <h2>Contacto</h2>
   <p>
-    Para cualquier duda o solicitud relacionada con el tratamiento de datos personales, contacte directamente al profesional de salud a través de los canales disponibles en <a href="/">neuroforza.com</a>.
+    Para preguntas sobre el tratamiento de datos personales, contacte a través de los canales disponibles en <a href="/">neuroforza.com</a> o escriba a <a href="mailto:danfrank@neuroforza.com">danfrank@neuroforza.com</a>. Para ejercer derechos ARCO sobre el expediente clínico de un paciente específico, dirigirse al fisioterapeuta responsable que lo atiende.
   </p>
 
   <div class="footer">
