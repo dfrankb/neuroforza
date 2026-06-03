@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>NeuroForza · Kit de redes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:#0a0a0a;color:#F8FAFC;font-family:'Jost',sans-serif;padding:32px 20px;min-height:100vh}
+.guide{max-width:760px;margin:0 auto 48px;padding:32px;background:#111;border:1px solid #333;border-radius:14px;font-size:14px;line-height:1.7;color:#aaa}
+.guide h1{font-family:'Bodoni Moda',serif;font-size:28px;color:#22D3EE;margin-bottom:16px;letter-spacing:.5px}
+.guide h2{font-size:14px;color:#D4AF37;letter-spacing:2px;text-transform:uppercase;margin-top:24px;margin-bottom:10px}
+.guide code{background:#222;padding:2px 8px;border-radius:4px;font-size:13px;color:#22D3EE}
+.guide ul{padding-left:20px}
+.guide li{margin-bottom:6px}
+.guide a{color:#22D3EE}
+
+.section{margin:48px auto;max-width:1280px}
+.section__head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid #333}
+.section__title{font-family:'Bodoni Moda',serif;font-size:22px;font-weight:700;color:#F8FAFC;letter-spacing:.5px}
+.section__dims{font-family:monospace;font-size:13px;color:#D4AF37;background:rgba(212,175,55,.08);padding:6px 14px;border-radius:6px;letter-spacing:1px}
+.canvas-row{display:flex;gap:24px;overflow-x:auto;padding:20px 0 32px}
+
+/* ───── COMÚN ───── */
+.tpl{flex-shrink:0;background:#020308;position:relative;overflow:hidden;font-family:'Jost',sans-serif;color:#F8FAFC;border:1px solid #333}
+.tpl *{position:relative}
+.tpl__scanlines{position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.018) 0,rgba(255,255,255,.018) 1px,transparent 1px,transparent 3px);pointer-events:none;z-index:0}
+.tpl__glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:130%;height:170%;background:radial-gradient(ellipse at center,rgba(212,175,55,.1) 0%,rgba(34,211,238,.05) 35%,transparent 70%);pointer-events:none;z-index:0}
+.tpl__noise{position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9' numOctaves='3'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:.5;pointer-events:none;mix-blend-mode:overlay;z-index:0}
+.tpl__inner{position:relative;z-index:1;width:100%;height:100%;display:flex;flex-direction:column;justify-content:space-between}
+
+.capitulo{display:flex;align-items:center;gap:10px;font-weight:600;letter-spacing:4px;color:#FF3737;text-transform:uppercase;text-shadow:0 0 12px rgba(255,55,55,.4)}
+.sigil{border-radius:50%;background:#FF3737;box-shadow:0 0 10px rgba(255,55,55,.6)}
+.divider{display:flex;align-items:center;justify-content:center;gap:10px}
+.divider span{height:1px;background:linear-gradient(90deg,transparent,rgba(212,175,55,.5),transparent)}
+.divider .dot{height:5px;width:5px;border-radius:50%;background:#D4AF37;box-shadow:0 0 10px rgba(212,175,55,.6)}
+.title{font-family:'Bodoni Moda',serif;font-weight:700;line-height:1.05;color:#F8FAFC;text-shadow:0 4px 24px rgba(0,0,0,.6)}
+.title em{font-family:'Bodoni Moda',serif;font-style:italic;font-weight:400;color:#22D3EE;text-shadow:0 0 30px rgba(34,211,238,.45)}
+.sub{font-weight:300;color:rgba(248,250,252,.6);letter-spacing:.3px}
+.bottom-url{font-family:'Bodoni Moda',serif;font-weight:700;color:#F8FAFC}
+.stats-inline{display:flex;flex-wrap:wrap;gap:10px 18px;font-size:12px;color:rgba(248,250,252,.5);letter-spacing:.3px;line-height:1.6}
+.stats-inline strong{font-family:'Bodoni Moda',serif;font-weight:700;color:#D4AF37;margin-right:5px}
+.brand-mark{font-family:'Bodoni Moda',serif;font-weight:700;letter-spacing:3px;color:rgba(255,255,255,.7)}
+
+/* ───── 1080×1080 SQUARE POST (Instagram feed) ───── */
+.tpl--square{width:540px;height:540px}
+.tpl--square .tpl__inner{padding:48px 44px}
+.tpl--square .capitulo{font-size:9.5px}
+.tpl--square .sigil{width:7px;height:7px}
+.tpl--square .brand-mark{font-size:12px}
+.tpl--square .divider{margin:14px 0}
+.tpl--square .divider span{width:30px}
+.tpl--square .title{font-size:42px;margin:0 0 10px;letter-spacing:-.5px}
+.tpl--square .sub{font-size:13px}
+.tpl--square .stats-inline{font-size:10px;gap:6px 14px}
+.tpl--square .stats-inline strong{font-size:13px}
+.tpl--square .bottom-url{font-size:14px;letter-spacing:.5px}
+
+/* ───── 1080×1920 STORY (Instagram story · WhatsApp status · TikTok cover) ───── */
+.tpl--story{width:300px;height:533px}
+.tpl--story .tpl__inner{padding:40px 32px}
+.tpl--story .capitulo{font-size:8px;letter-spacing:3px}
+.tpl--story .sigil{width:6px;height:6px}
+.tpl--story .brand-mark{font-size:10px;letter-spacing:2.5px}
+.tpl--story .divider{margin:18px 0}
+.tpl--story .divider span{width:22px}
+.tpl--story .title{font-size:34px;line-height:1.08;letter-spacing:-.5px;margin:0 0 16px}
+.tpl--story .sub{font-size:11px;line-height:1.5}
+.tpl--story .stats-inline{font-size:8.5px;gap:5px 10px;justify-content:center}
+.tpl--story .stats-inline strong{font-size:11px}
+.tpl--story .bottom-url{font-size:13px;text-align:center}
+.tpl--story .story-mid{flex:1;display:flex;flex-direction:column;justify-content:center;text-align:center;align-items:center}
+.tpl--story .story-bottom{text-align:center}
+
+/* ───── 1200×675 TWITTER CARD ───── */
+.tpl--twitter{width:600px;height:337px}
+.tpl--twitter .tpl__inner{padding:32px 40px;display:flex;flex-direction:column;justify-content:space-between}
+.tpl--twitter .capitulo{font-size:9px}
+.tpl--twitter .sigil{width:6px;height:6px}
+.tpl--twitter .brand-mark{font-size:13px}
+.tpl--twitter .topbar{display:flex;align-items:center;justify-content:space-between}
+.tpl--twitter .divider{margin:8px 0}
+.tpl--twitter .divider span{width:30px}
+.tpl--twitter .title{font-size:34px;letter-spacing:-.5px;margin:0 0 6px}
+.tpl--twitter .sub{font-size:13px}
+.tpl--twitter .stats-inline{font-size:10px;gap:4px 14px}
+.tpl--twitter .stats-inline strong{font-size:13px}
+.tpl--twitter .bottom-url{font-size:14px;letter-spacing:.4px}
+.tpl--twitter .bottom-row{display:flex;align-items:center;justify-content:space-between;gap:20px}
+
+/* ───── 1080×1920 REEL COVER (cita poderosa centrada) ───── */
+.tpl--reel{width:300px;height:533px}
+.tpl--reel .tpl__inner{padding:48px 36px;justify-content:center;align-items:center;text-align:center}
+.tpl--reel .capitulo{font-size:8px;letter-spacing:3px;margin-bottom:18px}
+.tpl--reel .sigil{width:6px;height:6px}
+.tpl--reel .reel-tag{font-family:'Bodoni Moda',serif;font-style:italic;font-size:14px;color:rgba(212,175,55,.85);margin-bottom:12px;letter-spacing:.4px}
+.tpl--reel .title{font-size:42px;line-height:1.05;letter-spacing:-.5px;margin:0;text-align:center}
+.tpl--reel .reel-meta{margin-top:24px;font-family:'Jost',sans-serif;font-size:10px;color:rgba(255,255,255,.45);letter-spacing:3px;text-transform:uppercase}
+.tpl--reel .reel-domain{font-family:'Bodoni Moda',serif;font-size:14px;color:#F8FAFC;margin-top:6px;letter-spacing:.5px}
+
+.copy-block{max-width:760px;margin:32px auto;padding:24px 32px;background:#111;border:1px solid #333;border-radius:12px;font-size:13px;line-height:1.7;color:#bbb}
+.copy-block h3{font-family:'Bodoni Moda',serif;font-size:18px;color:#22D3EE;margin-bottom:12px;letter-spacing:.3px}
+.copy-block code{display:block;background:#000;padding:14px 18px;border-radius:6px;color:#F8FAFC;border:1px solid #222;margin:8px 0;font-family:monospace;font-size:13px;white-space:pre-wrap}
+.copy-block .tag{display:inline-block;font-size:11px;color:#D4AF37;background:rgba(212,175,55,.1);padding:3px 10px;border-radius:4px;letter-spacing:1px;margin-right:6px}
+</style>
+</head>
+<body>
+
+<div class="guide">
+  <h1>Kit de redes · NeuroForza App</h1>
+  <p>Cinco plantillas que mantienen el factor "drop secreto". Coherentes con la sección de <code>neuroforza.com</code>.</p>
+
+  <h2>Cómo descargar como PNG</h2>
+  <ul>
+    <li>Chrome DevTools (F12) → <code>Ctrl+Shift+P</code> → escribe "Capture node screenshot"</li>
+    <li>Selecciona el <code>&lt;div class="tpl"&gt;</code> de la plantilla que quieras → ejecuta el comando → PNG cae a Descargas con dimensiones EXACTAS</li>
+    <li>Alternativa simple · Snipping Tool de Windows con captura rectangular sobre la plantilla</li>
+  </ul>
+
+  <h2>Cómo postear</h2>
+  <ul>
+    <li><strong>Instagram feed</strong> → usa <em>Square 1080×1080</em></li>
+    <li><strong>Instagram story / WhatsApp status / TikTok cover</strong> → usa <em>Story 1080×1920</em></li>
+    <li><strong>X / Twitter card</strong> → usa <em>1200×675</em> (también funciona para LinkedIn link posts)</li>
+    <li><strong>Reel cover</strong> → usa <em>Reel 1080×1920</em> (versión más impactante con cita centrada)</li>
+  </ul>
+
+  <h2>Frecuencia recomendada</h2>
+  <ul>
+    <li>3-4 posts por semana · varia la palabra final (fisioterapia → rehabilitación → razonamiento → decisión clínica)</li>
+    <li>Una vez por semana subir un reel con tipografía animada de la frase</li>
+    <li>Cada 10 días una story que repite la fecha "Verano 2026" sin más explicación</li>
+  </ul>
+</div>
+
+<!-- ════════════ 1 · INSTAGRAM POST SQUARE 1080×1080 (mostrado a escala 540×540) ════════════ -->
+<section class="section">
+  <div class="section__head">
+    <div class="section__title">Instagram feed · post cuadrado</div>
+    <div class="section__dims">1080 × 1080 px · mostrado a 50%</div>
+  </div>
+  <div class="canvas-row">
+    <div class="tpl tpl--square" data-export-name="square-fisioterapia">
+      <div class="tpl__scanlines"></div><div class="tpl__glow"></div><div class="tpl__noise"></div>
+      <div class="tpl__inner">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <div class="capitulo"><span class="sigil"></span>Capítulo 00 · Clasificado</div>
+          <div class="brand-mark">NEUROFORZA</div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:20px 0">
+          <div class="divider"><span></span><span class="dot"></span><span></span></div>
+          <h1 class="title">Algo cambió en la <em>fisioterapia</em>.</h1>
+          <p class="sub">Verano 2026 · acceso por invitación</p>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:16px">
+          <div class="stats-inline">
+            <span><strong>1,501</strong>Artículos</span>
+            <span><strong>671</strong>Protocolos</span>
+            <span><strong>0</strong>Nube</span>
+          </div>
+          <div class="bottom-url">neuroforza.com</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tpl tpl--square" data-export-name="square-rehabilitacion">
+      <div class="tpl__scanlines"></div><div class="tpl__glow"></div><div class="tpl__noise"></div>
+      <div class="tpl__inner">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <div class="capitulo"><span class="sigil"></span>Capítulo 00 · Clasificado</div>
+          <div class="brand-mark">NEUROFORZA</div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:20px 0">
+          <div class="divider"><span></span><span class="dot"></span><span></span></div>
+          <h1 class="title">Algo cambió en la <em>rehabilitación</em>.</h1>
+          <p class="sub">Verano 2026 · acceso por invitación</p>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:16px">
+          <div class="stats-inline">
+            <span><strong>1,501</strong>Artículos</span>
+            <span><strong>671</strong>Protocolos</span>
+            <span><strong>0</strong>Nube</span>
+          </div>
+          <div class="bottom-url">neuroforza.com</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ 2 · INSTAGRAM STORY / WHATSAPP / TIKTOK 1080×1920 (mostrado a 300×533) ════════════ -->
+<section class="section">
+  <div class="section__head">
+    <div class="section__title">Story · WhatsApp status · TikTok cover</div>
+    <div class="section__dims">1080 × 1920 px · mostrado a ~28%</div>
+  </div>
+  <div class="canvas-row">
+    <div class="tpl tpl--story" data-export-name="story-fisioterapia">
+      <div class="tpl__scanlines"></div><div class="tpl__glow"></div><div class="tpl__noise"></div>
+      <div class="tpl__inner">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <div class="capitulo"><span class="sigil"></span>Cap 00</div>
+          <div class="brand-mark">NF</div>
+        </div>
+        <div class="story-mid">
+          <div class="divider"><span></span><span class="dot"></span><span></span></div>
+          <h1 class="title">Algo cambió en la <em>fisioterapia</em>.</h1>
+          <p class="sub">Lo construimos en silencio<br>durante 90 días.</p>
+        </div>
+        <div class="story-bottom">
+          <div class="stats-inline" style="justify-content:center;margin-bottom:14px">
+            <span><strong>1,501</strong>Artículos</span>
+            <span><strong>671</strong>Protocolos</span>
+            <span><strong>0</strong>Nube</span>
+          </div>
+          <div class="bottom-url">Verano 2026 · neuroforza.com</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tpl tpl--story" data-export-name="story-razonamiento">
+      <div class="tpl__scanlines"></div><div class="tpl__glow"></div><div class="tpl__noise"></div>
+      <div class="tpl__inner">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <div class="capitulo"><span class="sigil"></span>Cap 00</div>
+          <div class="brand-mark">NF</div>
+        </div>
+        <div class="story-mid">
+          <div class="divider"><span></span><span class="dot"></span><span></span></div>
+          <h1 class="title">Algo cambió en el <em>razonamiento clínico</em>.</h1>
+          <p class="sub">Sin IA. Sin nube.<br>Sin compromiso.</p>
+        </div>
+        <div class="story-bottom">
+          <div class="stats-inline" style="justify-content:center;margin-bottom:14px">
+            <span><strong>1,501</strong>Artículos</span>
+            <span><strong>671</strong>Protocolos</span>
+            <span><strong>0</strong>Nube</span>
+          </div>
+          <div class="bottom-url">Verano 2026 · neuroforza.com</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ 3 · TWITTER / LINKEDIN CARD 1200×675 (mostrado a 600×337) ════════════ -->
+<section class="section">
+  <div class="section__head">
+    <div class="section__title">Twitter / X · LinkedIn link card</div>
+    <div class="section__dims">1200 × 675 px · mostrado a 50%</div>
+  </div>
+  <div class="canvas-row">
+    <div class="tpl tpl--twitter" data-export-name="twitter-card">
+      <div class="tpl__scanlines"></div><div class="tpl__glow"></div><div class="tpl__noise"></div>
+      <div class="tpl__inner">
+        <div class="topbar">
+          <div class="capitulo"><span class="sigil"></span>Capítulo 00 · Clasificado</div>
+          <div class="brand-mark">NEUROFORZA</div>
+        </div>
+        <div>
+          <div class="divider" style="justify-content:flex-start"><span></span><span class="dot"></span></div>
+          <h1 class="title">Algo cambió en la <em>fisioterapia</em>.</h1>
+          <p class="sub">Verano 2026 · acceso por invitación · sin IA · sin nube</p>
+        </div>
+        <div class="bottom-row">
+          <div class="stats-inline">
+            <span><strong>1,501</strong>Artículos</span>
+            <span><strong>1,631</strong>Ejercicios</span>
+            <span><strong>671</strong>Protocolos</span>
+            <span><strong>0</strong>Nube</span>
+          </div>
+          <div class="bottom-url">neuroforza.com</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ 4 · REEL COVER 1080×1920 (mostrado a 300×533) ════════════ -->
+<section class="section">
+  <div class="section__head">
+    <div class="section__title">Reel cover · cita centrada</div>
+    <div class="section__dims">1080 × 1920 px · mostrado a ~28%</div>
+  </div>
+  <div class="canvas-row">
+    <div class="tpl tpl--reel" data-export-name="reel-fisio">
+      <div class="tpl__scanlines"></div><div class="tpl__glow"></div><div class="tpl__noise"></div>
+      <div class="tpl__inner">
+        <div class="capitulo"><span class="sigil"></span>Cap 00 · Clasificado</div>
+        <div class="reel-tag">— de un fisio para fisios</div>
+        <h1 class="title">Algo cambió en la <em>fisioterapia</em>.</h1>
+        <div class="reel-meta">Verano 2026 · invitación</div>
+        <div class="reel-domain">neuroforza.com</div>
+      </div>
+    </div>
+
+    <div class="tpl tpl--reel" data-export-name="reel-decision">
+      <div class="tpl__scanlines"></div><div class="tpl__glow"></div><div class="tpl__noise"></div>
+      <div class="tpl__inner">
+        <div class="capitulo"><span class="sigil"></span>Cap 00 · Clasificado</div>
+        <div class="reel-tag">— sin IA · sin nube</div>
+        <h1 class="title">Algo cambió en la <em>decisión clínica</em>.</h1>
+        <div class="reel-meta">Verano 2026 · invitación</div>
+        <div class="reel-domain">neuroforza.com</div>
+      </div>
+    </div>
+
+    <div class="tpl tpl--reel" data-export-name="reel-practica">
+      <div class="tpl__scanlines"></div><div class="tpl__glow"></div><div class="tpl__noise"></div>
+      <div class="tpl__inner">
+        <div class="capitulo"><span class="sigil"></span>Cap 00 · Clasificado</div>
+        <div class="reel-tag">— construido en CDMX</div>
+        <h1 class="title">Algo cambió en la <em>práctica diaria</em>.</h1>
+        <div class="reel-meta">Verano 2026 · invitación</div>
+        <div class="reel-domain">neuroforza.com</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ COPY KIT · texto para acompañar los posts ════════════ -->
+<div class="copy-block">
+  <h3>Copy para acompañar los posts</h3>
+
+  <p><span class="tag">INSTAGRAM</span> Variantes para el caption:</p>
+  <code>Algo cambió.
+Lo construimos en silencio durante 90 días.
+Sin IA. Sin nube. Sin compromiso.
+
+Verano 2026 · neuroforza.com
+Acceso por invitación.
+
+#NeuroForza #Fisioterapia #RehabilitaciónBasadaEnEvidencia #CDMX</code>
+
+  <p><span class="tag">X / TWITTER</span> Tweet · 240 chars:</p>
+  <code>Algo cambió en la fisioterapia.
+
+1,501 artículos médicos citados.
+671 protocolos clínicos.
+0 datos en la nube.
+
+Verano 2026 · acceso por invitación.
+
+neuroforza.com</code>
+
+  <p><span class="tag">WHATSAPP STATUS</span> Texto corto:</p>
+  <code>Algo cambió.
+Verano 2026.
+neuroforza.com</code>
+
+  <p><span class="tag">LINKEDIN</span> Post largo · 600 chars:</p>
+  <code>Durante 90 días construimos algo distinto.
+
+Mientras todos prometen "IA clínica" con LLMs que alucinan y mandan datos de pacientes a la nube, nosotros hicimos lo contrario.
+
+NeuroForza App · motor de razonamiento clínico para fisioterapia.
+- 1,501 artículos médicos citados como evidencia
+- 671 protocolos clínicos con plan de fases
+- 34 áreas clínicas con razonamiento dedicado
+- 0 datos en la nube · 100% local cifrado
+
+Verano 2026 · acceso por invitación.
+
+neuroforza.com</code>
+
+  <p><span class="tag">HASHTAGS</span> Pool de hashtags (mezcla 5-8 por post):</p>
+  <code>#NeuroForza #Fisioterapia #FisioterapiaMexico #Rehabilitación #RehabilitaciónBasadaEnEvidencia #CDMX #MotorClínico #InteligenciaClínica #SinIA #DatosLocales #SoftwareClínico #TerapiaFísica #EvidenciaCientífica #PMID #FisioMexico</code>
+</div>
+
+</body>
+</html>

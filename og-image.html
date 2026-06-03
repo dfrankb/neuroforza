@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>NeuroForza · og-image (1200×630)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:#0a0a0a;color:#F8FAFC;font-family:'Jost',sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
+.howto{position:fixed;top:12px;left:12px;font-size:11px;color:#888;background:#000;border:1px solid #333;padding:8px 12px;border-radius:6px;font-family:monospace;z-index:100;max-width:340px;line-height:1.5}
+.howto strong{color:#22D3EE}
+
+/* Canvas 1200×630 exacto */
+.og{position:relative;width:1200px;height:630px;background:#020308;overflow:hidden;font-family:'Jost',sans-serif}
+.og *{position:relative}
+.og__scanlines{position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.018) 0,rgba(255,255,255,.018) 1px,transparent 1px,transparent 3px);pointer-events:none}
+.og__glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:120%;height:160%;background:radial-gradient(ellipse at center,rgba(212,175,55,.1) 0%,rgba(34,211,238,.05) 35%,transparent 70%);pointer-events:none}
+.og__noise{position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9' numOctaves='3'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:.5;pointer-events:none;mix-blend-mode:overlay}
+
+.og__inner{position:absolute;inset:0;padding:60px 70px;display:flex;flex-direction:column;justify-content:space-between;z-index:1}
+.og__topbar{display:flex;align-items:center;justify-content:space-between}
+.og__capitulo{display:flex;align-items:center;gap:14px;font-family:'Jost',sans-serif;font-size:15px;font-weight:600;letter-spacing:5px;color:#FF3737;text-transform:uppercase;text-shadow:0 0 16px rgba(255,55,55,.5)}
+.og__sigil{width:10px;height:10px;border-radius:50%;background:#FF3737;box-shadow:0 0 14px rgba(255,55,55,.7)}
+.og__brand{font-family:'Bodoni Moda',serif;font-size:24px;font-weight:700;letter-spacing:3.5px;color:#F8FAFC}
+
+.og__main{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;flex:1;padding:30px 0}
+.og__divider-tiny{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.og__divider-tiny span{height:1px;width:40px;background:linear-gradient(90deg,transparent,rgba(212,175,55,.5))}
+.og__divider-tiny span:last-child{background:linear-gradient(90deg,rgba(212,175,55,.5),transparent)}
+.og__divider-dot{width:6px;height:6px;border-radius:50%;background:#D4AF37;box-shadow:0 0 12px rgba(212,175,55,.6)}
+.og__title{font-family:'Bodoni Moda',serif;font-size:96px;font-weight:700;line-height:1.05;letter-spacing:-1.5px;color:#F8FAFC;margin-bottom:20px;text-shadow:0 4px 32px rgba(0,0,0,.6)}
+.og__title em{font-family:'Bodoni Moda',serif;font-style:italic;font-weight:400;color:#22D3EE;text-shadow:0 0 36px rgba(34,211,238,.45)}
+.og__sub{font-family:'Jost',sans-serif;font-size:22px;font-weight:300;color:rgba(248,250,252,.6);letter-spacing:.3px}
+
+.og__bottom{display:flex;align-items:center;justify-content:space-between;gap:40px}
+.og__stats{display:flex;gap:36px;flex-wrap:wrap}
+.og__stat{display:flex;flex-direction:column}
+.og__stat-num{font-family:'Bodoni Moda',serif;font-size:34px;font-weight:700;color:#D4AF37;line-height:1}
+.og__stat-lbl{font-size:11px;color:rgba(255,255,255,.45);letter-spacing:1.5px;text-transform:uppercase;margin-top:4px}
+.og__url{text-align:right}
+.og__url-line{font-family:'Jost',sans-serif;font-size:14px;font-weight:600;letter-spacing:2px;color:#22D3EE;text-transform:uppercase}
+.og__url-domain{font-family:'Bodoni Moda',serif;font-size:26px;font-weight:700;color:#F8FAFC;letter-spacing:.5px;margin-top:4px}
+</style>
+</head>
+<body>
+
+<div class="howto">
+<strong>Cómo bajar como PNG</strong><br>
+1. Chrome DevTools (F12) → device toolbar (Ctrl+Shift+M)<br>
+2. Custom · 1200 × 630 · DPR 1<br>
+3. ⋮ menú DevTools → "Capture node screenshot" sobre &lt;div class="og"&gt;<br>
+4. PNG cae a Descargas · súbelo a /og-image.png en el repo
+</div>
+
+<div class="og" id="ogCanvas">
+  <div class="og__scanlines"></div>
+  <div class="og__glow"></div>
+  <div class="og__noise"></div>
+
+  <div class="og__inner">
+    <div class="og__topbar">
+      <div class="og__capitulo">
+        <span class="og__sigil"></span>
+        Capítulo 00 · Clasificado
+      </div>
+      <div class="og__brand">NEUROFORZA</div>
+    </div>
+
+    <div class="og__main">
+      <div class="og__divider-tiny"><span></span><span class="og__divider-dot"></span><span></span></div>
+      <h1 class="og__title">Algo cambió en la <em>fisioterapia</em>.</h1>
+      <p class="og__sub">Verano 2026 · acceso por invitación · sin IA · sin nube</p>
+    </div>
+
+    <div class="og__bottom">
+      <div class="og__stats">
+        <div class="og__stat"><span class="og__stat-num">1,501</span><span class="og__stat-lbl">Artículos</span></div>
+        <div class="og__stat"><span class="og__stat-num">1,631</span><span class="og__stat-lbl">Ejercicios</span></div>
+        <div class="og__stat"><span class="og__stat-num">671</span><span class="og__stat-lbl">Protocolos</span></div>
+        <div class="og__stat"><span class="og__stat-num">0</span><span class="og__stat-lbl">Nube</span></div>
+      </div>
+      <div class="og__url">
+        <div class="og__url-line">Lista de invitados</div>
+        <div class="og__url-domain">neuroforza.com</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
