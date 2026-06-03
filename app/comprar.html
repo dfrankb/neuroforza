@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Planes y precios — NeuroForza</title>
+<meta name="description" content="Elige tu plan NeuroForza. Aprendiz gratis · Profesional $249/mes · Clínica $199/seat/mes. Cobro mensual recurrente seguro con Mercado Pago.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#050810;--surface:rgba(13,17,23,0.7);--gold:#D4AF37;--gold-glow:rgba(212,175,55,0.15);
+  --cyan:#22D3EE;--cyan-glow:rgba(34,211,238,0.08);--text:#F0F2F5;--text-2:rgba(240,242,245,0.65);
+  --text-3:rgba(240,242,245,0.35);--border:rgba(255,255,255,0.06);--radius:16px;
+  --success:#22c55e;--danger:#ff6b6b;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Jost',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.6}
+.container{max-width:1080px;margin:0 auto;padding:0 28px}
+a{color:inherit;text-decoration:none}
+
+/* ── Top nav ── */
+.topbar{padding:24px 0;border-bottom:1px solid var(--border)}
+.topbar-inner{max-width:1080px;margin:0 auto;padding:0 28px;display:flex;justify-content:space-between;align-items:center}
+.topbar-brand{font-family:'Bodoni Moda',serif;font-size:20px;font-weight:700;letter-spacing:2px}
+.topbar-back{font-size:13px;color:var(--text-2);transition:color .2s}
+.topbar-back:hover{color:var(--cyan)}
+
+/* ── Hero ── */
+.hero{padding:80px 0 48px;text-align:center}
+.hero-eyebrow{font-size:12px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:20px}
+.hero-title{font-family:'Bodoni Moda',serif;font-size:clamp(32px,5vw,52px);font-weight:700;margin-bottom:20px;line-height:1.15}
+.hero-sub{font-size:17px;color:var(--text-2);max-width:620px;margin:0 auto;line-height:1.7}
+
+/* ── Pricing grid ── */
+.pricing-section{padding:48px 0 80px}
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.p-card{background:var(--surface);backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:var(--radius);padding:36px 28px;display:flex;flex-direction:column;transition:all .3s}
+.p-card:hover{border-color:var(--cyan);transform:translateY(-4px)}
+.p-card.featured{border-color:var(--gold);box-shadow:0 0 80px rgba(212,175,55,0.08);position:relative}
+.p-card.featured::before{content:"MÁS POPULAR";position:absolute;top:-10px;right:24px;background:var(--gold);color:#000;font-size:10px;font-weight:700;letter-spacing:1.5px;padding:4px 12px;border-radius:6px}
+.p-name{font-size:20px;font-weight:700;margin-bottom:6px}
+.p-tagline{font-size:13px;color:var(--text-3);margin-bottom:20px}
+.p-price{font-family:'Bodoni Moda',serif;font-size:42px;font-weight:700;margin:8px 0 24px;background:linear-gradient(135deg,var(--gold),#E8C84A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
+.p-price span{font-size:14px;font-weight:400;-webkit-text-fill-color:var(--text-3)}
+.p-features{list-style:none;text-align:left;margin:0 0 28px;flex:1}
+.p-features li{font-size:13.5px;color:var(--text-2);padding:10px 0;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:10px}
+.p-features li::before{content:"✓";color:var(--cyan);font-weight:700;flex-shrink:0;margin-top:1px}
+.p-features li.no::before{content:"✕";color:var(--text-3)}
+.p-features li.no{color:var(--text-3)}
+.p-cta-wrap{margin-top:auto}
+.p-cta{display:block;width:100%;padding:14px 24px;border-radius:12px;font-family:'Jost';font-size:14px;font-weight:700;text-align:center;cursor:pointer;border:none;transition:all .25s}
+.p-cta-gold{background:var(--gold);color:#000}
+.p-cta-gold:hover{box-shadow:0 0 30px rgba(212,175,55,0.3);transform:translateY(-1px)}
+.p-cta-ghost{background:transparent;border:1.5px solid rgba(255,255,255,0.15);color:var(--text)}
+.p-cta-ghost:hover{border-color:var(--cyan);color:var(--cyan)}
+.p-cta-cyan{background:var(--cyan);color:#000}
+.p-cta-cyan:hover{box-shadow:0 0 30px rgba(34,211,238,0.3);transform:translateY(-1px)}
+
+/* ── Modal de email ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(5,8,16,0.85);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;z-index:1000;padding:24px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:36px;max-width:440px;width:100%;animation:modalIn .3s cubic-bezier(.16,1,.3,1)}
+@keyframes modalIn{from{opacity:0;transform:translateY(20px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+.modal-close{position:absolute;top:16px;right:16px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;background:transparent;border:none;color:var(--text-2);font-size:20px;cursor:pointer;border-radius:50%}
+.modal-close:hover{color:var(--text);background:rgba(255,255,255,.06)}
+.modal-eyebrow{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.modal-title{font-family:'Bodoni Moda',serif;font-size:24px;font-weight:700;margin-bottom:8px}
+.modal-sub{font-size:14px;color:var(--text-2);margin-bottom:24px;line-height:1.6}
+.modal-tier-summary{background:var(--cyan-glow);border:1px solid var(--cyan);border-radius:12px;padding:14px 16px;margin-bottom:20px;font-size:13px}
+.modal-tier-summary strong{color:var(--cyan)}
+.input-wrap{margin-bottom:16px}
+.input-label{font-size:12px;color:var(--text-3);margin-bottom:6px;letter-spacing:0.3px;display:block}
+.input-field{width:100%;padding:14px 16px;background:rgba(255,255,255,0.04);border:1.5px solid var(--border);border-radius:10px;color:var(--text);font-family:'Jost';font-size:15px;transition:border-color .2s}
+.input-field:focus{outline:none;border-color:var(--cyan)}
+.input-error{font-size:12px;color:var(--danger);margin-top:6px;display:none}
+.input-error.visible{display:block}
+.modal-submit{width:100%;padding:16px;background:var(--gold);color:#000;border:none;border-radius:12px;font-family:'Jost';font-size:15px;font-weight:700;cursor:pointer;transition:all .2s;margin-top:8px}
+.modal-submit:hover:not(:disabled){box-shadow:0 0 30px rgba(212,175,55,0.3);transform:translateY(-1px)}
+.modal-submit:disabled{opacity:.6;cursor:not-allowed}
+.modal-fineprint{font-size:11px;color:var(--text-3);text-align:center;margin-top:14px;line-height:1.5}
+.modal-fineprint a{color:var(--cyan)}
+
+/* ── Loader inline ── */
+.loader{display:none;align-items:center;justify-content:center;gap:8px;font-size:13px;color:var(--text-2)}
+.loader.visible{display:flex}
+.loader-dot{width:6px;height:6px;background:var(--cyan);border-radius:50%;animation:loaderPulse 1.4s ease-in-out infinite}
+.loader-dot:nth-child(2){animation-delay:.2s}
+.loader-dot:nth-child(3){animation-delay:.4s}
+@keyframes loaderPulse{0%,80%,100%{opacity:.3;transform:scale(.85)}40%{opacity:1;transform:scale(1)}}
+
+/* ── FAQ ── */
+.faq-section{padding:80px 0 100px;border-top:1px solid var(--border)}
+.faq-title{font-family:'Bodoni Moda',serif;font-size:32px;font-weight:700;text-align:center;margin-bottom:48px}
+.faq-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;max-width:840px;margin:0 auto}
+.faq-card{padding:24px;background:var(--surface);border:1px solid var(--border);border-radius:12px}
+.faq-q{font-size:15px;font-weight:600;color:var(--text);margin-bottom:8px}
+.faq-a{font-size:13.5px;color:var(--text-2);line-height:1.7}
+
+/* ── Footer ── */
+footer{padding:32px 0;text-align:center;border-top:1px solid var(--border)}
+footer p{font-size:11px;color:var(--text-3)}
+footer a{color:var(--cyan)}
+
+@media(max-width:640px){
+  .hero{padding:48px 0 32px}
+  .pricing-section{padding:32px 0 64px}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="/app/" class="topbar-brand">NEUROFORZA</a>
+    <a href="/app/" class="topbar-back">← Conoce la app</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-eyebrow">Planes y precios</div>
+    <h1 class="hero-title">Cobramos cuando<br>la usas en serio</h1>
+    <p class="hero-sub">El motor de razonamiento clínico es gratis para que lo conozcas a fondo. Cuando lo uses con pacientes reales, eliges el plan que te corresponde según cómo trabajas.</p>
+  </div>
+</section>
+
+<section class="pricing-section">
+  <div class="container">
+    <div class="pricing-grid">
+
+      <!-- ─── APRENDIZ ─── -->
+      <div class="p-card">
+        <div class="p-name">Aprendiz</div>
+        <div class="p-tagline">Para estudiantes y curiosos</div>
+        <div class="p-price">Gratis</div>
+        <ul class="p-features">
+          <li>Motor de razonamiento clínico completo</li>
+          <li>5 pacientes demo para practicar</li>
+          <li>Catálogo de evidencia con 1,593 citas verificadas</li>
+          <li>14 dominios clínicos cubiertos</li>
+          <li>Guía de sesión en 3 capas pedagógicas</li>
+          <li class="no">Pacientes reales</li>
+          <li class="no">Documentos PDF oficiales</li>
+          <li class="no">Cobros y agenda</li>
+        </ul>
+        <div class="p-cta-wrap">
+          <a href="/app/" class="p-cta p-cta-ghost">Descargar gratis</a>
+        </div>
+      </div>
+
+      <!-- ─── PROFESIONAL ─── -->
+      <div class="p-card featured">
+        <div class="p-name">Profesional</div>
+        <div class="p-tagline">Fisioterapeuta titulado independiente</div>
+        <div class="p-price">$249 <span>MXN/mes</span></div>
+        <ul class="p-features">
+          <li>Todo lo de Aprendiz +</li>
+          <li>Pacientes reales <strong>ilimitados</strong></li>
+          <li>Documentos PDF oficiales (planes, recetas, notas)</li>
+          <li>Consentimiento informado firmado en pantalla</li>
+          <li>Agenda integrada con recordatorios automáticos</li>
+          <li>Cobros con factura simple</li>
+          <li>Verificación de cédula profesional integrada</li>
+          <li>Soporte directo por email</li>
+        </ul>
+        <div class="p-cta-wrap">
+          <button class="p-cta p-cta-gold" data-tier="profesional">Empezar plan Profesional</button>
+        </div>
+      </div>
+
+      <!-- ─── CLÍNICA ─── -->
+      <div class="p-card">
+        <div class="p-name">Clínica</div>
+        <div class="p-tagline">Múltiples terapeutas + dashboard</div>
+        <div class="p-price">$199 <span>MXN/seat/mes</span></div>
+        <ul class="p-features">
+          <li>Todo lo de Profesional +</li>
+          <li>Múltiples terapeutas en una sola clínica</li>
+          <li>Dashboard de ingresos por terapeuta</li>
+          <li>Asignación de pacientes entre el equipo</li>
+          <li>Terminales de pago (Clip, MercadoPago Point)</li>
+          <li>Estadísticas mensuales consolidadas</li>
+          <li>Onboarding personalizado del equipo</li>
+          <li>Soporte prioritario</li>
+        </ul>
+        <div class="p-cta-wrap">
+          <button class="p-cta p-cta-cyan" data-tier="clinica">Empezar plan Clínica</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Modal de email (para Profesional + Clínica) -->
+<div class="modal-overlay" id="emailModal">
+  <div class="modal" style="position:relative">
+    <button class="modal-close" id="modalClose" aria-label="Cerrar">✕</button>
+    <div class="modal-eyebrow">Paso 1 de 2</div>
+    <h2 class="modal-title">Configura tu suscripción</h2>
+    <p class="modal-sub">Te mandamos tu código de activación por email después de confirmar el pago en Mercado Pago.</p>
+
+    <div class="modal-tier-summary">
+      Plan seleccionado · <strong id="modalTierName">Profesional</strong> · <strong id="modalTierPrice">$249 MXN/mes</strong>
+    </div>
+
+    <div class="input-wrap">
+      <label class="input-label" for="emailInput">Tu correo electrónico</label>
+      <input type="email" id="emailInput" class="input-field" placeholder="fisio@ejemplo.com" autocomplete="email">
+      <div class="input-error" id="emailError">Ingresa un email válido</div>
+    </div>
+
+    <button class="modal-submit" id="modalSubmit">Continuar a Mercado Pago →</button>
+
+    <div class="loader" id="modalLoader" style="margin-top:16px">
+      <span>Generando enlace seguro</span>
+      <span class="loader-dot"></span><span class="loader-dot"></span><span class="loader-dot"></span>
+    </div>
+
+    <p class="modal-fineprint">Al continuar aceptas los <a href="/app/terminos.html">términos</a> y el <a href="/app/privacidad.html">aviso de privacidad</a>. Cobro automático mensual · cancela cuando quieras desde Ajustes en la app.</p>
+  </div>
+</div>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div class="container">
+    <h2 class="faq-title">Preguntas frecuentes</h2>
+    <div class="faq-grid">
+      <div class="faq-card">
+        <div class="faq-q">¿Cómo recibo la app después de pagar?</div>
+        <div class="faq-a">Al confirmar el pago en Mercado Pago, te llega un email con tu código de activación y el link para descargar la app. Abres la app, pegas el código, completas la verificación de cédula y listo.</div>
+      </div>
+      <div class="faq-card">
+        <div class="faq-q">¿Puedo cancelar cuando quiera?</div>
+        <div class="faq-a">Sí, sin penalidades ni preguntas. La cancelas desde Mercado Pago o desde Ajustes de la app. El acceso se mantiene hasta el final del periodo ya pagado.</div>
+      </div>
+      <div class="faq-card">
+        <div class="faq-q">¿Qué pasa con mis datos clínicos si cancelo?</div>
+        <div class="faq-a">Quedan en tu dispositivo cifrados. Puedes seguir consultándolos en modo lectura. Para volver a operar plenamente, reactivas la suscripción cuando quieras.</div>
+      </div>
+      <div class="faq-card">
+        <div class="faq-q">¿Necesito cédula profesional?</div>
+        <div class="faq-a">Para el plan Profesional y Clínica sí · es obligatoria por regulación. Para Aprendiz no, porque no operas con pacientes reales.</div>
+      </div>
+      <div class="faq-card">
+        <div class="faq-q">¿Funciona sin internet?</div>
+        <div class="faq-a">Sí. Todo el motor clínico corre 100% local en tu dispositivo. Solo necesitas internet para la verificación inicial de cédula y para el cobro mensual.</div>
+      </div>
+      <div class="faq-card">
+        <div class="faq-q">¿Comprobante fiscal?</div>
+        <div class="faq-a">Mercado Pago emite factura electrónica automática. La descargas desde tu cuenta MP o respondiendo al email del cobro.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>© NeuroForza · <a href="/app/terminos.html">Términos</a> · <a href="/app/privacidad.html">Privacidad</a> · <a href="mailto:hola@neuroforza.com">hola@neuroforza.com</a></p>
+  </div>
+</footer>
+
+<script>
+// ─── Tier metadata ───
+const TIERS = {
+  profesional: { label: "Plan Profesional", price: "$249 MXN/mes" },
+  clinica:     { label: "Plan Clínica (por seat)", price: "$199 MXN/seat/mes" },
+}
+
+const WORKER_URL = "https://neuroforza-activation.danfrank.workers.dev"
+
+// ─── Modal logic ───
+const modal       = document.getElementById("emailModal")
+const modalClose  = document.getElementById("modalClose")
+const modalSubmit = document.getElementById("modalSubmit")
+const modalLoader = document.getElementById("modalLoader")
+const emailInput  = document.getElementById("emailInput")
+const emailError  = document.getElementById("emailError")
+const tierNameEl  = document.getElementById("modalTierName")
+const tierPriceEl = document.getElementById("modalTierPrice")
+
+let selectedTier = null
+
+document.querySelectorAll("[data-tier]").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    selectedTier = btn.dataset.tier
+    const meta = TIERS[selectedTier]
+    if (!meta) return
+    tierNameEl.textContent = meta.label
+    tierPriceEl.textContent = meta.price
+    emailInput.value = ""
+    emailError.classList.remove("visible")
+    modalSubmit.disabled = false
+    modalLoader.classList.remove("visible")
+    modal.classList.add("open")
+    setTimeout(() => emailInput.focus(), 200)
+  })
+})
+
+modalClose.addEventListener("click", () => modal.classList.remove("open"))
+modal.addEventListener("click", (e) => {
+  if (e.target === modal) modal.classList.remove("open")
+})
+
+function isValidEmail(s) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s)
+}
+
+modalSubmit.addEventListener("click", async () => {
+  const email = emailInput.value.trim()
+  if (!isValidEmail(email)) {
+    emailError.classList.add("visible")
+    emailInput.focus()
+    return
+  }
+  emailError.classList.remove("visible")
+  modalSubmit.disabled = true
+  modalSubmit.textContent = "Procesando..."
+  modalLoader.classList.add("visible")
+
+  try {
+    const res = await fetch(`${WORKER_URL}/subscribe/individual`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ tier: selectedTier, email }),
+    })
+    const data = await res.json()
+    if (!res.ok || !data.ok || !data.initPoint) {
+      throw new Error(data.error || "No pudimos iniciar el cobro · intenta más tarde")
+    }
+    // Redirigir a MP Checkout hosted
+    window.location.href = data.initPoint
+  } catch (err) {
+    modalLoader.classList.remove("visible")
+    modalSubmit.disabled = false
+    modalSubmit.textContent = "Continuar a Mercado Pago →"
+    emailError.textContent = err.message || "Error · intenta más tarde"
+    emailError.classList.add("visible")
+  }
+})
+
+emailInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") modalSubmit.click()
+})
+</script>
+
+</body>
+</html>
