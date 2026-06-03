@@ -138,15 +138,99 @@ footer p{font-size:11px;color:var(--text-3)}
   </div>
 </section>
 
-<!-- ═══ STATS ═══ -->
+<!-- ═══ STATS · 5 cifras verificadas 2026-06-03 ═══ -->
 <div class="stats">
-  <div class="stats-inner">
-    <div class="stat"><div class="stat-number" data-auto="exercise-count">2,285</div><div class="stat-label">Ejercicios auditados</div></div>
-    <div class="stat"><div class="stat-number" data-auto="protocol-count">49</div><div class="stat-label">Protocolos con evidencia citable</div></div>
-    <div class="stat"><div class="stat-number" data-auto="pattern-count">23</div><div class="stat-label">Patrones compensatorios</div></div>
-    <div class="stat"><div class="stat-number">0</div><div class="stat-label">Competidores haciendo esto</div></div>
+  <div class="stats-inner" style="display:grid;grid-template-columns:repeat(5,1fr);gap:0">
+    <div class="stat"><div class="stat-number">1,501</div><div class="stat-label">PMIDs verificados</div></div>
+    <div class="stat"><div class="stat-number">1,631</div><div class="stat-label">Ejercicios auditados</div></div>
+    <div class="stat"><div class="stat-number">671</div><div class="stat-label">Protocolos con plan de fases</div></div>
+    <div class="stat"><div class="stat-number">34</div><div class="stat-label">Áreas clínicas cubiertas</div></div>
+    <div class="stat"><div class="stat-number">0</div><div class="stat-label">Datos en la nube</div></div>
   </div>
 </div>
+
+<!-- ═══ Explicación de cada número (qué significan · cómo se usan) ═══ -->
+<section class="section" style="padding:80px 0 60px;border-bottom:1px solid var(--border)">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:48px">
+      <div style="font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--cyan);margin-bottom:14px">Qué significan estos números</div>
+      <h2 class="section-title reveal" style="margin-bottom:14px">No son cifras de marketing.</h2>
+      <p class="section-sub reveal">Son la materia prima del motor. Esto es lo que cada número hace por tu sesión clínica.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr;gap:20px;max-width:840px;margin:0 auto">
+
+      <div class="reveal" style="display:grid;grid-template-columns:120px 1fr;gap:32px;align-items:start;padding:28px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)">
+        <div>
+          <div style="font-family:'Bodoni Moda',serif;font-size:42px;font-weight:700;background:linear-gradient(135deg,var(--gold),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1">1,501</div>
+          <div style="font-size:11px;color:var(--text-3);letter-spacing:0.5px;margin-top:4px">PMIDs verificados</div>
+        </div>
+        <div>
+          <h3 style="font-family:'Bodoni Moda',serif;font-size:18px;font-weight:700;margin-bottom:8px;color:var(--cyan)">Artículos médicos citados como evidencia</h3>
+          <p style="font-size:14px;color:var(--text-2);line-height:1.7">Cada decisión clínica del motor está anclada a un paper publicado y verificable en PubMed. PMID es el identificador único de cada artículo médico (algo así como el ISBN de un libro). Tocas el número y lees el abstract en pantalla sin salir de la app. Cero "porque sí" · cero IA inventando.</p>
+        </div>
+      </div>
+
+      <div class="reveal" style="display:grid;grid-template-columns:120px 1fr;gap:32px;align-items:start;padding:28px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)">
+        <div>
+          <div style="font-family:'Bodoni Moda',serif;font-size:42px;font-weight:700;background:linear-gradient(135deg,var(--gold),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1">1,631</div>
+          <div style="font-size:11px;color:var(--text-3);letter-spacing:0.5px;margin-top:4px">Ejercicios auditados</div>
+        </div>
+        <div>
+          <h3 style="font-family:'Bodoni Moda',serif;font-size:18px;font-weight:700;margin-bottom:8px;color:var(--cyan)">Cada ejercicio con su contexto clínico completo</h3>
+          <p style="font-size:14px;color:var(--text-2);line-height:1.7">No son ejercicios sueltos · cada uno tiene su técnica (concéntrico, isométrico, excéntrico, control motor), modalidad, equipo necesario, contraindicaciones específicas y nivel funcional mínimo (frágil, moderado, activo, atlético). El motor filtra automáticamente los que aplican a tu paciente · nunca te da "ponte a estirar" sin contexto.</p>
+        </div>
+      </div>
+
+      <div class="reveal" style="display:grid;grid-template-columns:120px 1fr;gap:32px;align-items:start;padding:28px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)">
+        <div>
+          <div style="font-family:'Bodoni Moda',serif;font-size:42px;font-weight:700;background:linear-gradient(135deg,var(--gold),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1">671</div>
+          <div style="font-size:11px;color:var(--text-3);letter-spacing:0.5px;margin-top:4px">Protocolos con plan de fases</div>
+        </div>
+        <div>
+          <h3 style="font-family:'Bodoni Moda',serif;font-size:18px;font-weight:700;margin-bottom:8px;color:var(--cyan)">Tratamiento estructurado en el tiempo · no recetas sueltas</h3>
+          <p style="font-size:14px;color:var(--text-2);line-height:1.7">Cuando el motor detecta un cuadro clínico, no te suelta una lista de ejercicios. Arma un plan dividido en fases (típicamente aguda → subaguda → mantenimiento → alta funcional), cada una con objetivos clínicos específicos, criterios de progresión y outcome measures que se revalúan en cada cita. Tú decides cuándo avanzar de fase con el botón "siguiente fase".</p>
+        </div>
+      </div>
+
+      <div class="reveal" style="display:grid;grid-template-columns:120px 1fr;gap:32px;align-items:start;padding:28px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)">
+        <div>
+          <div style="font-family:'Bodoni Moda',serif;font-size:42px;font-weight:700;background:linear-gradient(135deg,var(--gold),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1">34</div>
+          <div style="font-size:11px;color:var(--text-3);letter-spacing:0.5px;margin-top:4px">Áreas clínicas cubiertas</div>
+        </div>
+        <div>
+          <h3 style="font-family:'Bodoni Moda',serif;font-size:18px;font-weight:700;margin-bottom:8px;color:var(--cyan)">Razonamiento dedicado por especialidad · no molde único</h3>
+          <p style="font-size:14px;color:var(--text-2);line-height:1.7">Cada subespecialidad tiene su lógica de razonamiento dedicada · insuficiencia cardiaca razona distinto a EPOC, pediatría razona distinto a geriatría, piso pélvico distinto a vestibular. Cubrimos MSK, neuro, pediátrico, geriátrico, oncológico, cardiopulmonar, piso pélvico, vestibular, reumático, amputación, quemaduras, endocrino-metabólico, UCI/ICU-AW, y más · cada una con sus propias banderas rojas, criterios de progresión y outcome measures.</p>
+        </div>
+      </div>
+
+      <div class="reveal" style="display:grid;grid-template-columns:120px 1fr;gap:32px;align-items:start;padding:28px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)">
+        <div>
+          <div style="font-family:'Bodoni Moda',serif;font-size:42px;font-weight:700;background:linear-gradient(135deg,var(--gold),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1">0</div>
+          <div style="font-size:11px;color:var(--text-3);letter-spacing:0.5px;margin-top:4px">Datos en la nube</div>
+        </div>
+        <div>
+          <h3 style="font-family:'Bodoni Moda',serif;font-size:18px;font-weight:700;margin-bottom:8px;color:var(--cyan)">Tus pacientes nunca salen de tu dispositivo</h3>
+          <p style="font-size:14px;color:var(--text-2);line-height:1.7">Todo el motor corre 100% local. Datos de pacientes cifrados AES-256 en tu dispositivo con SQLCipher. Cero servidor central, cero dataset de entrenamiento, cero "anonimización" sospechosa. Cumples LFPDPPP/GDPR por diseño · no por promesa de un proveedor. Si quieres backup, va cifrado de extremo a extremo a tu Drive personal · controlas tú · cuándo y cuánto.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+@media(max-width:768px){
+  .stats-inner{grid-template-columns:repeat(2,1fr)!important}
+  .stats-inner .stat:nth-child(5){grid-column:span 2}
+  .stats-inner .stat{padding:20px 12px!important}
+  .stats-inner .stat-number{font-size:24px!important}
+}
+@media(max-width:480px){
+  .stats-inner{grid-template-columns:1fr!important}
+  .stats-inner .stat:nth-child(5){grid-column:auto}
+}
+</style>
 
 <!-- ═══ MANIFIESTO · Sin IA · Sin internet · Sin compromiso ═══ -->
 <section class="section" id="manifiesto" style="padding:80px 0 100px;border-bottom:1px solid var(--border)">
