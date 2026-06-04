@@ -94,7 +94,7 @@
       <div class="nf-drop__divider">
         <span></span><span class="nf-drop__divider-dot"></span><span></span>
       </div>
-      <h2 class="nf-drop__title">Algo cambió en la <em id="nfDropWord">fisioterapia</em>.</h2>
+      <h2 class="nf-drop__title">Algo cambió en <span id="nfDropArticle">la</span> <em id="nfDropWord">fisioterapia</em>.</h2>
       <p class="nf-drop__sub">Lo construimos en silencio durante 90 días.<br>Pronto vas a entender por qué.</p>
 
       <div class="nf-drop__meta">
@@ -204,18 +204,26 @@
   </style>
 
   <script>
-  // Easter egg · la palabra rota cada 3.5 segundos
+  // Easter egg · la palabra rota cada 3.5 segundos · artículo concuerda en género
   (function(){
-    const words = ["fisioterapia","rehabilitación","razonamiento clínico","decisión clínica","práctica diaria"]
-    const el = document.getElementById("nfDropWord")
-    if (!el) return
+    const words = [
+      { a: "la", w: "fisioterapia" },
+      { a: "la", w: "rehabilitación" },
+      { a: "el", w: "razonamiento clínico" },
+      { a: "la", w: "decisión clínica" },
+      { a: "la", w: "práctica diaria" },
+    ]
+    const wordEl = document.getElementById("nfDropWord")
+    const artEl = document.getElementById("nfDropArticle")
+    if (!wordEl || !artEl) return
     let i = 0
     setInterval(() => {
-      el.style.opacity = "0"
+      wordEl.style.opacity = "0"
       setTimeout(() => {
         i = (i + 1) % words.length
-        el.textContent = words[i]
-        el.style.opacity = "1"
+        artEl.textContent = words[i].a
+        wordEl.textContent = words[i].w
+        wordEl.style.opacity = "1"
       }, 400)
     }, 3500)
   })()
