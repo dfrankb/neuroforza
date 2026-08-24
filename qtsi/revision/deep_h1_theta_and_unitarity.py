@@ -1,0 +1,51 @@
+import numpy as np, itertools
+s1=np.array([[0,1],[1,0]],dtype=complex); s3=np.array([[1,0],[0,-1]],dtype=complex); I=np.eye(2,dtype=complex)
+Th=lambda M: s1@M.conj()@s1
+n=lambda A: np.abs(A).max()
+
+print("="*74)
+print("H1-A. What does Theta-covariance ALONE force, for a GENERAL 2x2 vertex?")
+print("="*74)
+print(" Theta M Theta^-1 = s1 M* s1.  Write V=[[a,b],[c,d]]:")
+print("   s1 V* s1 = [[d*,c*],[b*,a*]]   set equal to V  =>  d=a*,  c=b*")
+print(" So Theta-covariance alone => V = [[a, b],[b*, a*]]  -- the U(1,1) form.")
+print(" Numerical spot-check on random V of that form:")
+rng=np.random.default_rng(7)
+for _ in range(3):
+    a=complex(rng.normal(),rng.normal()); b=complex(rng.normal(),rng.normal())
+    V=np.array([[a,b],[np.conj(b),np.conj(a)]])
+    print(f"   |Theta(V)-V| = {n(Th(V)-V):.1e}   det = {np.linalg.det(V).real:+.4f} (real: {abs(np.linalg.det(V).imag)<1e-12})")
+print(" NOTE: this is STRONGER than the paper's (5.9). The paper assumes the ansatz")
+print(" V = I + w*s1 and gets 'w real'. Theta-covariance alone already delivers the")
+print(" U(1,1) form with no ansatz at all, and det V is automatically real.")
+
+print("\n"+"="*74)
+print("H1-B. Now ADD unitarity to the general Theta-covariant vertex.")
+print("="*74)
+print(" V=[[a,b],[b*,a*]]  =>  V^dag V = [[|a|^2+|b|^2, 2 a* b],[2 a b*, |a|^2+|b|^2]]")
+print(" Unitarity needs |a|^2+|b|^2 = 1 AND a* b = 0, i.e. a=0 OR b=0.")
+for lbl,(a,b) in [("b=0 (never folds)",(np.exp(0.7j),0)),("a=0 (always folds)",(0,np.exp(0.7j)))]:
+    V=np.array([[a,b],[np.conj(b),np.conj(a)]])
+    print(f"   {lbl:22} |Th(V)-V|={n(Th(V)-V):.1e}  |V^dV-I|={n(V.conj().T@V-I):.1e}")
+print(" Are those two physical? Check the full step T = V D:")
+th=0.3; D=np.diag([np.exp(-1j*th),np.exp(1j*th)])
+for lbl,V in [("b=0",np.diag([np.exp(0.7j),np.exp(-0.7j)])),("a=0",np.exp(0.7j)*s1)]:
+    T=V@D; print(f"   {lbl}: T^2 = I ? {n(T@T-I)<1e-12}   |tr T|={abs(np.trace(T)):.4f}   coupling between branches: {abs(T[0,1]):.4f}")
+print(" b=0: diagonal, the two branches never mix -> no fold dynamics at all.")
+print(" a=0: pure swap, T^2 = I -> period two, nothing propagates.")
+print(" => The incompatibility is STRUCTURAL, not an artifact of the linear ansatz.")
+print("    Theta-covariance + unitarity admits only the two degenerate vertices.")
+
+print("\n"+"="*74)
+print("H1-C. Is Theta a relabeling redundancy? (the justification the paper needs)")
+print("="*74)
+print(f" Theta^2 = I ?  {n(Th(Th(I+0.3*s1))-(I+0.3*s1))<1e-12}  -> it is an involution, as a relabeling must be.")
+print(" D = diag(e^-iEeps, e^+iEeps) is Theta-invariant for EVERY E:")
+for E in (0.1,1.0,7.3):
+    D=np.diag([np.exp(-1j*E*0.1),np.exp(1j*E*0.1)])
+    print(f"   E={E:<5} |Theta(D)-D| = {n(Th(D)-D):.1e}")
+print(" Meaning: swapping the branch labels AND conjugating the phase convention")
+print(" attached to them returns the same D. Theta is the statement that the split")
+print(" into 'forward' and 'backward' is a labeling, not a physical datum.")
+print(" Pure swap s1 alone is NOT a symmetry of D:")
+D=np.diag([np.exp(-1j*0.3),np.exp(1j*0.3)]); print(f"   |s1 D s1 - D| = {n(s1@D@s1-D):.1e}  -> the K in Theta=s1*K is not optional.")
