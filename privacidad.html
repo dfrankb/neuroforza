@@ -31,114 +31,146 @@
   <a href="/" class="back-link">← Volver a NeuroForza</a>
 
   <h1>Aviso de Privacidad</h1>
-  <p class="subtitle">Última actualización: 6 de mayo de 2026</p>
+  <p class="subtitle">Última actualización: 25 de agosto de 2026</p>
 
   <p>
-    Este aviso explica con claridad cómo NeuroForza trata los datos personales. Distinguimos tres capas de información porque tienen un trato distinto: el expediente clínico del paciente, los datos operativos del fisioterapeuta y los datos comerciales de la suscripción. Cada capa se describe por separado para que el usuario sepa exactamente qué sale del dispositivo y qué no.
+    Este aviso explica qué datos trata NeuroForza, para qué, y qué puedes hacer al respecto. Está redactado conforme a la Ley Federal de Protección de Datos Personales en Posesión de los Particulares publicada en el Diario Oficial de la Federación el 20 de marzo de 2025, con su última reforma del 14 de noviembre de 2025.
   </p>
 
-  <h2>1. Responsable del tratamiento</h2>
+  <h2>Quién responde por tus datos</h2>
   <p>
-    El profesional de la salud titular del dispositivo donde se instala NeuroForza es el responsable del tratamiento de los datos personales de sus pacientes, conforme al artículo 3 fracción XIV de la LFPDPPP. NeuroForza es el encargado técnico que provee la herramienta y las garantías de seguridad descritas en este aviso, sin acceso al expediente clínico de ningún paciente.
+    El responsable del tratamiento de los datos personales que se describen aquí es Dan Frank Bolton, persona física, con domicilio en Yama Alpes, Anillo Periférico 2165, Los Alpes, Álvaro Obregón, 01010, Ciudad de México. Para cualquier asunto relacionado con este aviso puedes escribir a <a href="mailto:soporte@neuroforza.com">soporte@neuroforza.com</a> o a <a href="mailto:danfrank@neuroforza.com">danfrank@neuroforza.com</a>.
+  </p>
+  <p>
+    NeuroForza es una aplicación para fisioterapeutas. Sirve para llevar los expedientes de sus pacientes, planear tratamientos y administrar la agenda de su consultorio.
   </p>
 
-  <h2>2. Capa 1 · Expediente clínico del paciente</h2>
+  <h2>Lo primero, porque cambia todo lo demás</h2>
   <p>
-    Esta capa contiene la información sensible del paciente: nombre, fecha de nacimiento, fotografía, datos de contacto, diagnósticos, sesiones SOAPIE, escalas de evaluación, planes terapéuticos, hallazgos de imagenología y documentos firmados.
+    Aquí hay dos tipos de información y no reciben el mismo trato.
+  </p>
+  <p>
+    NeuroForza trata datos del fisioterapeuta que usa la aplicación. De esos datos somos responsables nosotros, y de eso trata la mayor parte de este aviso.
+  </p>
+  <p>
+    Los datos de los pacientes son distintos. Viven cifrados dentro del teléfono del fisioterapeuta y, si él activa el respaldo, en su propia cuenta de Google Drive, también cifrados. La llave que los abre se guarda en su teléfono y en una carpeta privada de su propio Drive. Nosotros no tenemos esa llave, así que no podemos leer esos expedientes ni entregárselos a nadie, ni siquiera si quisiéramos. Respecto de esa información el responsable es el fisioterapeuta que la captura, y es él quien debe dar su propio aviso de privacidad a sus pacientes y recabar su consentimiento.
   </p>
   <div class="highlight">
-    <p>El expediente clínico del paciente nunca sale del dispositivo del fisioterapeuta. Se almacena localmente cifrado con SQLCipher (AES-256) y nunca se transmite a NeuroForza, a Mercado Pago, ni a ningún otro tercero.</p>
+    <p>
+      Esto no es una manera de lavarnos las manos. Es la razón por la que la aplicación está construida así: los datos de salud de una persona son de los más delicados que existen, y la forma más confiable de protegerlos de nosotros mismos es no tener nunca la llave.
+    </p>
   </div>
-  <p>Medidas técnicas que protegen esta capa:</p>
-  <ul>
-    <li>Base de datos local cifrada con SQLCipher (AES-256).</li>
-    <li>Acceso protegido por PIN y autenticación biométrica.</li>
-    <li>En Android: bloqueo de capturas de pantalla (FLAG_SECURE) sobre las pantallas con datos clínicos.</li>
-    <li>Credenciales locales almacenadas en el Keychain (iOS) o Keystore (Android) del sistema operativo.</li>
-    <li>Respaldo opcional cifrado en el Google Drive personal del fisioterapeuta, activable solo si el fisioterapeuta lo elige expresamente. Si no se activa, ningún dato clínico sale del dispositivo por esta vía.</li>
-  </ul>
 
-  <h2>3. Capa 2 · Datos operativos del fisioterapeuta</h2>
+  <h2>Qué datos tratamos y cuáles son sensibles</h2>
+  <h3>Del fisioterapeuta</h3>
   <p>
-    Para que la aplicación pueda licenciarse, mantenerse activa y enviar alertas de soporte técnico, NeuroForza opera un servidor en Cloudflare Workers que recibe únicamente:
+    Su nombre y su correo electrónico. El número de su cédula profesional y la fotografía de una identificación oficial, que se piden una sola vez al dar de alta la cuenta, para comprobar que quien va a manejar expedientes clínicos es de verdad un profesional de la salud. El nombre de su consultorio, si lo registra. Información técnica de su teléfono, como el modelo, la versión del sistema y un identificador del equipo, que sirve para reconocer sus dispositivos y para poder borrar a distancia el que le roben.
+  </p>
+  <h3>De los pacientes</h3>
+  <p>
+    Capturados por el fisioterapeuta dentro de la aplicación: nombre, fecha de nacimiento, motivo de consulta, evaluaciones, diagnósticos, planes de tratamiento, notas de sesión y, si el fisioterapeuta las toma, fotografías de postura. Estos son datos personales sensibles, porque revelan el estado de salud presente o futuro de una persona. Como se explicó arriba, nosotros no tenemos acceso a ellos.
+  </p>
+
+  <h2>Para qué usamos los datos del fisioterapeuta</h2>
+  <p>
+    Las siguientes finalidades son necesarias para prestar el servicio, así que no podemos dejar de tratarlos sin dejar de darlo: crear y mantener su cuenta y reconocer los equipos donde la usa; comprobar su cédula profesional al dar de alta; guardar y restaurar su respaldo; sincronizar su agenda con su calendario, si él lo activa; atender lo que nos pida por soporte; y cumplir con las obligaciones que nos impone la ley.
+  </p>
+  <p>
+    No usamos sus datos para publicidad, no los vendemos y no los entregamos a nadie para que los use por su cuenta.
+  </p>
+
+  <h2>Qué sale del teléfono, y hacia dónde</h2>
+  <p>
+    Para operar necesitamos apoyarnos en proveedores de servicio. Estos son todos, sin excepción, y qué recibe cada uno.
   </p>
   <ul>
-    <li>Identificador único del dispositivo donde está instalada la app.</li>
-    <li>Cédula profesional declarada por el fisioterapeuta, para verificación contra el registro de la SEP.</li>
-    <li>Eventos operativos predefinidos (código + timestamp), por ejemplo activación, verificación periódica de licencia o alertas técnicas.</li>
-    <li>Datos agregados sin contenido clínico cuando el fisioterapeuta forma parte de un grupo de clínica (ver capa 4).</li>
-  </ul>
-  <p>
-    Esta información sale del dispositivo y se almacena en Cloudflare Workers KV. Es información del fisioterapeuta como usuario profesional de la app, no del paciente. Cloudflare opera bajo su propia <a href="https://www.cloudflare.com/privacypolicy/">política de privacidad</a>.
-  </p>
-
-  <h2>4. Capa 3 · Datos comerciales de la suscripción mensual</h2>
-  <p>
-    Cuando el titular de una clínica activa la suscripción mensual recurrente, los datos del medio de pago (número de tarjeta, fecha de vencimiento, código de seguridad) se ingresan directamente en el portal de Mercado Pago. NeuroForza nunca recibe, transmite ni almacena esos datos. Mercado Pago es responsable del cumplimiento del estándar PCI-DSS sobre el medio de pago.
-  </p>
-  <p>NeuroForza recibe de Mercado Pago únicamente:</p>
-  <ul>
-    <li>Identificador del preapproval (suscripción autorizada).</li>
-    <li>Estado del pago (aprobado, rechazado, en proceso) y monto.</li>
-    <li>Notificaciones de cambios de estado (webhooks).</li>
-  </ul>
-  <p>
-    Mercado Pago opera bajo su propia <a href="https://www.mercadopago.com.mx/ayuda/politica-privacidad_299">política de privacidad</a> y bajo la regulación financiera mexicana aplicable.
-  </p>
-
-  <h2>5. Multi-clínica · grupos de clínica</h2>
-  <p>
-    Cuando un fisioterapeuta titular agrupa varios dispositivos bajo un mismo grupo de clínica para administrar el cobro consolidado:
-  </p>
-  <ul>
-    <li>El titular ve únicamente datos agregados de actividad de su clínica: cantidad de seats activos, monto total de la suscripción, totales monetarios cobrados o facturados por terapeuta del grupo.</li>
-    <li>El titular no tiene acceso al expediente clínico de los pacientes atendidos por los terapeutas miembros. Esa información permanece cifrada en cada dispositivo individual.</li>
-    <li>Cada terapeuta miembro mantiene su propio expediente bajo su exclusivo control profesional.</li>
-    <li>Cuando un dispositivo se desvincula del grupo, los datos clínicos permanecen en su dispositivo. El grupo no retiene datos clínicos de pacientes que no le pertenecen.</li>
+    <li>Google, si el fisioterapeuta conecta su cuenta, recibe el archivo de respaldo ya cifrado y los bloques de tiempo de su agenda. Ese archivo se guarda en el Drive del propio fisioterapeuta, no en uno nuestro.</li>
+    <li>Cloudflare aloja el servidor con el que la aplicación se comunica para activar licencias, reconocer equipos y recuperar cuentas. Ahí viaja su correo, el identificador de su equipo y su cédula al momento del alta. Nunca viajan expedientes de pacientes.</li>
+    <li>Un servicio de correo envía los mensajes de recuperación de cuenta y los avisos de seguridad. Recibe su correo electrónico y el texto de esos mensajes.</li>
+    <li>Un servicio de reportes de error recibe los fallos técnicos de la aplicación, para poder arreglarlos. Los reportes se limpian antes de salir del teléfono: no llevan nombres, ni correos, ni contenido de expedientes, y la aplicación no graba la pantalla. Lo que sí llevan es el tipo de error, en qué parte del código ocurrió y datos técnicos del equipo.</li>
+    <li>Para operar el servicio recibimos avisos administrativos por mensajería, por ejemplo cuando una cuenta queda pendiente de revisión. Esos avisos pueden incluir el nombre del consultorio o el correo del fisioterapeuta. Nunca incluyen datos de pacientes.</li>
   </ul>
 
-  <h2>6. Sistema de citas en línea</h2>
+  <h2>Si pides una cita por internet</h2>
   <p>
-    El formulario de citas en <a href="/agendar.html">neuroforza.com/agendar</a> recaba nombre, teléfono, fecha preferida y motivo de consulta. Estos datos se almacenan temporalmente (máximo 30 días) en un servidor de Cloudflare Workers con el único fin de coordinar la cita. Una vez confirmada o rechazada, los datos de contacto se manejan exclusivamente por el profesional tratante.
-  </p>
-
-  <h2>7. Finalidad del tratamiento</h2>
-  <ul>
-    <li><strong>Datos del paciente</strong>: gestión del expediente clínico conforme a NOM-004-SSA3-2012, registro longitudinal de evolución, generación de documentos clínicos y apoyo a la planeación terapéutica.</li>
-    <li><strong>Datos del fisioterapeuta</strong>: verificación de cédula vigente, licenciamiento por dispositivo, generación de documentos firmados, respaldo opcional en su nube personal.</li>
-    <li><strong>Datos de la suscripción</strong>: operación del cobro mensual recurrente, gestión del modelo multi-clínica, soporte técnico.</li>
-  </ul>
-
-  <h2>8. Derechos ARCO del paciente</h2>
-  <p>
-    Conforme a la LFPDPPP (artículos 22-35), el paciente tiene derecho a Acceder, Rectificar, Cancelar u Oponerse al tratamiento de sus datos personales. Para ejercer estos derechos, el paciente debe dirigirse directamente al fisioterapeuta responsable que lo atiende, ya que es él quien tiene la custodia técnica del expediente.
-  </p>
-
-  <h2>9. Lo que NeuroForza no hace</h2>
-  <ul>
-    <li>No transmite ni transfiere datos clínicos de pacientes a ningún servidor de NeuroForza ni a ningún tercero.</li>
-    <li>No utiliza servicios de analítica de usuarios, publicidad ni seguimiento entre aplicaciones.</li>
-    <li>No vende datos a terceros.</li>
-    <li>No comparte información con redes sociales.</li>
-    <li>No tiene forma técnica de leer, descifrar ni acceder remotamente al contenido del expediente clínico almacenado en el dispositivo del fisioterapeuta.</li>
-  </ul>
-
-  <h2>10. Documento legal completo</h2>
-  <p>
-    Este aviso es un resumen claro y responsable. El documento legal completo, con detalle por sección, retención, transferencias internacionales, cumplimiento normativo (LFPDPPP, NOM-004-SSA3-2012, NOM-005-SSA3-2018, Apple, Google) y datos de contacto formal, está publicado en:
+    Cada fisioterapeuta que usa NeuroForza puede generar su propia página para que sus pacientes le agenden cita, y compartirla por mensaje o en sus redes. También el sitio de NeuroForza tiene la suya. En las dos se piden los mismos datos: tu nombre, tu teléfono, el día y la hora que quieres, y el motivo por el que consultas. Ese último puede hablar de tu salud, así que se trata como dato sensible.
   </p>
   <p>
-    <a href="https://neuroforza-activation.danfrank.workers.dev/privacy">Aviso de Privacidad completo</a>
+    Esta información sí pasa por nuestros servidores, a diferencia de los expedientes, porque es la manera de hacerle llegar tu solicitud al fisioterapeuta y de que él te confirme. Se guarda treinta días y después se borra sola. Se usa solo para eso.
+  </p>
+  <p>
+    Quien recibe y responde tu solicitud es el fisioterapeuta al que se la mandaste. Si prefieres no dejar tus datos aquí, siempre puedes escribirle por mensaje o llamarlo directo.
   </p>
 
-  <h2>Contacto</h2>
+  <h2>Si contratas una suscripción</h2>
   <p>
-    Para preguntas sobre el tratamiento de datos personales, contacte a través de los canales disponibles en <a href="/">neuroforza.com</a> o escriba a <a href="mailto:danfrank@neuroforza.com">danfrank@neuroforza.com</a>. Para ejercer derechos ARCO sobre el expediente clínico de un paciente específico, dirigirse al fisioterapeuta responsable que lo atiende.
+    Cuando un fisioterapeuta o una clínica contrata el servicio, el cobro lo procesa una plataforma de pagos. Los datos de tu tarjeta los captura y los guarda esa plataforma, no nosotros: nunca vemos el número completo ni el código de seguridad. De ese cobro conservamos el correo con el que se contrató, el monto, el estado de la suscripción y las fechas, que es lo que necesitamos para facturar, para saber si la cuenta está al corriente y para cumplir con las obligaciones fiscales.
+  </p>
+
+  <h2>Si trabajas en una clínica con varios fisioterapeutas</h2>
+  <p>
+    NeuroForza permite que una clínica pague una suscripción para varios fisioterapeutas. En ese caso, quien administra la clínica puede ver quién ocupa cada lugar de la suscripción y el estado del pago. No puede ver los expedientes de los pacientes de los demás, porque esos siguen cifrados en el teléfono de cada fisioterapeuta y la llave no sale de ahí.
+  </p>
+
+  <h2>Los datos de tu cuenta de Google</h2>
+  <p>
+    NeuroForza se conecta a tu cuenta de Google para dos cosas, y solo si tú la conectas. Puedes desconectarla cuando quieras desde Ajustes.
+  </p>
+  <h3>Respaldo</h3>
+  <p>
+    La aplicación crea un archivo de respaldo en tu Google Drive con la información de tu consultorio. Ese archivo se cifra antes de salir de tu teléfono, y la llave que lo abre se guarda en una carpeta privada de la aplicación dentro de tu propio Drive, a la que solo NeuroForza tiene acceso. Nadie de NeuroForza puede leer ese archivo, porque no tenemos tu llave. La aplicación solo ve los archivos que ella misma crea, nunca el resto de tu Drive.
+  </p>
+  <h3>Agenda</h3>
+  <p>
+    Si activas la sincronización, la aplicación crea un calendario llamado NeuroForza en tu cuenta y escribe ahí tus sesiones como bloques de tiempo que dicen "Ocupado, sesión clínica". No sube el nombre del paciente, ni el diagnóstico, ni las notas, ni la dirección. Además, cuando agendas, la aplicación consulta si tienes ocupado ese rato en tus otros calendarios, para avisarte antes de que empalmes dos compromisos. Esa consulta devuelve únicamente los horarios ocupados: la aplicación no ve el título de esos eventos, ni sus invitados, ni su descripción.
+  </p>
+  <div class="highlight">
+    <p>
+      Uso limitado. La información que NeuroForza obtiene de las interfaces de Google se usa solo para las funciones descritas arriba, que son visibles para ti dentro de la aplicación. No se transfiere a terceros salvo que sea necesario para prestar esas funciones, para cumplir la ley o con tu consentimiento; no se usa para publicidad; y ninguna persona la lee, salvo con tu permiso expreso, por razones de seguridad, para cumplir la ley, o cuando esté agregada y sin identificarte.
+    </p>
+  </div>
+
+  <h2>Cómo puedes limitar el uso de tus datos</h2>
+  <p>
+    Puedes desconectar tu cuenta de Google desde Ajustes, y con eso dejan de subirse respaldos y de sincronizarse la agenda. Puedes desactivar solo la sincronización del calendario y conservar el respaldo. Puedes desactivar las notificaciones desde Ajustes. Y puedes pedirnos que demos de baja tu cuenta escribiendo a <a href="mailto:soporte@neuroforza.com">soporte@neuroforza.com</a>, en cuyo caso borramos los datos que tengamos de ti, salvo los que la ley nos obligue a conservar.
+  </p>
+  <p>
+    Ten presente que los expedientes de tus pacientes viven en tu teléfono, no con nosotros, así que darte de baja no los borra: eso lo controlas tú desde tu propio equipo y tu propio respaldo.
+  </p>
+
+  <h2>Tus derechos y cómo ejercerlos</h2>
+  <p>
+    Tienes derecho a acceder a tus datos personales, a rectificarlos cuando sean inexactos, a cancelarlos cuando consideres que no los necesitamos, y a oponerte a que los usemos para un fin determinado. Son los llamados derechos ARCO. También puedes revocar el consentimiento que nos hayas dado.
+  </p>
+  <p>
+    Para ejercerlos, escribe a <a href="mailto:soporte@neuroforza.com">soporte@neuroforza.com</a> desde el correo con el que registraste tu cuenta, y dinos qué derecho quieres ejercer y sobre qué datos. Podemos pedirte que acredites tu identidad antes de responder, porque entregarle tus datos a quien se haga pasar por ti sería el peor de los errores posibles.
+  </p>
+  <p>
+    Te comunicaremos nuestra determinación en un plazo máximo de veinte días contados desde que recibamos tu solicitud, y si procede, la haremos efectiva dentro de los quince días siguientes a esa respuesta. Son los plazos que fija el artículo 31 de la ley.
+  </p>
+  <p>
+    Si no te respondemos, o no estás conforme con la respuesta, puedes acudir a la Secretaría Anticorrupción y Buen Gobierno, que es la autoridad encargada de la protección de datos personales en posesión de particulares.
+  </p>
+  <p>
+    Si tu reclamación es sobre tu expediente clínico, dirígete al fisioterapeuta que te atiende, que es quien lo tiene y quien responde por él.
+  </p>
+
+  <h2>Consentimiento</h2>
+  <p>
+    Al aceptar este aviso dentro de la aplicación, el fisioterapeuta da su consentimiento expreso para el tratamiento de sus datos en los términos aquí descritos, incluidos los que la ley considera sensibles, como la imagen de la identificación oficial que se usa para comprobar que es profesional de la salud.
+  </p>
+  <p>
+    El consentimiento de los pacientes es distinto y le corresponde al fisioterapeuta recabarlo. La ley exige que sea expreso y por escrito cuando se trata de datos de salud, y puede constar por firma autógrafa, firma electrónica o cualquier mecanismo de autenticación.
+  </p>
+
+  <h2>Cambios a este aviso</h2>
+  <p>
+    Cuando cambiemos este aviso, publicaremos la versión nueva en esta misma dirección con su fecha de actualización, y la aplicación la mostrará la siguiente vez que se abra, para que pueda leerse antes de seguir usándola. Si el cambio afecta de manera sustancial cómo tratamos los datos, lo avisaremos además al correo con el que se registró la cuenta.
   </p>
 
   <div class="footer">
     <p>NeuroForza — Fisioterapia y Rehabilitación</p>
-    <p>Este aviso de privacidad cumple con la LFPDPPP y su Reglamento.</p>
+    <p>Ley Federal de Protección de Datos Personales en Posesión de los Particulares, DOF 20 de marzo de 2025.</p>
     <p><a href="/terminos">Términos de Servicio</a></p>
   </div>
 </div>
