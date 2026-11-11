@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Planes y precios — NeuroForza</title>
-<meta name="description" content="Elige tu plan NeuroForza. Aprendiz gratis · Profesional $249/mes · Clínica $199/seat/mes. Cobro mensual recurrente seguro con Mercado Pago.">
+<meta name="description" content="Elige tu plan NeuroForza. Aprendiz gratis · Completo $899 al mes, IVA incluido. Cobro mensual recurrente seguro con Mercado Pago.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -154,11 +154,11 @@ footer a{color:var(--cyan)}
         </div>
       </div>
 
-      <!-- ─── PROFESIONAL ─── -->
+      <!-- ─── COMPLETO (por dentro sigue siendo el tier "profesional") ─── -->
       <div class="p-card featured">
-        <div class="p-name">Profesional</div>
+        <div class="p-name">Completo</div>
         <div class="p-tagline">Fisioterapeuta titulado independiente</div>
-        <div class="p-price">$249 <span>MXN/mes</span></div>
+        <div class="p-price">$899 <span>MXN/mes · IVA incluido</span></div>
         <div class="p-trust">🛡️ Sin IA · sin internet · 100% local</div>
         <ul class="p-features">
           <li>Todo lo de Aprendiz +</li>
@@ -171,7 +171,7 @@ footer a{color:var(--cyan)}
           <li>Soporte directo por email</li>
         </ul>
         <div class="p-cta-wrap">
-          <button class="p-cta p-cta-gold" data-tier="profesional">Empezar plan Profesional</button>
+          <button class="p-cta p-cta-gold" data-tier="profesional">Empezar plan Completo</button>
         </div>
       </div>
 
@@ -179,10 +179,10 @@ footer a{color:var(--cyan)}
       <div class="p-card">
         <div class="p-name">Clínica</div>
         <div class="p-tagline">Múltiples terapeutas + dashboard</div>
-        <div class="p-price">$199 <span>MXN/seat/mes</span></div>
+        <div class="p-price">Próximamente</div>
         <div class="p-trust">🛡️ Sin IA · sin internet · 100% local</div>
         <ul class="p-features">
-          <li>Todo lo de Profesional +</li>
+          <li>Todo lo del plan Completo +</li>
           <li>Múltiples terapeutas en una sola clínica</li>
           <li>Dashboard de ingresos por terapeuta</li>
           <li>Asignación de pacientes entre el equipo</li>
@@ -192,7 +192,7 @@ footer a{color:var(--cyan)}
           <li>Soporte prioritario</li>
         </ul>
         <div class="p-cta-wrap">
-          <button class="p-cta p-cta-cyan" data-tier="clinica">Empezar plan Clínica</button>
+          <a href="mailto:hola@neuroforza.com?subject=Plan%20Cl%C3%ADnica%20NeuroForza" class="p-cta p-cta-cyan">Próximamente · escríbenos</a>
         </div>
       </div>
 
@@ -216,7 +216,7 @@ footer a{color:var(--cyan)}
     <p class="modal-sub">Te mandamos tu código de activación por email después de confirmar el pago en Mercado Pago.</p>
 
     <div class="modal-tier-summary">
-      Plan seleccionado · <strong id="modalTierName">Profesional</strong> · <strong id="modalTierPrice">$249 MXN/mes</strong>
+      Plan seleccionado · <strong id="modalTierName">Completo</strong> · <strong id="modalTierPrice">$899 MXN/mes, IVA incluido</strong>
     </div>
 
     <div class="input-wrap">
@@ -255,7 +255,7 @@ footer a{color:var(--cyan)}
       </div>
       <div class="faq-card">
         <div class="faq-q">¿Necesito cédula profesional?</div>
-        <div class="faq-a">Para el plan Profesional y Clínica sí · es obligatoria por regulación. Para Aprendiz no, porque no operas con pacientes reales.</div>
+        <div class="faq-a">Para el plan Completo y Clínica sí · es obligatoria por regulación. Para Aprendiz no, porque no operas con pacientes reales.</div>
       </div>
       <div class="faq-card">
         <div class="faq-q">¿Funciona sin internet?</div>
@@ -278,8 +278,7 @@ footer a{color:var(--cyan)}
 <script>
 // ─── Tier metadata ───
 const TIERS = {
-  profesional: { label: "Plan Profesional", price: "$249 MXN/mes" },
-  clinica:     { label: "Plan Clínica (por seat)", price: "$199 MXN/seat/mes" },
+  profesional: { label: "Plan Completo", price: "$899 MXN/mes, IVA incluido" },
 }
 
 const WORKER_URL = "https://neuroforza-activation.danfrank.workers.dev"
