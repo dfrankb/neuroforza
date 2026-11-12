@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Descargar la app — NeuroForza</title>
+<meta name="description" content="Descarga NeuroForza para Android con tu código de activación.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#050810;--surface:rgba(13,17,23,0.7);--gold:#D4AF37;--cyan:#22D3EE;
+  --text:#F0F2F5;--text-2:rgba(240,242,245,0.65);--text-3:rgba(240,242,245,0.35);
+  --border:rgba(255,255,255,0.06);--danger:#f87171;
+}
+body{font-family:'Jost',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;line-height:1.6}
+a{color:var(--cyan);text-decoration:none}
+
+.topbar{padding:24px 28px;border-bottom:1px solid var(--border)}
+.topbar-inner{max-width:1080px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
+.topbar-brand{font-family:'Bodoni Moda',serif;font-size:20px;font-weight:700;letter-spacing:2px;color:var(--text)}
+
+.main{flex:1;display:flex;align-items:center;justify-content:center;padding:48px 20px}
+.card{max-width:560px;width:100%;text-align:center}
+
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+h1{font-family:'Bodoni Moda',serif;font-size:clamp(30px,5vw,42px);font-weight:700;margin-bottom:16px;line-height:1.2}
+.lead{font-size:17px;color:var(--text-2);margin-bottom:32px;line-height:1.7}
+
+.caja{background:var(--surface);backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:16px;padding:28px 24px;margin-bottom:24px;text-align:left}
+.caja-titulo{font-size:13px;font-weight:600;letter-spacing:1.5px;color:var(--gold);text-transform:uppercase;margin-bottom:16px;text-align:center}
+label{display:block;font-size:13px;color:var(--text-2);margin-bottom:8px}
+input{width:100%;padding:16px 18px;border-radius:12px;border:1.5px solid rgba(255,255,255,.15);background:rgba(255,255,255,.04);color:var(--text);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:20px;letter-spacing:3px;text-align:center;text-transform:uppercase}
+input:focus{outline:none;border-color:var(--cyan)}
+.aviso{min-height:22px;margin-top:10px;font-size:13px;color:var(--danger);text-align:center}
+
+.btn{display:block;width:100%;margin-top:14px;padding:16px 28px;border-radius:12px;font-family:'Jost';font-size:16px;font-weight:700;border:none;cursor:pointer;background:var(--gold);color:#000;transition:all .2s}
+.btn:hover{box-shadow:0 0 30px rgba(212,175,55,.3);transform:translateY(-1px)}
+
+.step{display:flex;gap:16px;margin-bottom:16px;align-items:flex-start}
+.step:last-child{margin-bottom:0}
+.step-num{flex-shrink:0;width:32px;height:32px;border-radius:50%;background:rgba(34,211,238,.12);border:1.5px solid var(--cyan);display:flex;align-items:center;justify-content:center;font-family:'Bodoni Moda',serif;font-weight:700;color:var(--cyan);font-size:15px}
+.step-text{flex:1;font-size:14px;color:var(--text-2);line-height:1.7;padding-top:4px}
+.step-text strong{color:var(--text)}
+
+.nota{background:rgba(212,175,55,.06);border:1px solid rgba(212,175,55,.18);border-radius:12px;padding:16px 20px;margin-bottom:24px;font-size:13px;color:var(--text-2);line-height:1.7;text-align:left}
+.nota strong{color:var(--gold)}
+
+footer{padding:24px 28px;text-align:center;border-top:1px solid var(--border)}
+footer p{font-size:11px;color:var(--text-3)}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="/app/" class="topbar-brand">NEUROFORZA</a>
+  </div>
+</header>
+
+<main class="main">
+  <div class="card">
+    <div class="eyebrow">Descarga</div>
+    <h1>Instala NeuroForza en tu teléfono</h1>
+    <p class="lead">Escribe el código de activación que te llegó por correo y descarga la app.</p>
+
+    <div class="nota">
+      <strong>Por ahora la app es para teléfonos Android.</strong> Abre esta página desde el teléfono en el que la vas a usar.
+    </div>
+
+    <form class="caja" id="formulario" novalidate>
+      <div class="caja-titulo">Tu código</div>
+      <label for="codigo">Código de activación</label>
+      <input id="codigo" name="codigo" type="text" inputmode="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="NF-XXXX-YYYY" maxlength="40">
+      <div class="aviso" id="aviso" role="alert"></div>
+      <button class="btn" type="submit">Descargar para Android</button>
+    </form>
+
+    <div class="caja">
+      <div class="caja-titulo">Cómo instalarla</div>
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-text">Toca <strong>Descargar para Android</strong> y espera a que termine. El archivo pesa unos 230 MB: conviene hacerlo con wifi.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-text">Abre el archivo descargado. Si el teléfono te pregunta, <strong>permite instalar aplicaciones desde el navegador</strong>.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-text">Abre NeuroForza, acepta el aviso de privacidad y <strong>pega tu código</strong> cuando te lo pida.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-text">Completa la <strong>verificación de tu cédula profesional</strong>. Toma unos dos minutos.</div>
+      </div>
+    </div>
+
+    <div class="nota">
+      <strong>¿Algo no funciona?</strong> Escríbenos a <a href="mailto:soporte@neuroforza.com">soporte@neuroforza.com</a> con el correo con el que pagaste.
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>© NeuroForza · <a href="/app/terminos.html">Términos</a> · <a href="/app/privacidad.html">Privacidad</a></p>
+</footer>
+
+<script>
+(function () {
+  var SERVIDOR = "https://neuroforza-activation.danfrank.workers.dev";
+  var campo = document.getElementById("codigo");
+  var aviso = document.getElementById("aviso");
+
+  // El enlace del correo trae el código: llega ya escrito.
+  var delEnlace = new URLSearchParams(window.location.search).get("codigo");
+  if (delEnlace) campo.value = delEnlace.trim().toUpperCase();
+
+  document.getElementById("formulario").addEventListener("submit", function (evento) {
+    evento.preventDefault();
+    var codigo = campo.value.trim().toUpperCase();
+    if (!/^[A-Z0-9][A-Z0-9-]{3,39}$/.test(codigo)) {
+      aviso.textContent = "Escribe el código completo, como viene en tu correo: NF-XXXX-YYYY.";
+      campo.focus();
+      return;
+    }
+    aviso.textContent = "";
+    window.location.href = SERVIDOR + "/descargar?codigo=" + encodeURIComponent(codigo);
+  });
+})();
+</script>
+</body>
+</html>
