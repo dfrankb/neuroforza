@@ -122,16 +122,19 @@ footer p{font-size:11px;color:var(--text-3)}
     pendiente: "La descarga todavía no está disponible. Te escribimos con el enlace en cuanto esté lista."
   };
 
-  // Pone los guiones solo, con la misma regla de la app: después de NF van siete u ocho
-  // caracteres y los últimos cuatro forman el segundo grupo. Mientras se escribe y no se
-  // llega a siete, deja el primer guion y ya, para no mover el cursor debajo del dedo.
-  function acomodarCodigo(entrada) {
+  // Pone los guiones solo. El código completo sale igual que en la app: después de NF van
+  // siete u ocho caracteres y los últimos cuatro forman el segundo grupo. Mientras se
+  // escribe, el segundo guion aparece desde el quinto carácter (los códigos comprados son
+  // NF-XXXX-YYYY), para que se vea que no hay que buscarlo en el teclado, y no se mueve
+  // de lugar hasta salir del campo o tocar el botón.
+  function acomodarCodigo(entrada, escribiendo) {
     var mayus = String(entrada || "").toUpperCase();
     var limpio = mayus.replace(/[^A-Z0-9]/g, "");
     if (limpio.indexOf("NF") !== 0) return mayus;
     var cuerpo = limpio.slice(2);
     if (cuerpo.length === 0) return "NF";
-    if (cuerpo.length < 7) return "NF-" + cuerpo;
+    if (cuerpo.length <= 4) return "NF-" + cuerpo;
+    if (cuerpo.length < 7 || (escribiendo && cuerpo.length === 7)) return "NF-" + cuerpo.slice(0, 4) + "-" + cuerpo.slice(4);
     var corte = cuerpo.length - 4;
     return "NF-" + cuerpo.slice(0, corte) + "-" + cuerpo.slice(corte);
   }
@@ -142,11 +145,18 @@ footer p{font-size:11px;color:var(--text-3)}
   var delServidor = parametros.get("aviso");
   if (delServidor && AVISOS[delServidor]) aviso.textContent = AVISOS[delServidor];
 
-  campo.addEventListener("input", function () {
-    var acomodado = acomodarCodigo(campo.value);
+  function acomodarElCampo(escribiendo) {
+    var acomodado = acomodarCodigo(campo.value, escribiendo);
     if (acomodado !== campo.value) campo.value = acomodado;
+  }
+  campo.addEventListener("input", function () {
+    acomodarElCampo(true);
     aviso.textContent = "";
   });
+  // Algunos teclados de teléfono no avisan letra por letra: se acomoda también al
+  // terminar la palabra y al salir del campo.
+  campo.addEventListener("compositionend", function () { acomodarElCampo(true); });
+  campo.addEventListener("blur", function () { acomodarElCampo(false); });
 
   document.getElementById("formulario").addEventListener("submit", function (evento) {
     evento.preventDefault();
