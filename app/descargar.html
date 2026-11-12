@@ -149,9 +149,16 @@ footer p{font-size:11px;color:var(--text-3)}
     var acomodado = acomodarCodigo(campo.value, escribiendo);
     if (acomodado !== campo.value) campo.value = acomodado;
   }
+  // Hay dos formas de código: el que llega por correo al comprar (NF-XXXX-YYYY) y el que
+  // se entrega a mano con un nombre corto (NF-DAN-XXXX). Mientras se escribe no se puede
+  // saber cuál es, así que al dejar de escribir un momento se acomoda con la regla final:
+  // los últimos cuatro forman el segundo grupo.
+  var espera = null;
   campo.addEventListener("input", function () {
     acomodarElCampo(true);
     aviso.textContent = "";
+    if (espera) clearTimeout(espera);
+    espera = setTimeout(function () { acomodarElCampo(false); }, 700);
   });
   // Algunos teclados de teléfono no avisan letra por letra: se acomoda también al
   // terminar la palabra y al salir del campo.
