@@ -44,6 +44,10 @@ a{color:inherit;text-decoration:none}
 .p-tagline{font-size:13px;color:var(--text-3);margin-bottom:20px}
 .p-price{font-family:'Bodoni Moda',serif;font-size:42px;font-weight:700;margin:8px 0 24px;background:linear-gradient(135deg,var(--gold),#E8C84A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
 .p-price span{font-size:14px;font-weight:400;-webkit-text-fill-color:var(--text-3)}
+.periodo{display:flex;gap:6px;margin:-12px 0 12px}
+.periodo-btn{flex:1;padding:8px 10px;border-radius:10px;border:1.5px solid rgba(255,255,255,0.15);background:transparent;color:var(--text-2);font-family:'Jost';font-size:13px;font-weight:600;cursor:pointer;transition:all .2s}
+.periodo-btn.activo{border-color:var(--gold);color:var(--gold);background:var(--gold-glow)}
+.p-ahorro{font-size:12px;color:var(--gold);margin:-4px 0 14px}
 .p-trust{display:flex;align-items:center;justify-content:center;gap:8px;padding:10px 14px;background:rgba(34,211,238,0.06);border:1px solid rgba(34,211,238,0.18);border-radius:8px;font-size:11px;color:var(--cyan);letter-spacing:0.4px;font-weight:600;margin-bottom:20px;text-align:center;line-height:1.4}
 .p-features{list-style:none;text-align:left;margin:0 0 28px;flex:1}
 .p-features li{font-size:13.5px;color:var(--text-2);padding:10px 0;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:10px}
@@ -158,7 +162,13 @@ footer a{color:var(--cyan)}
       <div class="p-card featured">
         <div class="p-name">Completo</div>
         <div class="p-tagline">Fisioterapeuta titulado independiente</div>
-        <div class="p-price">$899 <span>MXN/mes · IVA incluido</span></div>
+        <div class="p-price" id="precioCompleto">$899 <span>MXN/mes · IVA incluido</span></div>
+        <!-- D-180 · el anual sale solo si el servidor publica /planes (si no, la página queda como antes) -->
+        <div class="periodo" id="periodoCompleto" hidden>
+          <button type="button" class="periodo-btn activo" data-periodo="mensual">Mensual</button>
+          <button type="button" class="periodo-btn" data-periodo="anual">Anual</button>
+        </div>
+        <div class="p-ahorro" id="ahorroCompleto" hidden></div>
         <div class="p-trust">🛡️ Sin IA · sin internet · 100% local</div>
         <ul class="p-features">
           <li>Todo lo de Aprendiz +</li>
@@ -171,7 +181,28 @@ footer a{color:var(--cyan)}
           <li>Soporte directo por email</li>
         </ul>
         <div class="p-cta-wrap">
-          <button class="p-cta p-cta-gold" data-tier="profesional">Empezar plan Completo</button>
+          <button class="p-cta p-cta-gold" data-plan="completo">Empezar plan Completo</button>
+        </div>
+      </div>
+
+      <!-- ─── ADMIN · D-180 · sale solo cuando el servidor lo pone a la venta (aLaVenta en /planes) ─── -->
+      <div class="p-card" id="tarjetaAdmin" hidden>
+        <div class="p-name">Admin</div>
+        <div class="p-tagline">Agenda, expediente y cobros, sin el motor clínico</div>
+        <div class="p-price" id="precioAdmin"></div>
+        <div class="p-trust">🛡️ Sin IA · sin internet · 100% local</div>
+        <ul class="p-features">
+          <li>Pacientes reales <strong>ilimitados</strong> y su expediente</li>
+          <li>Agenda integrada con recordatorios automáticos</li>
+          <li>Cobros y estado de cuenta</li>
+          <li>Consentimiento informado firmado en pantalla</li>
+          <li>Nota de evolución y carta al médico</li>
+          <li>Biblioteca clínica completa</li>
+          <li class="no">Plan de tratamiento armado por el motor</li>
+          <li class="no">Programa de ejercicios en casa para el paciente</li>
+        </ul>
+        <div class="p-cta-wrap">
+          <button class="p-cta p-cta-ghost" data-plan="admin">Empezar plan Admin</button>
         </div>
       </div>
 
@@ -232,7 +263,7 @@ footer a{color:var(--cyan)}
       <span class="loader-dot"></span><span class="loader-dot"></span><span class="loader-dot"></span>
     </div>
 
-    <p class="modal-fineprint">Al continuar aceptas los <a href="/app/terminos.html">términos</a> y el <a href="/app/privacidad.html">aviso de privacidad</a>. Cobro automático mensual · cancela cuando quieras desde Ajustes en la app.</p>
+    <p class="modal-fineprint">Al continuar aceptas los <a href="/app/terminos.html">términos</a> y el <a href="/app/privacidad.html">aviso de privacidad</a>. <span id="modalCobro">Cobro automático mensual</span> · cancela cuando quieras desde Ajustes en la app.</p>
   </div>
 </div>
 
@@ -276,12 +307,62 @@ footer a{color:var(--cyan)}
 </footer>
 
 <script>
-// ─── Tier metadata ───
-const TIERS = {
-  profesional: { label: "Plan Completo", price: "$899 MXN/mes, IVA incluido" },
+// ─── Planes · D-180 ───
+// Los precios los dice el servidor (GET /planes, la tabla única). Si no contesta, la página queda como
+// estaba: solo Completo a $899 al mes (RESPALDO). El monto que se cobra lo pone el servidor, nunca esta página.
+const WORKER_URL = "https://neuroforza-activation.danfrank.workers.dev"
+const RESPALDO = { completo: { nombre: "Completo", mensual: 899, anual: null } }
+let planes = { ...RESPALDO }
+let hayTabla = false
+let periodoCompleto = "mensual"
+
+const pesos = (n) => "$" + Number(n).toLocaleString("es-MX")
+
+function precioDe(plan, periodo) {
+  const p = planes[plan]
+  return periodo === "anual" ? p.anual : p.mensual
+}
+function textoDelPrecio(plan, periodo) {
+  return periodo === "anual" ? `${pesos(precioDe(plan, "anual"))} MXN al año, IVA incluido` : `${pesos(precioDe(plan, "mensual"))} MXN/mes, IVA incluido`
 }
 
-const WORKER_URL = "https://neuroforza-activation.danfrank.workers.dev"
+function pintaCompleto() {
+  const el = document.getElementById("precioCompleto")
+  const anual = periodoCompleto === "anual"
+  el.innerHTML = `${pesos(precioDe("completo", periodoCompleto))} <span>MXN/${anual ? "año" : "mes"} · IVA incluido</span>`
+  const ahorro = document.getElementById("ahorroCompleto")
+  ahorro.hidden = !anual
+  if (anual) ahorro.textContent = `Pagas ${hayTabla ? planes.mesesQueCobraElAnual : 10} meses y usas 12`
+  document.querySelectorAll("#periodoCompleto .periodo-btn").forEach((b) => b.classList.toggle("activo", b.dataset.periodo === periodoCompleto))
+}
+
+document.querySelectorAll("#periodoCompleto .periodo-btn").forEach((b) => {
+  b.addEventListener("click", () => { periodoCompleto = b.dataset.periodo; pintaCompleto() })
+})
+
+async function cargaPlanes() {
+  try {
+    const r = await fetch(`${WORKER_URL}/planes`, { cache: "no-store" })
+    const t = await r.json()
+    if (!r.ok || !t.ok || !Array.isArray(t.planes)) return
+    const porId = Object.fromEntries(t.planes.map((p) => [p.id, p]))
+    const c = porId.completo
+    if (!c || !c.aLaVenta || !Number.isFinite(c.mensual) || !Number.isFinite(c.anual)) return
+    hayTabla = true
+    planes = { completo: { nombre: c.nombre, mensual: c.mensual, anual: c.anual }, mesesQueCobraElAnual: t.mesesQueCobraElAnual }
+    document.getElementById("periodoCompleto").hidden = false
+    const a = porId.admin
+    if (a && a.aLaVenta && Number.isFinite(a.mensual)) {
+      planes.admin = { nombre: a.nombre, mensual: a.mensual, anual: a.anual }
+      document.getElementById("precioAdmin").innerHTML = `${pesos(a.mensual)} <span>MXN/mes · IVA incluido</span>`
+      document.getElementById("tarjetaAdmin").hidden = false
+    }
+    pintaCompleto()
+  } catch (_) {
+    // Sin /planes la página queda con el respaldo.
+  }
+}
+cargaPlanes()
 
 // ─── Modal logic ───
 const modal       = document.getElementById("emailModal")
@@ -293,15 +374,18 @@ const emailError  = document.getElementById("emailError")
 const tierNameEl  = document.getElementById("modalTierName")
 const tierPriceEl = document.getElementById("modalTierPrice")
 
-let selectedTier = null
+let elegido = null // { plan, periodo }
 
-document.querySelectorAll("[data-tier]").forEach((btn) => {
+document.querySelectorAll("[data-plan]").forEach((btn) => {
   btn.addEventListener("click", () => {
-    selectedTier = btn.dataset.tier
-    const meta = TIERS[selectedTier]
-    if (!meta) return
-    tierNameEl.textContent = meta.label
-    tierPriceEl.textContent = meta.price
+    const plan = btn.dataset.plan
+    if (!planes[plan]) return
+    // Admin, por ahora, solo mensual
+    const periodo = plan === "completo" ? periodoCompleto : "mensual"
+    elegido = { plan, periodo }
+    tierNameEl.textContent = `Plan ${planes[plan].nombre}${periodo === "anual" ? " anual" : ""}`
+    tierPriceEl.textContent = textoDelPrecio(plan, periodo)
+    document.getElementById("modalCobro").textContent = periodo === "anual" ? "Cobro automático cada año" : "Cobro automático mensual"
     emailInput.value = ""
     emailError.classList.remove("visible")
     modalSubmit.disabled = false
@@ -336,7 +420,9 @@ modalSubmit.addEventListener("click", async () => {
     const res = await fetch(`${WORKER_URL}/subscribe/individual`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ tier: selectedTier, email }),
+      // tier "profesional" para el servidor de antes (solo Completo mensual); el servidor nuevo usa plan y periodo.
+      // El anual y Admin solo se ofrecen si el servidor nuevo contestó /planes.
+      body: JSON.stringify({ tier: elegido.plan === "completo" ? "profesional" : elegido.plan, plan: elegido.plan, periodo: elegido.periodo, email }),
     })
     const data = await res.json()
     if (!res.ok || !data.ok || !data.initPoint) {
