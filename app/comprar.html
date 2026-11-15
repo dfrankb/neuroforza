@@ -44,8 +44,10 @@ a{color:inherit;text-decoration:none}
 .p-tagline{font-size:13px;color:var(--text-3);margin-bottom:20px}
 .p-price{font-family:'Bodoni Moda',serif;font-size:42px;font-weight:700;margin:8px 0 24px;background:linear-gradient(135deg,var(--gold),#E8C84A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
 .p-price span{font-size:14px;font-weight:400;-webkit-text-fill-color:var(--text-3)}
+/* D-180 · revisión de la Mac: .p-card y .periodo usan display, que le gana al atributo hidden; sin esto se veían desde el principio */
+[hidden]{display:none!important}
 .periodo{display:flex;gap:6px;margin:-12px 0 12px}
-.periodo-btn{flex:1;padding:8px 10px;border-radius:10px;border:1.5px solid rgba(255,255,255,0.15);background:transparent;color:var(--text-2);font-family:'Jost';font-size:13px;font-weight:600;cursor:pointer;transition:all .2s}
+.periodo-btn{flex:1;min-height:44px;padding:8px 10px;border-radius:10px;border:1.5px solid rgba(255,255,255,0.15);background:transparent;color:var(--text-2);font-family:'Jost';font-size:13px;font-weight:600;cursor:pointer;transition:all .2s}
 .periodo-btn.activo{border-color:var(--gold);color:var(--gold);background:var(--gold-glow)}
 .p-ahorro{font-size:12px;color:var(--gold);margin:-4px 0 14px}
 .p-trust{display:flex;align-items:center;justify-content:center;gap:8px;padding:10px 14px;background:rgba(34,211,238,0.06);border:1px solid rgba(34,211,238,0.18);border-radius:8px;font-size:11px;color:var(--cyan);letter-spacing:0.4px;font-weight:600;margin-bottom:20px;text-align:center;line-height:1.4}
@@ -165,8 +167,8 @@ footer a{color:var(--cyan)}
         <div class="p-price" id="precioCompleto">$899 <span>MXN/mes · IVA incluido</span></div>
         <!-- D-180 · el anual sale solo si el servidor publica /planes (si no, la página queda como antes) -->
         <div class="periodo" id="periodoCompleto" hidden>
-          <button type="button" class="periodo-btn activo" data-periodo="mensual">Mensual</button>
-          <button type="button" class="periodo-btn" data-periodo="anual">Anual</button>
+          <button type="button" class="periodo-btn activo" data-periodo="mensual" aria-pressed="true">Mensual</button>
+          <button type="button" class="periodo-btn" data-periodo="anual" aria-pressed="false">Anual</button>
         </div>
         <div class="p-ahorro" id="ahorroCompleto" hidden></div>
         <div class="p-trust">🛡️ Sin IA · sin internet · 100% local</div>
@@ -188,7 +190,7 @@ footer a{color:var(--cyan)}
       <!-- ─── ADMIN · D-180 · sale solo cuando el servidor lo pone a la venta (aLaVenta en /planes) ─── -->
       <div class="p-card" id="tarjetaAdmin" hidden>
         <div class="p-name">Admin</div>
-        <div class="p-tagline">Agenda, expediente y cobros, sin el motor clínico</div>
+        <div class="p-tagline">Agenda, expediente y cobros de tu consulta</div>
         <div class="p-price" id="precioAdmin"></div>
         <div class="p-trust">🛡️ Sin IA · sin internet · 100% local</div>
         <ul class="p-features">
@@ -198,9 +200,8 @@ footer a{color:var(--cyan)}
           <li>Consentimiento informado firmado en pantalla</li>
           <li>Nota de evolución y carta al médico</li>
           <li>Biblioteca clínica completa</li>
-          <li class="no">Plan de tratamiento armado por el motor</li>
-          <li class="no">Programa de ejercicios en casa para el paciente</li>
         </ul>
+        <p class="p-ahorro" style="color:var(--text-2);margin:-12px 0 24px">No incluye: el plan de tratamiento ni el programa de ejercicios en casa que arma la app. Esos vienen en el plan Completo.</p>
         <div class="p-cta-wrap">
           <button class="p-cta p-cta-ghost" data-plan="admin">Empezar plan Admin</button>
         </div>
@@ -313,13 +314,15 @@ footer a{color:var(--cyan)}
 const WORKER_URL = "https://neuroforza-activation.danfrank.workers.dev"
 const RESPALDO = { completo: { nombre: "Completo", mensual: 899, anual: null } }
 let planes = { ...RESPALDO }
-let hayTabla = false
+let meses = { cobra: 10, cubre: 12 }
 let periodoCompleto = "mensual"
 
 const pesos = (n) => "$" + Number(n).toLocaleString("es-MX")
+const esPrecio = (n) => Number.isFinite(n) && n > 0
 
 function precioDe(plan, periodo) {
   const p = planes[plan]
+  if (!p) return null
   return periodo === "anual" ? p.anual : p.mensual
 }
 function textoDelPrecio(plan, periodo) {
@@ -327,13 +330,19 @@ function textoDelPrecio(plan, periodo) {
 }
 
 function pintaCompleto() {
+  // Sin precio anual (servidor de antes) no se puede quedar en anual.
+  if (periodoCompleto === "anual" && !esPrecio(precioDe("completo", "anual"))) periodoCompleto = "mensual"
   const el = document.getElementById("precioCompleto")
   const anual = periodoCompleto === "anual"
   el.innerHTML = `${pesos(precioDe("completo", periodoCompleto))} <span>MXN/${anual ? "año" : "mes"} · IVA incluido</span>`
   const ahorro = document.getElementById("ahorroCompleto")
   ahorro.hidden = !anual
-  if (anual) ahorro.textContent = `Pagas ${hayTabla ? planes.mesesQueCobraElAnual : 10} meses y usas 12`
-  document.querySelectorAll("#periodoCompleto .periodo-btn").forEach((b) => b.classList.toggle("activo", b.dataset.periodo === periodoCompleto))
+  if (anual) ahorro.textContent = `Pagas ${meses.cobra} meses y usas ${meses.cubre}`
+  document.querySelectorAll("#periodoCompleto .periodo-btn").forEach((b) => {
+    const activo = b.dataset.periodo === periodoCompleto
+    b.classList.toggle("activo", activo)
+    b.setAttribute("aria-pressed", activo ? "true" : "false")
+  })
 }
 
 document.querySelectorAll("#periodoCompleto .periodo-btn").forEach((b) => {
@@ -347,12 +356,21 @@ async function cargaPlanes() {
     if (!r.ok || !t.ok || !Array.isArray(t.planes)) return
     const porId = Object.fromEntries(t.planes.map((p) => [p.id, p]))
     const c = porId.completo
-    if (!c || !c.aLaVenta || !Number.isFinite(c.mensual) || !Number.isFinite(c.anual)) return
-    hayTabla = true
-    planes = { completo: { nombre: c.nombre, mensual: c.mensual, anual: c.anual }, mesesQueCobraElAnual: t.mesesQueCobraElAnual }
+    // Revisión de la Mac: si la tabla llega y dice que Completo no está a la venta, no se vende (el respaldo es
+    // para cuando la tabla no llega, no para cuando dice que no).
+    if (c && c.aLaVenta === false) {
+      const b = document.querySelector('[data-plan="completo"]')
+      if (b) { b.disabled = true; b.textContent = "No disponible por ahora" }
+      planes = {}
+      return
+    }
+    const cobra = t.mesesQueCobraElAnual, cubre = t.mesesQueCubreElAnual
+    if (!c || !esPrecio(c.mensual) || !esPrecio(c.anual) || !esPrecio(cobra) || !esPrecio(cubre)) return
+    meses = { cobra, cubre }
+    planes = { completo: { nombre: c.nombre, mensual: c.mensual, anual: c.anual } }
     document.getElementById("periodoCompleto").hidden = false
     const a = porId.admin
-    if (a && a.aLaVenta && Number.isFinite(a.mensual)) {
+    if (a && a.aLaVenta === true && esPrecio(a.mensual)) {
       planes.admin = { nombre: a.nombre, mensual: a.mensual, anual: a.anual }
       document.getElementById("precioAdmin").innerHTML = `${pesos(a.mensual)} <span>MXN/mes · IVA incluido</span>`
       document.getElementById("tarjetaAdmin").hidden = false
@@ -379,13 +397,14 @@ let elegido = null // { plan, periodo }
 document.querySelectorAll("[data-plan]").forEach((btn) => {
   btn.addEventListener("click", () => {
     const plan = btn.dataset.plan
-    if (!planes[plan]) return
     // Admin, por ahora, solo mensual
     const periodo = plan === "completo" ? periodoCompleto : "mensual"
+    // Sin un precio de verdad no se abre la ventana (revisión de la Mac)
+    if (!planes[plan] || !esPrecio(precioDe(plan, periodo))) return
     elegido = { plan, periodo }
     tierNameEl.textContent = `Plan ${planes[plan].nombre}${periodo === "anual" ? " anual" : ""}`
     tierPriceEl.textContent = textoDelPrecio(plan, periodo)
-    document.getElementById("modalCobro").textContent = periodo === "anual" ? "Cobro automático cada año" : "Cobro automático mensual"
+    document.getElementById("modalCobro").textContent = `Se cobra ${pesos(precioDe(plan, periodo))} cada ${periodo === "anual" ? "año" : "mes"}`
     emailInput.value = ""
     emailError.classList.remove("visible")
     modalSubmit.disabled = false
@@ -426,7 +445,9 @@ modalSubmit.addEventListener("click", async () => {
     })
     const data = await res.json()
     if (!res.ok || !data.ok || !data.initPoint) {
-      throw new Error(data.error || "No pudimos iniciar el cobro · intenta más tarde")
+      // Revisión de la Mac: un aviso humano, nunca el texto del servidor; y se vuelven a pedir los planes por si cambiaron.
+      cargaPlanes()
+      throw new Error(res.status === 429 ? "Hiciste varios intentos seguidos. Espera unos minutos y vuelve a intentarlo." : "No pudimos iniciar el pago. Intenta de nuevo en unos minutos o escríbenos a hola@neuroforza.com.")
     }
     // Redirigir a MP Checkout hosted
     window.location.href = data.initPoint
@@ -434,7 +455,8 @@ modalSubmit.addEventListener("click", async () => {
     modalLoader.classList.remove("visible")
     modalSubmit.disabled = false
     modalSubmit.textContent = "Continuar a Mercado Pago →"
-    emailError.textContent = err.message || "Error · intenta más tarde"
+    // Un fallo de red trae un texto en inglés del navegador: se cambia por uno humano.
+    emailError.textContent = err instanceof TypeError || !err.message ? "No pudimos conectarnos. Revisa tu internet e intenta de nuevo." : err.message
     emailError.classList.add("visible")
   }
 })
