@@ -171,6 +171,8 @@ footer a{color:var(--cyan)}
           <button type="button" class="periodo-btn" data-periodo="anual" aria-pressed="false">Anual</button>
         </div>
         <div class="p-ahorro" id="ahorroCompleto" hidden></div>
+        <!-- D-178 · precio fundador: sale solo cuando el servidor lo pone a la venta (fundador.aLaVenta en /planes) -->
+        <div class="p-ahorro" id="fundadorCompleto" hidden></div>
         <div class="p-trust">🛡️ Sin IA · sin internet · 100% local</div>
         <ul class="p-features">
           <li>Todo lo de Aprendiz +</li>
@@ -316,13 +318,17 @@ const RESPALDO = { completo: { nombre: "Completo", mensual: 899, anual: null } }
 let planes = { ...RESPALDO }
 let meses = { cobra: 10, cubre: 12 }
 let periodoCompleto = "mensual"
+// D-178 · precio fundador de Completo mensual, mientras el servidor diga que quedan lugares. null = sin oferta.
+let fundador = null
 
 const pesos = (n) => "$" + Number(n).toLocaleString("es-MX")
 const esPrecio = (n) => Number.isFinite(n) && n > 0
+const conFundador = (plan, periodo) => !!fundador && plan === "completo" && periodo === "mensual"
 
 function precioDe(plan, periodo) {
   const p = planes[plan]
   if (!p) return null
+  if (conFundador(plan, periodo)) return fundador.mensual
   return periodo === "anual" ? p.anual : p.mensual
 }
 function textoDelPrecio(plan, periodo) {
@@ -334,10 +340,18 @@ function pintaCompleto() {
   if (periodoCompleto === "anual" && !esPrecio(precioDe("completo", "anual"))) periodoCompleto = "mensual"
   const el = document.getElementById("precioCompleto")
   const anual = periodoCompleto === "anual"
-  el.innerHTML = `${pesos(precioDe("completo", periodoCompleto))} <span>MXN/${anual ? "año" : "mes"} · IVA incluido</span>`
+  const tachado = conFundador("completo", periodoCompleto) ? `<s style="opacity:.55;font-size:.6em;margin-right:6px">${pesos(planes.completo.mensual)}</s>` : ""
+  el.innerHTML = `${tachado}${pesos(precioDe("completo", periodoCompleto))} <span>MXN/${anual ? "año" : "mes"} · IVA incluido</span>`
   const ahorro = document.getElementById("ahorroCompleto")
   ahorro.hidden = !anual
   if (anual) ahorro.textContent = `Pagas ${meses.cobra} meses y usas ${meses.cubre}`
+  const nota = document.getElementById("fundadorCompleto")
+  nota.hidden = !fundador
+  if (fundador) {
+    nota.textContent = anual
+      ? `El precio fundador de ${pesos(fundador.mensual)} es solo en el pago mensual.`
+      : `Precio fundador: quedan ${fundador.restantes} de ${fundador.lugares} lugares. Se queda en ${pesos(fundador.mensual)} al mes mientras sigas suscrito.`
+  }
   document.querySelectorAll("#periodoCompleto .periodo-btn").forEach((b) => {
     const activo = b.dataset.periodo === periodoCompleto
     b.classList.toggle("activo", activo)
@@ -369,6 +383,10 @@ async function cargaPlanes() {
     meses = { cobra, cubre }
     planes = { completo: { nombre: c.nombre, mensual: c.mensual, anual: c.anual } }
     document.getElementById("periodoCompleto").hidden = false
+    const f = t.fundador
+    fundador = f && f.aLaVenta === true && f.aplicaA === "completo" && esPrecio(f.mensual) && esPrecio(f.lugaresRestantes) && esPrecio(f.lugares)
+      ? { mensual: f.mensual, restantes: f.lugaresRestantes, lugares: f.lugares }
+      : null
     const a = porId.admin
     if (a && a.aLaVenta === true && esPrecio(a.mensual)) {
       planes.admin = { nombre: a.nombre, mensual: a.mensual, anual: a.anual }
@@ -401,10 +419,15 @@ document.querySelectorAll("[data-plan]").forEach((btn) => {
     const periodo = plan === "completo" ? periodoCompleto : "mensual"
     // Sin un precio de verdad no se abre la ventana (revisión de la Mac)
     if (!planes[plan] || !esPrecio(precioDe(plan, periodo))) return
-    elegido = { plan, periodo }
-    tierNameEl.textContent = `Plan ${planes[plan].nombre}${periodo === "anual" ? " anual" : ""}`
+    const esFundador = conFundador(plan, periodo)
+    elegido = { plan, periodo, fundador: esFundador }
+    tierNameEl.textContent = `Plan ${planes[plan].nombre}${periodo === "anual" ? " anual" : ""}${esFundador ? ", precio fundador" : ""}`
     tierPriceEl.textContent = textoDelPrecio(plan, periodo)
-    document.getElementById("modalCobro").textContent = periodo === "anual" ? `Se cobra ${pesos(precioDe(plan, periodo))} cada año; si cancelas, lo usas hasta terminar el año pagado y no hay devolución` : `Se cobra ${pesos(precioDe(plan, periodo))} cada mes`
+    document.getElementById("modalCobro").textContent = periodo === "anual"
+      ? `Se cobra ${pesos(precioDe(plan, periodo))} cada año; si cancelas, lo usas hasta terminar el año pagado y no hay devolución`
+      : esFundador
+        ? `Se cobra ${pesos(precioDe(plan, periodo))} cada mes mientras sigas suscrito; si cancelas, el lugar de fundador no se recupera`
+        : `Se cobra ${pesos(precioDe(plan, periodo))} cada mes`
     emailInput.value = ""
     emailError.classList.remove("visible")
     modalSubmit.disabled = false
@@ -441,9 +464,22 @@ modalSubmit.addEventListener("click", async () => {
       headers: { "Content-Type": "application/json" },
       // tier "profesional" para el servidor de antes (solo Completo mensual); el servidor nuevo usa plan y periodo.
       // El anual y Admin solo se ofrecen si el servidor nuevo contestó /planes.
-      body: JSON.stringify({ tier: elegido.plan === "completo" ? "profesional" : elegido.plan, plan: elegido.plan, periodo: elegido.periodo, email }),
+      body: JSON.stringify({
+        tier: elegido.plan === "completo" ? "profesional" : elegido.plan,
+        plan: elegido.plan,
+        periodo: elegido.periodo,
+        ...(elegido.fundador ? { fundador: true } : {}),
+        email,
+      }),
     })
     const data = await res.json()
+    if (res.status === 409 && data && data.sinLugares) {
+      // D-178 · se acabaron los lugares (o este correo ya usó el suyo): se quita la oferta y se dice en humano.
+      fundador = null
+      pintaCompleto()
+      cargaPlanes()
+      throw new Error(`Ya no hay un lugar de fundador para este correo. El plan Completo sigue disponible a ${pesos(planes.completo.mensual)} al mes; cierra esta ventana y vuelve a elegirlo.`)
+    }
     if (!res.ok || !data.ok || !data.initPoint) {
       // Revisión de la Mac: un aviso humano, nunca el texto del servidor; y se vuelven a pedir los planes por si cambiaron.
       cargaPlanes()
