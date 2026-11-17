@@ -64,6 +64,9 @@ a{color:inherit;text-decoration:none}
 .p-cta-ghost:hover{border-color:var(--cyan);color:var(--cyan)}
 .p-cta-cyan{background:var(--cyan);color:#000}
 .p-cta-cyan:hover{box-shadow:0 0 30px rgba(34,211,238,0.3);transform:translateY(-1px)}
+/* D-181 · egresado: la liga dentro de la tarjeta de Completo, con área táctil de 44 px */
+.p-egresado{display:block;width:100%;min-height:44px;margin:-6px 0 14px;padding:8px 0;background:none;border:none;color:var(--cyan);font-family:'Jost';font-size:12.5px;line-height:1.5;text-align:left;text-decoration:underline;cursor:pointer}
+.egresado-listo{font-size:14px;color:var(--text-2);line-height:1.7}
 
 /* ── Modal de email ── */
 .modal-overlay{position:fixed;inset:0;background:rgba(5,8,16,0.85);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;z-index:1000;padding:24px}
@@ -173,6 +176,8 @@ footer a{color:var(--cyan)}
         <div class="p-ahorro" id="ahorroCompleto" hidden></div>
         <!-- D-178 · precio fundador: sale solo cuando el servidor lo pone a la venta (fundador.aLaVenta en /planes) -->
         <div class="p-ahorro" id="fundadorCompleto" hidden></div>
+        <!-- D-181 · egresado: sale solo cuando el servidor lo pone a la venta (egresado.aLaVenta en /planes) -->
+        <button type="button" class="p-egresado" id="egresadoBtn" hidden></button>
         <div class="p-trust">🛡️ Sin IA · sin internet · 100% local</div>
         <ul class="p-features">
           <li>Todo lo de Aprendiz +</li>
@@ -270,6 +275,34 @@ footer a{color:var(--cyan)}
   </div>
 </div>
 
+<!-- ─── D-181 · Egresado: se pide con la cédula; se cobra solo después de revisarla ─── -->
+<div class="modal-overlay" id="egresadoModal">
+  <div class="modal" style="position:relative">
+    <button class="modal-close" id="egresadoClose" aria-label="Cerrar">✕</button>
+    <div class="modal-eyebrow">Precio de egresado</div>
+    <h2 class="modal-title">Recién titulado</h2>
+    <div id="egresadoFormulario">
+      <p class="modal-sub" id="egresadoSub">El plan Completo a precio de egresado durante el primer año desde la fecha de tu cédula. Primero revisamos tu cédula y después te mandamos por correo tu liga de pago; no se cobra nada antes.</p>
+      <div class="input-wrap">
+        <label class="input-label" for="egresadoEmail">Tu correo electrónico</label>
+        <input type="email" id="egresadoEmail" class="input-field" placeholder="fisio@ejemplo.com" autocomplete="email">
+      </div>
+      <div class="input-wrap">
+        <label class="input-label" for="egresadoCedula">Número de cédula profesional</label>
+        <input type="text" id="egresadoCedula" class="input-field" inputmode="numeric" placeholder="12345678" autocomplete="off">
+      </div>
+      <div class="input-wrap">
+        <label class="input-label" for="egresadoFecha">Fecha de tu cédula</label>
+        <input type="date" id="egresadoFecha" class="input-field">
+        <div class="input-error" id="egresadoError"></div>
+      </div>
+      <button class="modal-submit" id="egresadoSubmit">Enviar para revisión</button>
+      <p class="modal-fineprint">Solo pago mensual. No se junta con el precio fundador.</p>
+    </div>
+    <p class="egresado-listo" id="egresadoListo" hidden></p>
+  </div>
+</div>
+
 <!-- FAQ -->
 <section class="faq-section">
   <div class="container">
@@ -320,6 +353,8 @@ let meses = { cobra: 10, cubre: 12 }
 let periodoCompleto = "mensual"
 // D-178 · precio fundador de Completo mensual, mientras el servidor diga que quedan lugares. null = sin oferta.
 let fundador = null
+// D-181 · precio de egresado (se pide con la cédula y se cobra después de revisarla). null = sin oferta.
+let egresado = null
 
 const pesos = (n) => "$" + Number(n).toLocaleString("es-MX")
 const esPrecio = (n) => Number.isFinite(n) && n > 0
@@ -387,6 +422,12 @@ async function cargaPlanes() {
     fundador = f && f.aLaVenta === true && f.aplicaA === "completo" && esPrecio(f.mensual) && esPrecio(f.lugaresRestantes) && esPrecio(f.lugares)
       ? { mensual: f.mensual, restantes: f.lugaresRestantes, lugares: f.lugares }
       : null
+    // D-181 · egresado: la liga sale solo si el servidor lo pone a la venta con un precio de verdad.
+    const g = t.egresado
+    egresado = g && g.aLaVenta === true && esPrecio(g.mensual) ? { mensual: g.mensual } : null
+    const egBtn = document.getElementById("egresadoBtn")
+    egBtn.hidden = !egresado
+    if (egresado) egBtn.textContent = `¿Te titulaste hace menos de un año? Pide el precio de egresado: ${pesos(egresado.mensual)} al mes el primer año.`
     const a = porId.admin
     if (a && a.aLaVenta === true && esPrecio(a.mensual)) {
       planes.admin = { nombre: a.nombre, mensual: a.mensual, anual: a.anual }
@@ -499,6 +540,75 @@ modalSubmit.addEventListener("click", async () => {
 
 emailInput.addEventListener("keydown", (e) => {
   if (e.key === "Enter") modalSubmit.click()
+})
+
+// ─── D-181 · Egresado: la solicitud ───
+// La página solo manda la solicitud; el servidor decide y contesta con un motivo que aquí se dice en humano.
+const egModal = document.getElementById("egresadoModal")
+const egSubmit = document.getElementById("egresadoSubmit")
+const egError = document.getElementById("egresadoError")
+const MOTIVOS_EGRESADO = {
+  cerrado: "El precio de egresado no está disponible por ahora. El plan Completo sigue disponible.",
+  correo: "Revisa tu correo: parece que le falta algo.",
+  cedula: "La cédula profesional tiene 7 u 8 números. Revísala.",
+  fecha_futura: "La fecha de tu cédula no puede ser posterior a hoy.",
+  fecha_vieja: "El precio de egresado es para el primer año desde la fecha de tu cédula, y la tuya tiene más de un año. Puedes elegir el plan Completo.",
+  ya_usado: "Esta cédula o este correo ya usaron el precio de egresado.",
+  es_fundador: "Este correo ya tiene el precio fundador, que no se junta con el de egresado.",
+}
+function avisoEgresado(texto) {
+  egError.textContent = texto
+  egError.classList.add("visible")
+}
+
+document.getElementById("egresadoBtn").addEventListener("click", () => {
+  if (!egresado) return
+  document.getElementById("egresadoFormulario").hidden = false
+  document.getElementById("egresadoListo").hidden = true
+  egError.classList.remove("visible")
+  egSubmit.disabled = false
+  egSubmit.textContent = "Enviar para revisión"
+  egModal.classList.add("open")
+})
+document.getElementById("egresadoClose").addEventListener("click", () => egModal.classList.remove("open"))
+egModal.addEventListener("click", (e) => {
+  if (e.target === egModal) egModal.classList.remove("open")
+})
+
+egSubmit.addEventListener("click", async () => {
+  const email = document.getElementById("egresadoEmail").value.trim()
+  const cedula = document.getElementById("egresadoCedula").value.replace(/\s+/g, "")
+  const fechaCedula = document.getElementById("egresadoFecha").value
+  if (!isValidEmail(email)) return avisoEgresado(MOTIVOS_EGRESADO.correo)
+  if (!/^\d{7,8}$/.test(cedula)) return avisoEgresado(MOTIVOS_EGRESADO.cedula)
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(fechaCedula)) return avisoEgresado("Escribe la fecha de tu cédula.")
+  egError.classList.remove("visible")
+  egSubmit.disabled = true
+  egSubmit.textContent = "Enviando..."
+  try {
+    const res = await fetch(`${WORKER_URL}/egresado/solicitud`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, cedula, fechaCedula }),
+    })
+    const data = await res.json().catch(() => ({}))
+    if (res.ok && data.ok) {
+      document.getElementById("egresadoFormulario").hidden = true
+      const listo = document.getElementById("egresadoListo")
+      listo.textContent = `Listo. Revisamos tu cédula y te escribimos a ${email} con tu liga de pago. No se cobra nada antes.`
+      listo.hidden = false
+      return
+    }
+    egSubmit.disabled = false
+    egSubmit.textContent = "Enviar para revisión"
+    if (res.status === 429) return avisoEgresado("Hiciste varios intentos seguidos. Espera unos minutos y vuelve a intentarlo.")
+    if (data && data.motivo === "cerrado") { egresado = null; document.getElementById("egresadoBtn").hidden = true }
+    avisoEgresado(MOTIVOS_EGRESADO[data && data.motivo] || "No pudimos enviar tu solicitud. Intenta de nuevo en unos minutos o escríbenos a hola@neuroforza.com.")
+  } catch (_) {
+    egSubmit.disabled = false
+    egSubmit.textContent = "Enviar para revisión"
+    avisoEgresado("No pudimos conectarnos. Revisa tu internet e intenta de nuevo.")
+  }
 })
 </script>
 
